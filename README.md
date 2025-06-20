@@ -1,16 +1,17 @@
 <p align="center" width="100%">
-    <img height="100" src="https://github.com/said7388/developer-portfolio/assets/77630868/c0064908-cd5f-4751-a77c-eba90a62b55c">
+    <!-- <img height="100" src="https://github.com/said7388/developer-portfolio/assets/77630868/c0064908-cd5f-4751-a77c-eba90a62b55c"> -->
+    <img height="100" src="https://github.com/inzamam-idrees/software-developer-portfolio/public/image/palestine.jpg">
 </p>
 
 ---
 
-# [Built Portfolio With GitHub ](https://github.com/said7388/github-portfolio)
+<!-- # [Built Portfolio With GitHub ](https://github.com/inzamam-idrees/github-portfolio) -->
 
 ---
 
 # Developer Portfolio
 
-#### Are you struggling to create a professional portfolio website? Look no further! You can use the Developer Portfolio template and create your very own personalized portfolio today! My website is designed to be user-friendly and easily customizable, making it perfect for both developers and freelancers.
+#### Are you having trouble making a website for your portfolio that looks good? Look no further!  You can use the Developer Portfolio template and create your very own personalized portfolio today!  My website is designed to be user-friendly and easily customizable, making it perfect for both developers and freelancers.
 
 ---
 
@@ -18,7 +19,7 @@
 
 ![](./public/image/screen.png)
 
-## View live preview [here](https://abusaid.netlify.app/).
+## View live preview [here](https://inzamam-portfolio.netlify.app/).
 
 ---
 
@@ -74,9 +75,9 @@ git --version
 To Fork the repo click on the fork button at the top right of the page. Once the repo is forked open your terminal and perform the following commands
 
 ```bash
-git clone https://github.com/<YOUR GITHUB USERNAME>/developer-portfolio.git
+git clone https://github.com/<YOUR GITHUB USERNAME>/software-developer-portfolio.git
 
-cd developer-portfolio
+cd software-developer-portfolio
 ```
 
 ### Install packages from the root directory
@@ -145,7 +146,7 @@ GMAIL_PASSKEY =
 EMAIL_ADDRESS =
 ```
 
-### Then, Customize data in the `utils/data` [folder](https://github.com/said7388/developer-portfolio/tree/main/utils/data).
+### Then, Customize data in the `utils/data` [folder](https://github.com/inzamam-idrees/software-developer-portfolio/tree/master/utils/data).
 
 Eg:
 
@@ -159,11 +160,10 @@ export const personalData = {
   phone: "+923345203366",
   address: "Lahore, Punjab, Pakistan",
   github: "https://github.com/inzamam-idrees",
-  facebook: "https://www.facebook.com/abusaid.riyaz/",
+  facebook: "https://www.facebook.com/inzi.smart/",
   linkedIn: "https://www.linkedin.com/in/inzamam-idrees/",
-  twitter: "https://x.com/said7388",
-  stackOverflow: "https://stackoverflow.com/users/16840768/abu-said",
-  leetcode: "https://leetcode.com/",
+  twitter: "https://x.com/smart_inzi",
+  stackOverflow: "https://stackoverflow.com/users/7973760/inzamam-idrees",
   devUsername: "inzamam-idrees",
   resume: "...",
 };

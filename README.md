@@ -18,7 +18,7 @@
 
 ![](./public/image/screen.png)
 
-## View live preview [here](https://inzamam-portfolio.netlify.app/).
+## View live preview [here](https://inzamamidrees.netlify.app/).
 
 ---
 

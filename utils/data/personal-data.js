@@ -2,7 +2,7 @@ export const personalData = {
   name: "INZAMAM IDREES",
   profile: '/inzamam_profile.jpg',
   designation: "Senior Software Engineer",
-  description: "My name is INZAMAM IDREES. I am a passionate Web Developer having experience of 5+ Years in developing, user friendly web applications. Desirous of establishing myself as a dynamic and competent Software Engineer, equipped with the latest tools, techniques and knowledge that will enable me to handle emerging technologies and prove myself as a valuable resource for the company.",
+  description: "Results-driven Web Developer with over 5 years of hands-on experience in designing, developing, and maintaining responsive, user-friendly web applications. Specialized in JavaScript technologies, with strong proficiency in Angular, React, Next.js, Node.js, Express and NestJS. Demonstrated ability to build scalable frontend and backend solutions using modern frameworks and best practices. Adept at working in Agile environments, collaborating with cross-functional teams, and delivering high-quality code. Passionate about learning emerging technologies and contributing to innovative software solutions that drive business success.",
   email: 'inzamamidrees@gmail.com',
   phone: '+923345203366',
   address: 'Lahore, Punjab, Pakistan',
@@ -13,5 +13,5 @@ export const personalData = {
   stackOverflow: 'https://stackoverflow.com/users/7973760/inzamam-idrees',
   leetcode: "https://leetcode.com/inzamam-idrees",
   devUsername: "inzamam-idrees",
-  resume: "https://drive.google.com/file/d/1aEMwQfLfzusiezAIIEtf3U2YYCNr7OzG/view?usp=sharing"
+  resume: "https://drive.google.com/file/d/1BsU9Fv6dtCmfc9Qi2zXeyxLMs5xuX3ST/view?usp=sharing"
 }

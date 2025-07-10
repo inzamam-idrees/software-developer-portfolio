@@ -129,9 +129,15 @@ function HeroSection() {
                 <span className="text-gray-400">{"', '"}</span>
                 <span className="text-amber-300">NestJS</span>
                 <span className="text-gray-400">{"', '"}</span>
+                <span className="text-amber-300">MongoDB</span>
+                <span className="text-gray-400">{"', '"}</span>
                 <span className="text-amber-300">MySql</span>
                 <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">MongoDB</span>
+                <span className="text-amber-300">PHP</span>
+                <span className="text-gray-400">{"', '"}</span>
+                <span className="text-amber-300">Laravel</span>
+                <span className="text-gray-400">{"', '"}</span>
+                <span className="text-amber-300">CodeIgniter</span>
                 <span className="text-gray-400">{"', '"}</span>
                 <span className="text-amber-300">Docker</span>
                 <span className="text-gray-400">{"', '"}</span>

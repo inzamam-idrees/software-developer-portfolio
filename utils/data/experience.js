@@ -7,13 +7,13 @@ export const experiences = [
   },
   {
     id: 2,
-    title: "Web Developer (Remote)",
+    title: "Angular Developer (Remote)",
     company: "Xenex Media (Queensland, Australia)",
     duration: "(Feb 2021 - Jul 2022)"
   },
   {
     id: 3,
-    title: "PHP Developer",
+    title: "Web Developer",
     company: "CODEINFORMATICS (Islamabad, Pakistan)",
     duration: "(Jan 2019 - Jan 2021)"
   }

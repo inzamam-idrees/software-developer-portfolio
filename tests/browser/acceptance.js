@@ -9,7 +9,7 @@ async (page) => {
     const origin = new URL(page.url()).origin,
       browser = page.context().browser(),
       evidence = [],
-      prefix = origin.endsWith(":3002") ? "production" : "development";
+      prefix = /:300(?:2|4)$/.test(origin) ? "production" : "development";
     const viewports = [
       { width: 1440, height: 900 },
       { width: 1280, height: 800 },

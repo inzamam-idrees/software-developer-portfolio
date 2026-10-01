@@ -12,14 +12,15 @@ whole-branch reviewer follows implementation; findings and dispositions are belo
   public-origin normalization/rejection. Thirteen named cases across four files.
 - `npm run lint`: passes without lint warnings/errors. Next 15 prints the upstream
   `next lint` deprecation notice; no lint rule or build check was disabled.
-- `PORTFOLIO_BUILD_DIR=.next-portfolio-production npm run build`: passes, including
+- `PORTFOLIO_BUILD_DIR=.next-portfolio-polish-production-2 npm run build`: passes, including
   lint and prerendering. Home first-load JS is approximately 116 kB in Next's build
   report; shared JS 103 kB. This excludes the lazy scene and is not total transfer.
 - `npm audit`: zero vulnerabilities after documented existing-dependency patches.
-- Production runs at `http://127.0.0.1:3002`, with isolated generated output.
-- Eleven Playwright files: startup, navigation, content, contact, motion,
-  scroll-motion, metadata, accessibility, acceptance, performance, touch.
-- Viewports: 1440×900, 1280×800, 768×1024, 390×844. Home, `/project`, `/blog`,
+- Production validation ran at `http://127.0.0.1:3004`, with isolated generated output.
+- Twelve Playwright files: startup, startup investigation, navigation, content,
+  contact, motion, scroll-motion, metadata, accessibility, acceptance,
+  performance, touch.
+- Viewports: 1440×900, 1280×800, 1024×768, 768×1024, 390×844. Home, `/project`, `/blog`,
   deep links and refresh: one h1, complete content, no horizontal overflow or skipped heading levels,
   working destinations, zero unexplained application/critical-resource errors.
 - Cold-start case: three fresh contexts, initial visit and reload in each; no
@@ -65,10 +66,11 @@ were identical: 5 textures, 3 framebuffers, 29 buffers, 5 programs, 8 vertex arr
 
 ## Visual inspection
 
-Captured and opened hero, project, experience, contact, reduced-motion and full
-mobile screenshots under `artifacts/portfolio/`. Production names:
-`production-hero-{1440,1280,768,390}.png`,
-`production-{projects,experience,contact}-{1440,390}.png`,
+Captured and opened hero, project, about, skills, experience, writing, contact,
+reduced-motion and full-page screenshots under `artifacts/portfolio/`. Production names:
+`production-hero-{1440,1280,1024,768,390}.png`,
+`production-{projects,about,skills,experience,writing,contact}-{1440,390}.png`,
+`production-full-desktop.png`,
 `production-full-mobile.png`, `production-reduced-{1440,390}.png`.
 Corrected demonstrated textarea/control collision and the portrait-tablet scene
 crop; checked typography, reading order, contrast, spacing, image crop, sticky header
@@ -98,8 +100,31 @@ and scene interference. Mobile touch emulation also verifies menu/anchor/form ta
 ## Independent final review
 
 Independent whole-branch review returned **READY**, with no Critical or Important
-findings. One Minor finding is deferred: on mobile, activating the home wordmark
-from another route while the navigation disclosure is open changes routes but
-leaves the disclosure open over the home hero (`app/components/navbar.jsx:56`).
-The follow-up is to close the disclosure on wordmark activation and route changes,
-with browser coverage for that path.
+findings. Its one Minor finding is now resolved: the mobile disclosure closes on
+wordmark activation and every pathname change. The browser regression was written
+first, reproduced the stale disclosure against the previous production bundle,
+and passes against the fix.
+
+## Focused polish pass
+
+- Preserved the existing routes, factual data, 3D world, native scrolling, motion
+  system, reduced-motion behavior and rendering budgets. No dependency was added.
+- Added lightweight active navigation through `usePathname`, `aria-current` and
+  `IntersectionObserver`; the project archive marks Work as the current page.
+- Added hero metadata using the repository's canonical `OVER 5 YEARS` value,
+  clarified the factual About copy, introduced capability categories from the
+  existing technology set, and converted the real article into an editorial row.
+- Confirmed `nextjs-portal` is absent at every production viewport. The red/debug
+  overlays observed during development were framework tooling and are not present
+  in the production screenshots or DOM.
+- The first isolated build attempt in the restricted worker ended during webpack
+  compilation without a diagnostic. A second build from a clean isolated output
+  directory in the approved native environment compiled, type-checked, linted,
+  prerendered 13/13 pages and served the complete production validation suite.
+  The validated bundle reports approximately 116 kB first-load JS for the home
+  route and 103 kB shared JS.
+- Final screenshot review found no clipping, horizontal overflow, accidental
+  development overlay, content collision or hierarchy regression at any required
+  viewport. The production performance sample recorded 16.7 ms median / 16.7 ms
+  p95 idle and 16.7 ms median / 16.8 ms p95 while scrolling on SwiftShader, with
+  8 calls, 2,088 triangles and capped 0.75 DPR.

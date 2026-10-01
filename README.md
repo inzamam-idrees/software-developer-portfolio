@@ -272,3 +272,25 @@ npm install -g next
 This installs Next.js globally
 
 then do the usual `npm run dev`
+
+
+## Cinematic portfolio implementation
+
+The existing Next.js App Router application keeps all factual content in `utils/data`.
+Server-rendered chapters remain readable without JavaScript or WebGL. One lazy Fiber
+canvas uses Three.js; GSAP owns scroll progression. Native scrolling is the baseline.
+No Drei, Lenis or post-processing is installed. The motion control respects the system
+reduced-motion preference and persists an explicit pause choice.
+
+Set `SITE_URL` only to the verified public HTTPS origin, without a path or credentials.
+When absent, canonical links, Person URL and sitemap references are omitted. The local
+social image needs no external assets. Contact delivery uses the existing
+`EMAIL_ADDRESS` and `GMAIL_PASSKEY`; never commit credentials. Test delivery is mocked.
+
+Run `npm run test:unit`, `npm run lint`, and `npm run build` for local checks.
+Browser cases in `tests/browser` run with the installed Playwright CLI, e.g.
+`playwright-cli -s=portfolio run-code --filename=tests/browser/navigation.js`.
+If another Next process uses the checkout, isolate generated files:
+`PORTFOLIO_BUILD_DIR=.next-portfolio-dev npm run dev -- --port 3001`.
+Use the same `PORTFOLIO_BUILD_DIR` for a production build and its start command.
+Validation evidence and dependency choices are recorded under `docs/portfolio`.

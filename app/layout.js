@@ -4,12 +4,16 @@ import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 import "./css/globals.scss";
 import "./css/portfolio.scss";
+import { getSiteOrigin } from "@/lib/site-origin.mjs";
+const origin = getSiteOrigin();
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Portfolio of Inzamam Idrees - Senior Software Enginner",
-  description:
-    "This is the portfolio of Inzamam Idrees. I am a full stack developer and a self taught developer. I love to learn new things and I am always open to collaborating with others. I am a quick learner and I am always looking for new challenges.",
+  ...(origin ? { metadataBase: new URL(origin) } : {}),
+  title: "Inzamam Idrees | Senior Software Engineer",
+  description: "Inzamam Idrees is a Senior Software Engineer in Lahore, Pakistan, building web applications with React, Angular, Next.js and Node.js.",
+  openGraph: { type: "website", locale: "en_US", siteName: "Inzamam Idrees", title: "Inzamam Idrees | Senior Software Engineer", description: "Web applications, thoughtful systems and readable interfaces." },
+  twitter: { card: "summary_large_image", title: "Inzamam Idrees | Senior Software Engineer", description: "Web applications, thoughtful systems and readable interfaces." },
 };
 
 export default function RootLayout({ children }) {

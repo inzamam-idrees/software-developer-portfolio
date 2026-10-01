@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 const links = [
   ["Work", "projects"],
   ["About", "about"],
@@ -13,6 +14,11 @@ export default function Navbar() {
   const [ready, setReady] = useState(false);
   const disclosure = useRef(null);
   const summary = useRef(null);
+  const pathname = usePathname();
+  const closeMenu = useCallback(() => {
+    if (disclosure.current) disclosure.current.open = false;
+    setOpen(false);
+  }, []);
   useEffect(() => {
     setOpen(Boolean(disclosure.current?.open));
     setReady(true);
@@ -24,6 +30,9 @@ export default function Navbar() {
     media.addEventListener("change", reset);
     return () => media.removeEventListener("change", reset);
   }, []);
+  useEffect(() => {
+    closeMenu();
+  }, [closeMenu, pathname]);
   useEffect(() => {
     const escape = (e) => {
       if (e.key === "Escape" && disclosure.current?.open) {
@@ -40,10 +49,7 @@ export default function Navbar() {
       <li key={id}>
         <Link
           href={`/#${id}`}
-          onClick={() => {
-            if (disclosure.current) disclosure.current.open = false;
-            setOpen(false);
-          }}
+          onClick={closeMenu}
         >
           {label}
           {id === "contact" && <span aria-hidden="true"> ↗</span>}
@@ -53,7 +59,12 @@ export default function Navbar() {
   return (
     <header className="site-header">
       <div className="container header-inner">
-        <Link className="wordmark" href="/" aria-label="Inzamam Idrees home">
+        <Link
+          className="wordmark"
+          href="/"
+          aria-label="Inzamam Idrees home"
+          onClick={closeMenu}
+        >
           inzamam<span className="accent">.</span>
           <span className="wordmark-sub">IDREES / ENGINEER</span>
         </Link>

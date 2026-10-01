@@ -16,6 +16,22 @@ async (page) => {
   await page.keyboard.press("Escape");
   if (!(await toggle.evaluate((e) => e === document.activeElement)))
     throw new Error("Escape focus not restored");
+
+  await page.goto(origin + "/project", { waitUntil: "domcontentloaded" });
+  const routeToggle = page.getByRole("button", {
+    name: "Open menu",
+    exact: true,
+  });
+  await routeToggle.click();
+  await page.getByRole("link", { name: "Inzamam Idrees home" }).click();
+  await page.waitForURL(origin + "/");
+  if (
+    (await page.locator("details.mobile-disclosure").evaluate((e) => e.open)) ||
+    (await page.locator(".menu-toggle").getAttribute("aria-expanded")) !==
+      "false"
+  )
+    throw new Error("Wordmark navigation left the mobile menu expanded");
+
   await toggle.click();
   await page
     .getByRole("navigation", { name: "Main navigation" })

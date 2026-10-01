@@ -10,13 +10,17 @@ export default function BlogCard({ blog, headingLevel = 3 }) {
           ? " / " + blog.reading_time_minutes + " MIN READ"
           : ""}
       </p>
-      <Heading>
-        <a href={blog.url} target="_blank" rel="noreferrer">
-          {blog.title}
-          <span aria-hidden="true"> ↗</span>
-        </a>
-      </Heading>
-      {blog.description && <p className="body-copy">{blog.description}</p>}
+      <div className="writing-copy">
+        <Heading>
+          <a href={blog.url} target="_blank" rel="noreferrer">
+            <span>{blog.title}</span>
+            <span className="writing-arrow" aria-hidden="true">
+              ↗
+            </span>
+          </a>
+        </Heading>
+        {blog.description && <p className="body-copy">{blog.description}</p>}
+      </div>
     </article>
   );
 }

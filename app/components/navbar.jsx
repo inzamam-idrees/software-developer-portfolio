@@ -12,6 +12,7 @@ const links = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
+  const [activeSection, setActiveSection] = useState(null);
   const disclosure = useRef(null);
   const summary = useRef(null);
   const pathname = usePathname();
@@ -34,6 +35,33 @@ export default function Navbar() {
     closeMenu();
   }, [closeMenu, pathname]);
   useEffect(() => {
+    if (pathname !== "/") {
+      setActiveSection(null);
+      return undefined;
+    }
+    const sections = links
+      .map(([, id]) => document.getElementById(id))
+      .filter(Boolean);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.find((entry) => entry.isIntersecting);
+        setActiveSection((current) => {
+          if (visible) return visible.target.id;
+          return entries.some(
+            (entry) => entry.target.id === current && !entry.isIntersecting,
+          )
+            ? null
+            : current;
+        });
+      },
+      { rootMargin: "-30% 0px -55% 0px" },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [pathname]);
+  const currentSection =
+    pathname === "/project" ? "projects" : activeSection;
+  useEffect(() => {
     const escape = (e) => {
       if (e.key === "Escape" && disclosure.current?.open) {
         disclosure.current.open = false;
@@ -50,6 +78,13 @@ export default function Navbar() {
         <Link
           href={`/#${id}`}
           onClick={closeMenu}
+          aria-current={
+            currentSection === id
+              ? pathname === "/project"
+                ? "page"
+                : "location"
+              : undefined
+          }
         >
           {label}
           {id === "contact" && <span aria-hidden="true"> ↗</span>}

@@ -13,6 +13,7 @@ async (page) => {
     const viewports = [
       { width: 1440, height: 900 },
       { width: 1280, height: 800 },
+      { width: 1024, height: 768 },
       { width: 768, height: 1024 },
       { width: 390, height: 844 },
     ];
@@ -34,7 +35,7 @@ async (page) => {
       });
       p.on("response", (r) => {
         if (
-          !r.ok() &&
+          r.status() >= 400 &&
           r.url().startsWith(origin) &&
           ["script", "stylesheet", "image"].includes(r.request().resourceType())
         )
@@ -56,6 +57,8 @@ async (page) => {
       await p.waitForTimeout(1200);
       if ((await p.locator("h1").count()) !== 1)
         throw new Error("Home heading count");
+      if (prefix === "production" && (await p.locator("nextjs-portal").count()))
+        throw new Error("Next.js development tooling rendered in production");
       if (
         await p.evaluate(
           () => document.documentElement.scrollWidth > innerWidth,
@@ -95,7 +98,19 @@ async (page) => {
       await p.screenshot({
         path: `artifacts/portfolio/${prefix}-hero-${viewport.width}.png`,
       });
-      for (const id of ["projects", "experience", "contact"]) {
+      if (viewport.width === 1440)
+        await p.screenshot({
+          path: `artifacts/portfolio/${prefix}-full-desktop.png`,
+          fullPage: true,
+        });
+      for (const id of [
+        "projects",
+        "about",
+        "skills",
+        "experience",
+        "writing",
+        "contact",
+      ]) {
         await p.locator("#" + id).evaluate((e) =>
           scrollTo({
             top:
@@ -161,10 +176,11 @@ async (page) => {
         refresh: "passed",
         errors: 0,
         failedScripts: 0,
+        ...(prefix === "production" ? { developmentToolbar: "absent" } : {}),
       });
       await context.close();
     }
-    for (const viewport of [viewports[0], viewports[3]]) {
+    for (const viewport of [viewports[0], viewports[4]]) {
       const c = await createTestContext({ viewport, reducedMotion: "reduce" }),
         p = await c.newPage();
       await p.goto(origin, { waitUntil: "domcontentloaded" });

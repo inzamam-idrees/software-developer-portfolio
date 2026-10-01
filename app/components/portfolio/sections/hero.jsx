@@ -4,12 +4,15 @@ import { FiArrowDownRight, FiArrowUpRight } from "react-icons/fi";
 export default function Hero() {
   return (
     <section id="hero" className="hero container" aria-labelledby="hero-title">
-      <div className="hero-top">
+      <div className="hero-top hero-metadata">
         <p className="eyebrow">
           <span className="status-dot" aria-hidden="true" />
-          {personalData.designation}
+          OVER 5 YEARS <span aria-hidden="true">/</span> FULL-STACK ENGINEERING
         </p>
-        <span className="eyebrow hero-coordinate">LAHORE, PK / 31.52° N</span>
+        <p className="eyebrow hero-coordinate">
+          {personalData.designation} <span aria-hidden="true">/</span>{" "}
+          LAHORE, PAKISTAN
+        </p>
       </div>
       <div className="hero-grid">
         <div className="hero-copy">

@@ -36,6 +36,7 @@ export const projectEditorial = {
 export const technologyGroups = [
   {
     id: "frontend",
+    label: "FRONTEND",
     title: "Interfaces that make sense.",
     summary:
       "Responsive applications, component systems, and consistent interaction patterns.",
@@ -50,6 +51,7 @@ export const technologyGroups = [
   },
   {
     id: "backend",
+    label: "BACKEND & DATA",
     title: "Systems that connect.",
     summary:
       "Application services, structured data, and integrations behind the interface.",
@@ -65,6 +67,7 @@ export const technologyGroups = [
   },
   {
     id: "delivery",
+    label: "ENGINEERING & DELIVERY",
     title: "From build to delivery.",
     summary:
       "Version control, infrastructure, and the tools that support maintainable software.",

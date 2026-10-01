@@ -50,6 +50,7 @@
   display: flex;
   align-items: center;
   gap: 1px;
+  min-height: 44px;
 }
 .wordmark-sub {
   font:
@@ -82,6 +83,9 @@
 }
 .main-menu li:last-child a {
   color: var(--text);
+}
+.main-menu a[aria-current] {
+  color: var(--text);
   border-bottom: 1px solid var(--accent);
 }
 .menu-toggle {
@@ -100,6 +104,12 @@
   justify-content: space-between;
   gap: 20px;
   color: var(--muted);
+}
+.hero-metadata p {
+  margin: 0;
+}
+.hero-metadata .eyebrow {
+  letter-spacing: 0.14em;
 }
 .status-dot {
   display: inline-block;
@@ -384,6 +394,10 @@
   .main-menu li:last-child a {
     border: 0;
   }
+  .main-menu a[aria-current] {
+    color: var(--accent);
+    border: 0;
+  }
   .hero {
     padding-top: 24px;
     min-height: auto;
@@ -493,6 +507,11 @@
   gap: 64px;
   align-items: center;
 }
+@media (max-width: 1199px) {
+  .project-grid {
+    gap: 40px;
+  }
+}
 .project-copy :is(h2, h3) {
   font-size: clamp(28px, 3.1vw, 44px);
   line-height: 1.15;
@@ -512,7 +531,7 @@
 }
 .project-details dt {
   font:
-    10px ui-monospace,
+    11px ui-monospace,
     monospace;
   color: var(--accent);
   letter-spacing: 0.1em;
@@ -534,7 +553,7 @@
 }
 .technology-list li {
   font:
-    10px/1.5 ui-monospace,
+    11px/1.5 ui-monospace,
     monospace;
   color: var(--muted);
   border: 1px solid var(--rule);
@@ -682,6 +701,11 @@
   margin-bottom: 24px;
   max-width: 500px;
 }
+.about-story {
+  display: grid;
+  gap: 14px;
+  max-width: 62ch;
+}
 .body-copy {
   font-size: 16px;
   line-height: 1.8;
@@ -698,6 +722,7 @@
   object-position: center 22%;
   filter: grayscale(100%);
   border-radius: 8px;
+  border: 1px solid var(--rule);
 }
 .portrait figcaption {
   font:
@@ -731,6 +756,10 @@
   font-weight: 500;
   letter-spacing: -0.03em;
   margin-bottom: 16px;
+}
+.capability-domain {
+  color: var(--accent);
+  margin-bottom: 10px;
 }
 .capability-list .technology-list {
   margin: 0;
@@ -1007,36 +1036,61 @@
 }
 .writing-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
 }
 .writing-card {
   border-top: 1px solid var(--rule);
-  padding-top: 24px;
+  padding-block: 32px;
+  display: grid;
+  grid-template-columns: minmax(150px, 0.28fr) 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.writing-card > .eyebrow {
+  margin: 5px 0 0;
 }
 .writing-card :is(h2, h3) {
-  font-size: 22px;
-  line-height: 1.4;
+  font-size: clamp(22px, 2.2vw, 32px);
+  line-height: 1.25;
   letter-spacing: -0.03em;
-  margin: 20px 0;
+  margin: 0;
+}
+.writing-card :is(h2, h3) a {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  align-items: start;
+}
+.writing-arrow {
+  color: var(--accent);
+  font-size: 18px;
+  flex: 0 0 auto;
+  transition: transform 200ms var(--ease);
 }
 .writing-card a:hover {
   color: var(--accent);
 }
+.writing-card a:hover .writing-arrow {
+  transform: translate(3px, -3px);
+}
 .writing-card .body-copy {
-  font-size: 15px;
+  font-size: 16px;
+  max-width: 70ch;
+  margin-top: 16px;
 }
 .writing-actions {
   margin-top: 32px;
 }
-@media (max-width: 1023px) {
-  .writing-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
 @media (max-width: 767px) {
-  .writing-grid {
+  .writing-card {
     grid-template-columns: 1fr;
+    gap: 16px;
+    padding-block: 24px;
+  }
+  .writing-card > .eyebrow {
+    margin: 0;
+  }
+  .writing-card :is(h2, h3) a {
+    gap: 20px;
   }
 }
 .experience-shell {

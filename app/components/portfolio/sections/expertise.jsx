@@ -18,6 +18,7 @@ export default function Expertise() {
           <article key={group.id} data-reveal>
             <span className="capability-number">0{index + 1}</span>
             <div>
+              <p className="eyebrow capability-domain">{group.label}</p>
               <h3>{group.title}</h3>
               <p className="body-copy">{group.summary}</p>
             </div>

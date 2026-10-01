@@ -1,9 +1,30 @@
 async (page) => {
   const origin = new URL(page.url()).origin;
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(origin, { waitUntil: "domcontentloaded" });
   const names = await page.locator("#projects h3").allTextContents();
   if (names.join("|") !== "MIS / Nexis Project|Group Captain Project|Remmi CRM")
     throw new Error("Featured ordering/heading contract failed: " + names);
+  const heroMetadata = await page.locator(".hero-metadata").innerText();
+  for (const fact of [
+    "OVER 5 YEARS",
+    "FULL-STACK ENGINEERING",
+    "LAHORE, PAKISTAN",
+  ])
+    if (!heroMetadata.includes(fact))
+      throw new Error("Missing factual hero metadata: " + fact);
+  const capabilityDomains = await page
+    .locator(".capability-domain")
+    .allTextContents();
+  if (
+    capabilityDomains.join("|") !==
+    "FRONTEND|BACKEND & DATA|ENGINEERING & DELIVERY"
+  )
+    throw new Error(
+      "Capability hierarchy missing: " + capabilityDomains.join("|"),
+    );
+  if ((await page.locator("#about .about-story .body-copy").count()) !== 2)
+    throw new Error("About story must remain concise and scannable");
   for (const id of ["about", "skills", "experience", "education", "contact"])
     if ((await page.locator("#" + id).count()) !== 1)
       throw new Error("Missing chapter " + id);

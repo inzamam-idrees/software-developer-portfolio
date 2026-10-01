@@ -32,6 +32,34 @@ async (page) => {
   )
     throw new Error("Wordmark navigation left the mobile menu expanded");
 
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(origin + "/project", { waitUntil: "domcontentloaded" });
+  const desktopNavigation = page.getByRole("navigation", {
+    name: "Main navigation",
+  });
+  if (
+    (await desktopNavigation
+      .getByRole("link", { name: "Work", exact: true })
+      .getAttribute("aria-current")) !== "page"
+  )
+    throw new Error("Project archive is not reflected in active navigation");
+
+  await page.goto(origin + "/#about", { waitUntil: "domcontentloaded" });
+  await page.waitForFunction(
+    () =>
+      document
+        .querySelector('.desktop-menu a[href="/#about"]')
+        ?.getAttribute("aria-current") === "location",
+  );
+  if (
+    (await desktopNavigation
+      .getByRole("link", { name: "About", exact: true })
+      .getAttribute("aria-current")) !== "location"
+  )
+    throw new Error("Visible homepage chapter is not reflected in navigation");
+
+  await page.setViewportSize({ width: 390, height: 844 });
+
   await toggle.click();
   await page
     .getByRole("navigation", { name: "Main navigation" })

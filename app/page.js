@@ -1,11 +1,8 @@
-import HeroSection from './components/portfolio/sections/hero';
-import AboutSection from './components/homepage/about';
-import Experience from './components/homepage/experience';
-import Skills from './components/homepage/skills';
-import Projects from './components/homepage/projects';
-import Education from './components/homepage/education';
+import Hero from './components/portfolio/sections/hero';
+import SelectedWork from './components/portfolio/sections/selected-work';
+import About from './components/portfolio/sections/about';
+import Expertise from './components/portfolio/sections/expertise';
+import Experience from './components/portfolio/sections/experience';
+import Education from './components/portfolio/sections/education';
 import ContactSection from './components/homepage/contact';
-
-export default function Home() {
-  return <><HeroSection /><AboutSection /><Experience /><Skills /><Projects /><Education /><ContactSection /></>;
-}
+export default function Home(){return <><Hero/><SelectedWork/><About/><Expertise/><Experience/><Education/><div className="container"><ContactSection/></div></>;}

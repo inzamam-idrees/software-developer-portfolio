@@ -1,6 +1,8 @@
 const path = require('path')
  
 module.exports = {
+  // Separate output when running a parallel local preview.
+  distDir: process.env.PORTFOLIO_BUILD_DIR || ".next",
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },

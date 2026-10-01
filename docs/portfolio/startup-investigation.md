@@ -9,3 +9,7 @@ The no-JavaScript regression test failed on the unchanged application: essential
 Production cold-load evidence will be added after the production build.
 
 Server composition exposed a separate, reproducible compatibility error: `lottie-web` accesses `document` during SSR (stack points through `animation-lottie.jsx`). Only that decorative player is now loaded client-side; content remains server-rendered. This is not claimed as the cause of the earlier browser syntax error.
+
+## Recurrence during Task 3
+
+The error recurred on the server with a stack identifying `.next/server/vendor-chunks/react-icons.js:70`; generated code passed `node --check` after the failing request. Two Next.js server processes had the same checkout as their working directory and shared the default `.next` output. This supports an intermittent generated-output collision; it does not prove the original browser error had the same cause. Validation now uses `PORTFOLIO_BUILD_DIR=.next-portfolio-dev`; the other server remains untouched. Production will use a separate `.next-portfolio-production` directory. Repeated isolated-output cold loads must pass before release.

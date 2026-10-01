@@ -1,0 +1,3 @@
+import { technologyGroups } from '@/utils/data/portfolio-content';
+import ChapterHeading from '../ui/chapter-heading';
+export default function Expertise(){return <section id="skills" className="chapter container" aria-labelledby="skills-heading"><ChapterHeading id="skills" number="03" title="Depth across the stack." description="From the details people interact with to the services they never see."/><div className="capability-list">{technologyGroups.map((group,index)=><article key={group.id} data-reveal><span className="capability-number">0{index+1}</span><div><h3>{group.title}</h3><p className="body-copy">{group.summary}</p></div><ul className="technology-list">{group.technologies.map(t=><li key={t}>{t}</li>)}</ul></article>)}</div></section>;}

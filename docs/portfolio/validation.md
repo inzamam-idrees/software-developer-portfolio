@@ -97,5 +97,9 @@ and scene interference. Mobile touch emulation also verifies menu/anchor/form ta
 
 ## Independent final review
 
-Pending review of the completed implementation and evidence. This section will
-record the reviewer verdict, fixes and any deferred minor findings.
+Independent whole-branch review returned **READY**, with no Critical or Important
+findings. One Minor finding is deferred: on mobile, activating the home wordmark
+from another route while the navigation disclosure is open changes routes but
+leaves the disclosure open over the home hero (`app/components/navbar.jsx:56`).
+The follow-up is to close the disclosure on wordmark activation and route changes,
+with browser coverage for that path.

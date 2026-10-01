@@ -12,28 +12,36 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.3.1",
-    "@next/third-parties": "15.1.1",
+    "@next/third-parties": "^15.5.27",
     "@react-three/fiber": "^9.8.1",
     "axios": "^1.6.8",
     "gsap": "^3.15.0",
     "lottie-react": "^2.4.1",
-    "next": "15.1.1",
-    "nodemailer": "^6.9.15",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "next": "^15.5.27",
+    "nodemailer": "^10.0.13",
+    "react": "^19.0.8",
+    "react-dom": "^19.0.8",
     "react-fast-marquee": "^1.6.2",
     "react-google-recaptcha": "^3.1.0",
     "react-icons": "^4.11.0",
     "react-toastify": "^10.0.4",
-    "sharp": "^0.33.5",
+    "sharp": "^0.35.5",
     "three": "^0.186.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
     "eslint": "^9.18.0",
-    "eslint-config-next": "15.1.1",
-    "postcss": "^8.4.31",
+    "eslint-config-next": "^15.5.27",
+    "postcss": "^8.5.28",
     "sass": "^1.69.5",
     "tailwindcss": "~3.3.3"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "$postcss"
+    }
+  },
+  "engines": {
+    "node": ">=20.9.0"
   }
 }

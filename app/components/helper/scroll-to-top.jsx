@@ -1,1 +1,3 @@
-export default function ScrollToTop(){return null;}
+export default function ScrollToTop() {
+  return null;
+}

@@ -276,6 +276,8 @@ then do the usual `npm run dev`
 
 ## Cinematic portfolio implementation
 
+Requires Node.js 20.9 or newer (validated with Node 22).
+
 The existing Next.js App Router application keeps all factual content in `utils/data`.
 Server-rendered chapters remain readable without JavaScript or WebGL. One lazy Fiber
 canvas uses Three.js; GSAP owns scroll progression. Native scrolling is the baseline.

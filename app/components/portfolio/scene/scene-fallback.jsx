@@ -1,1 +1,30 @@
-export default function SceneFallback(){return <div className="static-core" aria-hidden="true"><svg viewBox="0 0 500 500"><g fill="none" stroke="currentColor"><ellipse cx="250" cy="250" rx="200" ry="75" transform="rotate(-35 250 250)"/><ellipse cx="250" cy="250" rx="200" ry="75" transform="rotate(40 250 250)"/><path d="M250 100 380 175 380 325 250 400 120 325 120 175Z M250 100V250L380 325 M250 250 120 325 M120 175 250 250 380 175"/><path d="M250 145 340 198 340 302 250 355 160 302 160 198Z" strokeWidth="8" opacity=".4"/></g></svg></div>;}
+export default function SceneFallback() {
+  return (
+    <div className="static-core" aria-hidden="true">
+      <svg viewBox="0 0 500 500">
+        <g fill="none" stroke="currentColor">
+          <ellipse
+            cx="250"
+            cy="250"
+            rx="200"
+            ry="75"
+            transform="rotate(-35 250 250)"
+          />
+          <ellipse
+            cx="250"
+            cy="250"
+            rx="200"
+            ry="75"
+            transform="rotate(40 250 250)"
+          />
+          <path d="M250 100 380 175 380 325 250 400 120 325 120 175Z M250 100V250L380 325 M250 250 120 325 M120 175 250 250 380 175" />
+          <path
+            d="M250 145 340 198 340 302 250 355 160 302 160 198Z"
+            strokeWidth="8"
+            opacity=".4"
+          />
+        </g>
+      </svg>
+    </div>
+  );
+}

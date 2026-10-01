@@ -1,6 +1,6 @@
 # Cinematic Developer Portfolio Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans for native execution, or superpowers:subagent-driven-development if the user selects that method. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans for native execution, or superpowers:subagent-driven-development if the user selects that method. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Transform the existing Inzamam Idrees portfolio into a readable, premium editorial experience with one coordinated scroll-driven 3D world.
 
@@ -74,12 +74,12 @@ Prefer a named component export per file. Do not delete unused legacy components
 
 **Interfaces:** Produces a server `Home()` component with existing sections in DOM order and a conditional analytics boundary. No scene dependency yet. Temporary legacy sections may remain interactive, but their readable text must have server HTML.
 
-- [ ] Capture pageerror message/stack, failed request URLs/statuses, and local script response content in a fresh browser context before navigation. Repeat cold visits and reloads with configured analytics, then with Google Tag Manager requests blocked. Keep instrumentation out of product code and redact configuration identifiers where unnecessary.
-- [ ] Write `startup.js`: register pageerror/requestfailed listeners before `goto`; assert exactly one h1 and the name, project title, and contact link after initial load. With JavaScript disabled, assert name, MIS/Nexis, and contact details exist in the HTML. Initially expect the no-JavaScript content check to fail because SSR is disabled.
-- [ ] Run the startup case on the baseline. Record failing assertions and whether the original syntax error recurs. Compare cold development startup, warmed development, and later production output; do not claim a root cause without a stack/resource identifying it.
-- [ ] Convert `app/page.js` to server composition, remove blanket `ssr:false` imports and hydration-warning suppression, and isolate optional article loading from essential content. Gate analytics on a valid `GTM-...` identifier and place it inside the body using the existing integration. Fix a syntax-error source only when evidence identifies it.
-- [ ] Rerun startup checks and lint. Document the root cause and fix, or explicitly record “unreproduced; cause unresolved” with runs and captured evidence. Carry any unresolved application failure into Task 9 as a release blocker.
-- [ ] Review and commit the Task 1 files. Acceptance: readable server HTML, clean repeated local application loads, and an honest investigation record.
+- [x] Capture pageerror message/stack, failed request URLs/statuses, and local script response content in a fresh browser context before navigation. Repeat cold visits and reloads with configured analytics, then with Google Tag Manager requests blocked. Keep instrumentation out of product code and redact configuration identifiers where unnecessary.
+- [x] Write `startup.js`: register pageerror/requestfailed listeners before `goto`; assert exactly one h1 and the name, project title, and contact link after initial load. With JavaScript disabled, assert name, MIS/Nexis, and contact details exist in the HTML. Initially expect the no-JavaScript content check to fail because SSR is disabled.
+- [x] Run the startup case on the baseline. Record failing assertions and whether the original syntax error recurs. Compare cold development startup, warmed development, and later production output; do not claim a root cause without a stack/resource identifying it.
+- [x] Convert `app/page.js` to server composition, remove blanket `ssr:false` imports and hydration-warning suppression, and isolate optional article loading from essential content. Gate analytics on a valid `GTM-...` identifier and place it inside the body using the existing integration. Fix a syntax-error source only when evidence identifies it.
+- [x] Rerun startup checks and lint. Document the root cause and fix, or explicitly record “unreproduced; cause unresolved” with runs and captured evidence. Carry any unresolved application failure into Task 9 as a release blocker.
+- [x] Review and commit the Task 1 files. Acceptance: readable server HTML, clean repeated local application loads, and an honest investigation record.
 
 ### Task 2: Build design system, responsive shell, and hero
 
@@ -87,12 +87,12 @@ Prefer a named component export per file. Do not delete unused legacy components
 
 **Interfaces:** `Hero()` renders `#hero`, the sole h1, `#projects` CTA, and the actual resume URL. `ChapterHeading({ id, number, title, description })` renders an h2 with the supplied ID. Navbar is a semantic disclosure, not a modal; no focus trap or dialog semantics.
 
-- [ ] Write navigation assertions: at 390×844, a named “Open menu” button exists; closed links are absent from tab order; Enter opens it with `aria-expanded=true`; Escape closes it and returns focus to the toggle; choosing Work reaches `#projects`; resizing to desktop clears stale mobile state. Check skip-link activation moves focus to `#main-content`.
-- [ ] Run navigation case to capture baseline failures.
-- [ ] Implement the approved tokens, readable line lengths, global focus/selection rules, safe-area-aware spacing, and reduced-motion CSS. Build a header outside main, a single `main#main-content` with `tabIndex=-1`, and footer outside main. Use CSS class scoping to avoid breaking secondary routes.
-- [ ] Implement the mobile disclosure: actual hidden state removes focusable descendants, Escape restores toggle focus, anchor activation closes without moving focus back, and breakpoint changes reset disclosure state. Desktop navigation includes Work, About, Expertise, Experience, and Contact; education/writing remain reachable in page/footer links. Preserve all old anchors.
-- [ ] Implement hero with introduction before decorative visual on mobile. Render a static architectural motif for now, reserve scene space without CLS, and keep title/CTAs readable. Preserve existing social/resume destinations with named links; make scroll-to-top named and motion-aware.
-- [ ] Run navigation/startup cases, inspect hero screenshots at 1440×900 and 390×844, and check `scrollWidth <= innerWidth` without masking layout problems using blanket overflow hiding. Run lint, review, and commit.
+- [x] Write navigation assertions: at 390×844, a named “Open menu” button exists; closed links are absent from tab order; Enter opens it with `aria-expanded=true`; Escape closes it and returns focus to the toggle; choosing Work reaches `#projects`; resizing to desktop clears stale mobile state. Check skip-link activation moves focus to `#main-content`.
+- [x] Run navigation case to capture baseline failures.
+- [x] Implement the approved tokens, readable line lengths, global focus/selection rules, safe-area-aware spacing, and reduced-motion CSS. Build a header outside main, a single `main#main-content` with `tabIndex=-1`, and footer outside main. Use CSS class scoping to avoid breaking secondary routes.
+- [x] Implement the mobile disclosure: actual hidden state removes focusable descendants, Escape restores toggle focus, anchor activation closes without moving focus back, and breakpoint changes reset disclosure state. Desktop navigation includes Work, About, Expertise, Experience, and Contact; education/writing remain reachable in page/footer links. Preserve all old anchors.
+- [x] Implement hero with introduction before decorative visual on mobile. Render a static architectural motif for now, reserve scene space without CLS, and keep title/CTAs readable. Preserve existing social/resume destinations with named links; make scroll-to-top named and motion-aware.
+- [x] Run navigation/startup cases, inspect hero screenshots at 1440×900 and 390×844, and check `scrollWidth <= innerWidth` without masking layout problems using blanket overflow hiding. Run lint, review, and commit.
 
 ### Task 3: Deliver project storytelling and career chapters
 
@@ -100,12 +100,12 @@ Prefer a named component export per file. Do not delete unused legacy components
 
 **Interfaces:** `featuredProjectIds = [1,5,4]`; `projectEditorial[id] = { problem, solution, outcome }`, all strings traceable to existing descriptions. `technologyGroups = [{ id, title, summary, technologies }]`, with technologies drawn from actual skills/project data. `ProjectSummary({ project, editorial, index, featured=false })` consumes the existing project shape and renders external links only for nonempty valid HTTP(S) destinations.
 
-- [ ] Write content assertions: home contains MIS/Nexis, Group Captain, Remmi in that order; `/project` contains all eight projects; projects without demo/code have no empty destination links; deep-link anchors exist; heading order starts at one h1 and does not skip a level. Disable JavaScript in a separate context and assert featured summaries remain readable.
-- [ ] Run the case before the new chapter implementation; expect featured ordering and semantic-heading failures.
-- [ ] Derive concise problem/solution/outcome text from documented behavior, without quantified results. Build generous project chapters with role and technology metadata. Do not use unverified sample imagery; use labeled abstract system diagrams that cannot be mistaken for screenshots. Default to natural document scrolling rather than pinning.
-- [ ] Implement about with the existing portrait using next/image and explicit dimensions; expertise with readable grouped lists; experience using `experiences` in earliest-to-latest order and unchanged dates; education retaining all records. No repeating marquee or Lottie illustration in the new homepage.
-- [ ] Replace `/project` presentation with the shared summary component, one h1, home navigation, and factual full descriptions. Scope route metadata title to Projects.
-- [ ] Run content/navigation cases, inspect project/experience screenshots at desktop/tablet/mobile, run lint, review copy against source data, and commit.
+- [x] Write content assertions: home contains MIS/Nexis, Group Captain, Remmi in that order; `/project` contains all eight projects; projects without demo/code have no empty destination links; deep-link anchors exist; heading order starts at one h1 and does not skip a level. Disable JavaScript in a separate context and assert featured summaries remain readable.
+- [x] Run the case before the new chapter implementation; expect featured ordering and semantic-heading failures.
+- [x] Derive concise problem/solution/outcome text from documented behavior, without quantified results. Build generous project chapters with role and technology metadata. Do not use unverified sample imagery; use labeled abstract system diagrams that cannot be mistaken for screenshots. Default to natural document scrolling rather than pinning.
+- [x] Implement about with the existing portrait using next/image and explicit dimensions; expertise with readable grouped lists; experience using `experiences` in earliest-to-latest order and unchanged dates; education retaining all records. No repeating marquee or Lottie illustration in the new homepage.
+- [x] Replace `/project` presentation with the shared summary component, one h1, home navigation, and factual full descriptions. Scope route metadata title to Projects.
+- [x] Run content/navigation cases, inspect project/experience screenshots at desktop/tablet/mobile, run lint, review copy against source data, and commit.
 
 ### Task 4: Make contact accessible and robust without live delivery tests
 
@@ -113,12 +113,12 @@ Prefer a named component export per file. Do not delete unused legacy components
 
 **Interfaces:** `validateContact(value) -> { ok:true, data:{name,email,message} } | { ok:false, errors:{name?,email?,message?} }`; trimmed string fields only, name/email max 100 chars and message max 500 chars; reject CR/LF in name/email. `escapeHtml(string) -> string`; `buildMail(data, sender) -> { from,to,replyTo,subject,text,html }`, using configured sender as from/to and visitor email as replyTo. `handleContact(request, { sendMail, sender }) -> Promise<Response>` is dependency-injected; route `POST` delegates using the existing Nodemailer transport.
 
-- [ ] Write unit tests for whitespace-only/missing/non-string/oversized input, malformed JSON, invalid email, header newlines, `<script>` markup escaping, replyTo/from ownership, delivery failure, and success. Assert invalid requests return 400 and invoke the fake sender zero times; unavailable sender configuration returns 503; simulated transport failure returns 502; successful fake delivery returns 200. No real transport in tests.
-- [ ] Run `node --test tests/unit/contact.test.mjs` and capture failure before implementation.
-- [ ] Implement validation/escaping/response helper and delegate the API handler. Keep useful plain-text email, preserve credentials/configuration, and remove only obsolete contact-specific commented sending code. Do not change unrelated API routes.
-- [ ] Implement semantic form, explicit IDs/labels/autocomplete, named submit button, same-origin `/api/contact`, client validation, inline field errors and status region. Keep inputs on failure, clear on success, and prevent concurrent submission. Provide working `mailto:` and `tel:` alternatives plus the actual location.
-- [ ] Write/run browser tests with every valid POST intercepted: required/invalid fields; held response keeps submit disabled; success clears fields and announces success; 502/network error preserves fields and offers email. Assert no second request on repeated submit. Do not send external messages.
-- [ ] Run unit/browser checks and lint, review, and commit.
+- [x] Write unit tests for whitespace-only/missing/non-string/oversized input, malformed JSON, invalid email, header newlines, `<script>` markup escaping, replyTo/from ownership, delivery failure, and success. Assert invalid requests return 400 and invoke the fake sender zero times; unavailable sender configuration returns 503; simulated transport failure returns 502; successful fake delivery returns 200. No real transport in tests.
+- [x] Run `node --test tests/unit/contact.test.mjs` and capture failure before implementation.
+- [x] Implement validation/escaping/response helper and delegate the API handler. Keep useful plain-text email, preserve credentials/configuration, and remove only obsolete contact-specific commented sending code. Do not change unrelated API routes.
+- [x] Implement semantic form, explicit IDs/labels/autocomplete, named submit button, same-origin `/api/contact`, client validation, inline field errors and status region. Keep inputs on failure, clear on success, and prevent concurrent submission. Provide working `mailto:` and `tel:` alternatives plus the actual location.
+- [x] Write/run browser tests with every valid POST intercepted: required/invalid fields; held response keeps submit disabled; success clears fields and announces success; 502/network error preserves fields and offers email. Assert no second request on repeated submit. Do not send external messages.
+- [x] Run unit/browser checks and lint, review, and commit.
 
 ### Task 5: Make optional writing resilient
 
@@ -126,10 +126,10 @@ Prefer a named component export per file. Do not delete unused legacy components
 
 **Interfaces:** `getArticles(username, { fetchImpl=fetch, timeoutMs=4000 }={}) -> Promise<{ status:'ready'|'empty'|'unavailable', articles:Array }>`; deterministically order by publication date descending. Validate article title and HTTP(S) destination, omit malformed items, allow missing cover art, and use a reserved image region if an image is present. `Writing({ result })` renders the result with a DEV profile fallback link; homepage wraps a server loader in Suspense so it cannot delay core content.
 
-- [ ] Write unit tests using injected fetch for valid list, empty list, HTTP failure, rejected fetch, timeout/abort, invalid JSON shape, malformed article URLs, and missing image. Assert no thrown failure escapes and no randomized ordering.
-- [ ] Run tests to prove failure before creating the helper.
-- [ ] Implement bounded fetch, normalize data, and add deterministic ready/empty/unavailable route states. Keep `/blog` usable on upstream failure and provide meaningful loading text. Blog titles use real heading elements and named external links.
-- [ ] Run tests; verify `/blog` with working upstream and simulate failed server fetch through the helper tests rather than browser network interception (browser interception cannot control server-side requests). Inspect route screenshot and lint, review, and commit.
+- [x] Write unit tests using injected fetch for valid list, empty list, HTTP failure, rejected fetch, timeout/abort, invalid JSON shape, malformed article URLs, and missing image. Assert no thrown failure escapes and no randomized ordering.
+- [x] Run tests to prove failure before creating the helper.
+- [x] Implement bounded fetch, normalize data, and add deterministic ready/empty/unavailable route states. Keep `/blog` usable on upstream failure and provide meaningful loading text. Blog titles use real heading elements and named external links.
+- [x] Run tests; verify `/blog` with working upstream and simulate failed server fetch through the helper tests rather than browser network interception (browser interception cannot control server-side requests). Inspect route screenshot and lint, review, and commit.
 
 ### Task 6: Add one lazy, adaptive 3D environment with fallback
 
@@ -137,13 +137,13 @@ Prefer a named component export per file. Do not delete unused legacy components
 
 **Interfaces:** `ExperienceShell({ children })` is a client boundary accepting server-rendered children; it owns one stable ref to `createSceneState() -> { cameraX:0,cameraY:0,cameraZ:8,rotationX:0,rotationY:0,coreX:0,coreY:0,coreScale:1,spread:0,opacity:1 }`. `MotionPreferences` exposes `{ enabled, reduced, setEnabled }` through context, initialized to no motion until preference detection. `SceneLayer({ stateRef })` consumes that context and mounts at most one canvas. `CoreCanvas({ stateRef, enabled, compact, onReady, onUnavailable })` owns frame rendering and calls `onReady` once after the first successful rendered frame; `EngineeredCore({ stateRef, enabled, compact })` owns geometry/transforms. `SceneFallback()` renders a decorative static SVG with `aria-hidden`.
 
-- [ ] Verify official package release peer requirements for React 19 and Next.js 15 before installing only three/Fiber/GSAP with bounded version ranges; record resolved versions and rationale. Preserve Tailwind 3 rather than letting `latest` resolve a breaking major when updating the lockfile; use the audited compatible major ranges for existing `latest` build dependencies. Check `npm ls --depth=0` for peer errors.
-- [ ] Write scene-state tests: two factories return independent objects; initial values are finite; device profiles cap DPR at 1.5 desktop / 1 mobile and select 100 / 30 particles. Define `getSceneProfile(compact) -> { maxDpr, particleCount }` in `scene-state.mjs` for the profile test.
-- [ ] Write browser checks before canvas implementation: primary text visible with WebGL contexts denied; one canvas at most when available; motion toggle has accessible “Pause motion”/“Enable motion” names; fallback visible after context loss. Expect missing controls/fallback contract to fail initially.
-- [ ] Implement a no-texture low-polygon metal frame core with orbital line paths, instanced nodes, seeded point cloud, and technical grid; no Drei, shadow maps, or effect passes. Update owned transforms in Fiber's `useFrame` only, reusing scratch values. Cap DPR and reduce mobile composition/particles.
-- [ ] Lazy-import the canvas from a client component with its static fallback already visible. Guard feature detection, add React error boundary and context-loss handling; on failure unmount canvas and retain fallback without trapping scroll. Only hide the static motif once the canvas signals its first successful frame. Keep canvas decorative and pointer-safe so links remain clickable.
-- [ ] Suspend frame work when hidden, disable particles/idle spin and use demand rendering with motion disabled, and invalidate once on resize/state change. Dispose manually allocated resources and rely on Fiber ownership for declarative resources. Persist the user's pause choice safely; OS reduced motion always takes precedence, with visible explanation.
-- [ ] Run scene-state/motion/startup tests and lint; inspect hero visual against spec; review resource ownership and chunk splitting; commit.
+- [x] Verify official package release peer requirements for React 19 and Next.js 15 before installing only three/Fiber/GSAP with bounded version ranges; record resolved versions and rationale. Preserve Tailwind 3 rather than letting `latest` resolve a breaking major when updating the lockfile; use the audited compatible major ranges for existing `latest` build dependencies. Check `npm ls --depth=0` for peer errors.
+- [x] Write scene-state tests: two factories return independent objects; initial values are finite; device profiles cap DPR at 1.5 desktop / 1 mobile and select 100 / 30 particles. Define `getSceneProfile(compact) -> { maxDpr, particleCount }` in `scene-state.mjs` for the profile test.
+- [x] Write browser checks before canvas implementation: primary text visible with WebGL contexts denied; one canvas at most when available; motion toggle has accessible “Pause motion”/“Enable motion” names; fallback visible after context loss. Expect missing controls/fallback contract to fail initially.
+- [x] Implement a no-texture low-polygon metal frame core with orbital line paths, instanced nodes, seeded point cloud, and technical grid; no Drei, shadow maps, or effect passes. Update owned transforms in Fiber's `useFrame` only, reusing scratch values. Cap DPR and reduce mobile composition/particles.
+- [x] Lazy-import the canvas from a client component with its static fallback already visible. Guard feature detection, add React error boundary and context-loss handling; on failure unmount canvas and retain fallback without trapping scroll. Only hide the static motif once the canvas signals its first successful frame. Keep canvas decorative and pointer-safe so links remain clickable.
+- [x] Suspend frame work when hidden, disable particles/idle spin and use demand rendering with motion disabled, and invalidate once on resize/state change. Dispose manually allocated resources and rely on Fiber ownership for declarative resources. Persist the user's pause choice safely; OS reduced motion always takes precedence, with visible explanation.
+- [x] Run scene-state/motion/startup tests and lint; inspect hero visual against spec; review resource ownership and chunk splitting; commit.
 
 ### Task 7: Coordinate scroll and scene transitions
 
@@ -151,12 +151,12 @@ Prefer a named component export per file. Do not delete unused legacy components
 
 **Interfaces:** `ScrollCoordinator({ stateRef, rootRef })` writes only scalar fields of the Task 6 state. `ExperienceShell` owns `rootRef` around all chapters. GSAP context/matchMedia owns all timelines/triggers and reverts them on cleanup; Fiber remains the sole transform writer.
 
-- [ ] Extend motion tests: emulating reduced motion before load shows final readable content and no moving camera; changing the preference while scrolled settles content immediately; pause/resume preserves scroll and menu usability; forward then backward scroll returns the visual world to its earlier composition; repeated navigation home/project/home retains at most one canvas and motion control.
-- [ ] Run the extended tests to capture missing coordinated transitions.
-- [ ] Build one main ScrollTrigger timeline from actual section positions, updating camera/core/spread/opacity for hero, projects, about, expertise, experience, education/writing, and contact. Use normalized measured stops in DOM order, invalidate/rebuild on refresh, linear scrub, and simpler compact-device state ranges. Keep data order consistent with Task 3 rather than copying an earlier illustrative chapter order.
-- [ ] Add scoped hero/reveal timelines at 650–900 ms and power2 easing; animate transforms/opacity only. Content is visible by default, and animation setup may temporarily hide it only inside a successfully initialized enhancement context. No Lenis or pinned chapters in this initial implementation.
-- [ ] On live reduced-motion/pause change, revert triggers/reveals and reset scene to its readable static composition; create timelines again only when enabled. Remove resize/visibility/preference listeners and GSAP context on unmount. Native hash navigation remains authoritative.
-- [ ] Run motion/navigation/startup checks with scroll reversal and mobile keyboard behavior; inspect mid-scroll screenshots and confirm triggers do not move or hide essential text. Record the decision to retain native scroll and natural chapter flow, run lint, review, and commit.
+- [x] Extend motion tests: emulating reduced motion before load shows final readable content and no moving camera; changing the preference while scrolled settles content immediately; pause/resume preserves scroll and menu usability; forward then backward scroll returns the visual world to its earlier composition; repeated navigation home/project/home retains at most one canvas and motion control.
+- [x] Run the extended tests to capture missing coordinated transitions.
+- [x] Build one main ScrollTrigger timeline from actual section positions, updating camera/core/spread/opacity for hero, projects, about, expertise, experience, education/writing, and contact. Use normalized measured stops in DOM order, invalidate/rebuild on refresh, linear scrub, and simpler compact-device state ranges. Keep data order consistent with Task 3 rather than copying an earlier illustrative chapter order.
+- [x] Add scoped hero/reveal timelines at 650–900 ms and power2 easing; animate transforms/opacity only. Content is visible by default, and animation setup may temporarily hide it only inside a successfully initialized enhancement context. No Lenis or pinned chapters in this initial implementation.
+- [x] On live reduced-motion/pause change, revert triggers/reveals and reset scene to its readable static composition; create timelines again only when enabled. Remove resize/visibility/preference listeners and GSAP context on unmount. Native hash navigation remains authoritative.
+- [x] Run motion/navigation/startup checks with scroll reversal and mobile keyboard behavior; inspect mid-scroll screenshots and confirm triggers do not move or hide essential text. Record the decision to retain native scroll and natural chapter flow, run lint, review, and commit.
 
 ### Task 8: Add truthful SEO and production-origin handling
 
@@ -164,11 +164,11 @@ Prefer a named component export per file. Do not delete unused legacy components
 
 **Interfaces:** `getSiteOrigin(value=process.env.SITE_URL) -> string|null` accepts a credential-free HTTPS origin, no path/query/fragment, no localhost/loopback/private-literal host; normalization removes a terminal slash. Missing/invalid setting returns null. Use this function consistently across metadata, robots, sitemap, and JSON-LD; never serialize configuration secrets.
 
-- [ ] Write tests for absent value, valid HTTPS origin, trailing slash, insecure URL, invalid URL, credentials, path/query/fragment, localhost and loopback IPv4/IPv6. Assert null when invalid, normalized origin when valid.
-- [ ] Run tests to demonstrate failure before implementation.
-- [ ] Implement origin utility and document `SITE_URL` in `.env.example` without using the README URL as proof. Without verified setting, omit absolute canonical/Person URL/sitemap references; sitemap returns no entries. With setting, generate `/`, `/project`, `/blog` entries, omit invented modification dates, and reference sitemap from robots.
-- [ ] Correct title to “Inzamam Idrees | Senior Software Engineer”; add factual description and Open Graph/Twitter metadata. Render a local social image using Next ImageResponse, system fonts, approved colors, actual name/title, and no remote fetch. Inject Person JSON-LD using name/title/location/profile links with `<` escaped in serialized JSON.
-- [ ] Run tests, inspect metadata/social image/robots/sitemap with configured and absent test origin, validate JSON-LD parsing, run lint, review, and commit.
+- [x] Write tests for absent value, valid HTTPS origin, trailing slash, insecure URL, invalid URL, credentials, path/query/fragment, localhost and loopback IPv4/IPv6. Assert null when invalid, normalized origin when valid.
+- [x] Run tests to demonstrate failure before implementation.
+- [x] Implement origin utility and document `SITE_URL` in `.env.example` without using the README URL as proof. Without verified setting, omit absolute canonical/Person URL/sitemap references; sitemap returns no entries. With setting, generate `/`, `/project`, `/blog` entries, omit invented modification dates, and reference sitemap from robots.
+- [x] Correct title to “Inzamam Idrees | Senior Software Engineer”; add factual description and Open Graph/Twitter metadata. Render a local social image using Next ImageResponse, system fonts, approved colors, actual name/title, and no remote fetch. Inject Person JSON-LD using name/title/location/profile links with `<` escaped in serialized JSON.
+- [x] Run tests, inspect metadata/social image/robots/sitemap with configured and absent test origin, validate JSON-LD parsing, run lint, review, and commit.
 
 ### Task 9: Validate, visually refine, and report production evidence
 
@@ -176,14 +176,14 @@ Prefer a named component export per file. Do not delete unused legacy components
 
 **Interfaces:** Acceptance script uses the user-facing DOM interfaces above. It returns viewport/route/error/failure evidence, not private environment data. Report real frame timing; no unconditional claim of 60 FPS.
 
-- [ ] Implement/run the viewport matrix: 1440×900, 1280×800, 768×1024, 390×844; assert no overflow, one h1, complete anchor destinations, readable chapter content, and no overlapping primary controls. Test menu and keyboard flows at mobile/tablet, every relevant route, refresh, deep links, resume/project/social hrefs, contact alternatives, and mocked form paths.
-- [ ] Run reduced-motion-before-load and live-change cases; JS-disabled and WebGL-denied cases; context loss and route remount cases. Monitor application console errors/failed critical requests throughout. Distinguish optional analytics/article/provider failures. Inspect external project destinations read-only; report restricted/authenticated destinations rather than treating them as broken merely because access is blocked.
-- [ ] Capture hero, featured projects, experience, contact, and full-page mobile screenshots with normal and reduced motion. Open and visually inspect each screenshot for typography, contrast, crop, spacing, clipping, sticky overlap, and scene/content competition. Fix concrete findings and rerun the affected cases.
-- [ ] Sample requestAnimationFrame timing after warmup during idle and scrolling; report median/p95 frame interval, viewport, browser/GPU context, and limitations. Inspect canvas draw calls/triangle counts during development using renderer information without leaving a public debug overlay. Confirm hidden-page rendering suspension and bounded listener/trigger/resource counts across remounts. If timing degrades, simplify geometry/particles/DPR first.
-- [ ] Run `npm run test:unit`, `npm run lint`, and `npm run build`. Investigate failures rather than disabling checks. If external font fetch prevents build, document environmental evidence and use an authorized local/offline font path if available; do not fabricate a passed build.
-- [ ] Serve production output on a separate free port; repeat cold-load/refresh, viewport, motion/fallback, navigation, and contact-mock tests. Revisit Task 1's syntax error investigation with production evidence; any recurrent unexplained application syntax error remains a blocker.
-- [ ] Inspect the final diff for factual claims, accidental user-file changes, dependency additions, credentials, disabled checks, dead heavy homepage imports, and cleanup defects. Remove only demonstrated unreferenced redesign artifacts; retain source content and useful existing routes.
-- [ ] Record commands/results, screenshot paths, actual dependency decisions, measured performance, and unresolved external limitations. Review/commit scoped final changes and provide the user with preview access and a concise completion report. If a required check remains blocked, report the task as incomplete rather than claiming completion.
+- [x] Implement/run the viewport matrix: 1440×900, 1280×800, 768×1024, 390×844; assert no overflow, one h1, complete anchor destinations, readable chapter content, and no overlapping primary controls. Test menu and keyboard flows at mobile/tablet, every relevant route, refresh, deep links, resume/project/social hrefs, contact alternatives, and mocked form paths.
+- [x] Run reduced-motion-before-load and live-change cases; JS-disabled and WebGL-denied cases; context loss and route remount cases. Monitor application console errors/failed critical requests throughout. Distinguish optional analytics/article/provider failures. Inspect external project destinations read-only; report restricted/authenticated destinations rather than treating them as broken merely because access is blocked.
+- [x] Capture hero, featured projects, experience, contact, and full-page mobile screenshots with normal and reduced motion. Open and visually inspect each screenshot for typography, contrast, crop, spacing, clipping, sticky overlap, and scene/content competition. Fix concrete findings and rerun the affected cases.
+- [x] Sample requestAnimationFrame timing after warmup during idle and scrolling; report median/p95 frame interval, viewport, browser/GPU context, and limitations. Inspect canvas draw calls/triangle counts during development using renderer information without leaving a public debug overlay. Confirm hidden-page rendering suspension and bounded listener/trigger/resource counts across remounts. If timing degrades, simplify geometry/particles/DPR first.
+- [x] Run `npm run test:unit`, `npm run lint`, and `npm run build`. Investigate failures rather than disabling checks. If external font fetch prevents build, document environmental evidence and use an authorized local/offline font path if available; do not fabricate a passed build.
+- [x] Serve production output on a separate free port; repeat cold-load/refresh, viewport, motion/fallback, navigation, and contact-mock tests. Revisit Task 1's syntax error investigation with production evidence; any recurrent unexplained application syntax error remains a blocker.
+- [x] Inspect the final diff for factual claims, accidental user-file changes, dependency additions, credentials, disabled checks, dead heavy homepage imports, and cleanup defects. Remove only demonstrated unreferenced redesign artifacts; retain source content and useful existing routes.
+- [x] Record commands/results, screenshot paths, actual dependency decisions, measured performance, and unresolved external limitations. Review/commit scoped final changes and provide the user with preview access and a concise completion report. If a required check remains blocked, report the task as incomplete rather than claiming completion.
 
 ## Plan self-review
 
@@ -192,4 +192,4 @@ Prefer a named component export per file. Do not delete unused legacy components
 - All five Review Focus items have behavior assertions in their owning tasks. Review includes plain DOM without JS/WebGL, malformed input, live media changes, remounts, failed optional fetch, and missing origin.
 - No automatic Lenis/Drei/post-processing installation, no new test framework, no generic app rewrite, no per-frame React state, and no invented screenshots/AI claims.
 - Browser assertions emphasize user behavior; reversible styling refinements use screenshot review rather than tests that mirror CSS.
-- Implementation has not started. The next step is user plan review and execution-method selection.
+- Native implementation and task validation are complete. Independent final review and its dispositions are recorded in docs/portfolio/validation.md.

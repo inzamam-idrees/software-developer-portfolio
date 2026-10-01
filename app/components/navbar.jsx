@@ -1,44 +1,11 @@
-// @flow strict
-import Link from "next/link";
-
-
-function Navbar() {
-  return (
-    <nav className="bg-transparent">
-      <div className="flex items-center justify-between py-5">
-        <div className="flex flex-shrink-0 items-center">
-          <Link
-            href="/"
-            className=" text-[#16f2b3] text-3xl font-bold">
-            INZAMAM IDREES
-          </Link>
-        </div>
-
-        <ul className="mt-4 flex h-screen max-h-0 w-full flex-col items-start text-sm opacity-0 md:mt-0 md:h-auto md:max-h-screen md:w-auto md:flex-row md:space-x-1 md:border-0 md:opacity-100" id="navbar-default">
-          <li>
-            <Link className="block px-4 py-2 no-underline outline-none hover:no-underline" href="/#about">
-              <div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">ABOUT</div>
-            </Link>
-          </li>
-          <li>
-            <Link className="block px-4 py-2 no-underline outline-none hover:no-underline" href="/#experience"><div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">EXPERIENCE</div></Link>
-          </li>
-          <li>
-            <Link className="block px-4 py-2 no-underline outline-none hover:no-underline" href="/#skills"><div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">SKILLS</div></Link>
-          </li>
-          <li>
-            <Link className="block px-4 py-2 no-underline outline-none hover:no-underline" href="/#education"><div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">EDUCATION</div></Link>
-          </li>
-          <li>
-            <Link className="block px-4 py-2 no-underline outline-none hover:no-underline" href="/blog"><div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">BLOGS</div></Link>
-          </li>
-          <li>
-            <Link className="block px-4 py-2 no-underline outline-none hover:no-underline" href="/#projects"><div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">PROJECTS</div></Link>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  );
-};
-
-export default Navbar;
+'use client';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
+const links=[['Work','projects'],['About','about'],['Expertise','skills'],['Experience','experience'],['Contact','contact']];
+export default function Navbar(){
+ const [open,setOpen]=useState(false); const disclosure=useRef(null); const summary=useRef(null);
+ useEffect(()=>{setOpen(Boolean(disclosure.current?.open));const media=matchMedia('(min-width: 768px)');const reset=()=>{if(disclosure.current)disclosure.current.open=false;setOpen(false);};media.addEventListener('change',reset);return()=>media.removeEventListener('change',reset);},[]);
+ useEffect(()=>{const escape=e=>{if(e.key==='Escape'&&disclosure.current?.open){disclosure.current.open=false;setOpen(false);summary.current?.focus();}};document.addEventListener('keydown',escape);return()=>document.removeEventListener('keydown',escape);},[]);
+ const items=()=>links.map(([label,id])=><li key={id}><Link href={`/#${id}`} onClick={()=>{if(disclosure.current)disclosure.current.open=false;setOpen(false);}}>{label}{id==='contact'&&<span aria-hidden="true"> ↗</span>}</Link></li>);
+ return <header className="site-header"><div className="container header-inner"><Link className="wordmark" href="/" aria-label="Inzamam Idrees home">inzamam<span className="accent">.</span><span className="wordmark-sub">IDREES / ENGINEER</span></Link><nav aria-label="Main navigation"><ul className="main-menu desktop-menu">{items()}</ul><details className="mobile-disclosure" suppressHydrationWarning ref={disclosure} onToggle={e=>setOpen(e.currentTarget.open)}><summary ref={summary} className="menu-toggle" role="button" aria-label={open?'Close menu':'Open menu'} aria-expanded={open} aria-controls="main-menu">{open?'Close −':'Menu +'}</summary><ul id="main-menu" className="main-menu mobile-menu">{items()}</ul></details></nav></div></header>;
+}

@@ -1,0 +1,1 @@
+export default function ChapterHeading({id,number,title,description}){return <div className="chapter-heading"><p className="eyebrow"><span className="accent">{number}</span> / {id.replaceAll('-',' ')}</p><h2 id={id+'-heading'}>{title}</h2>{description&&<p className="section-intro">{description}</p>}</div>;}

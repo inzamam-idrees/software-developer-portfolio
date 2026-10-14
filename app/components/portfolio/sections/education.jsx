@@ -1,6 +1,5 @@
-import { educations } from "@/utils/data/educations";
 import ChapterHeading from "../ui/chapter-heading";
-export default function Education() {
+export default function Education({ educations }) {
   return (
     <section
       id="education"
@@ -16,7 +15,7 @@ export default function Education() {
         {educations.map((e) => (
           <article key={e.id}>
             <p className="eyebrow muted">{e.duration}</p>
-            <h3>{e.title}</h3>
+            <h3>{e.qualification}</h3>
             <p className="body-copy">{e.institution}</p>
           </article>
         ))}

@@ -1,18 +1,17 @@
 import Link from "next/link";
-import { personalData } from "@/utils/data/personal-data";
-export default function Footer() {
+export default function Footer({ profile, site }) {
   return (
     <footer className="site-footer">
       <div className="container footer-inner">
         <p>
-          © {new Date().getFullYear()} Inzamam Idrees{" "}
+          © {new Date().getFullYear()} {profile.name}{" "}
           <span className="muted">/ Built with intention.</span>
         </p>
         <nav aria-label="Footer navigation">
           <Link href="/#education">Education</Link>
           <Link href="/blog">Writing</Link>
           <a
-            href={personalData.github + "/software-developer-portfolio"}
+            href={site.repositoryUrl}
             target="_blank"
             rel="noreferrer"
           >

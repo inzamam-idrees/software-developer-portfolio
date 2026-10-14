@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { personalData } from "@/utils/data/personal-data";
 import { getArticles } from "@/lib/articles.mjs";
 import ChapterHeading from "../ui/chapter-heading";
 import BlogCard from "../../homepage/blog/blog-card";
-export function Writing({ result }) {
+export function Writing({ result, profileUrl }) {
   return (
     <section
       id="writing"
@@ -32,7 +31,7 @@ export function Writing({ result }) {
       <div className="actions writing-actions">
         <a
           className="button secondary"
-          href={"https://dev.to/" + personalData.devUsername}
+          href={profileUrl}
           target="_blank"
           rel="noreferrer"
         >
@@ -47,6 +46,11 @@ export function Writing({ result }) {
     </section>
   );
 }
-export default async function WritingLoader() {
-  return <Writing result={await getArticles(personalData.devUsername)} />;
+export default async function WritingLoader({ articles, social }) {
+  return (
+    <Writing
+      result={await getArticles(articles.provider.username)}
+      profileUrl={social.dev}
+    />
+  );
 }

@@ -2,14 +2,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-const links = [
-  ["Work", "projects"],
-  ["About", "about"],
-  ["Expertise", "skills"],
-  ["Experience", "experience"],
-  ["Contact", "contact"],
-];
-export default function Navbar() {
+
+export default function Navbar({ profile, links }) {
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
   const [activeSection, setActiveSection] = useState(null);
@@ -40,7 +34,7 @@ export default function Navbar() {
       return undefined;
     }
     const sections = links
-      .map(([, id]) => document.getElementById(id))
+      .map(({ id }) => document.getElementById(id))
       .filter(Boolean);
     const observer = new IntersectionObserver(
       (entries) => {
@@ -58,7 +52,7 @@ export default function Navbar() {
     );
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, [pathname]);
+  }, [links, pathname]);
   const currentSection =
     pathname === "/project" ? "projects" : activeSection;
   useEffect(() => {
@@ -73,10 +67,10 @@ export default function Navbar() {
     return () => document.removeEventListener("keydown", escape);
   }, []);
   const items = () =>
-    links.map(([label, id]) => (
+    links.map(({ label, id, href }) => (
       <li key={id}>
         <Link
-          href={`/#${id}`}
+          href={href}
           onClick={closeMenu}
           aria-current={
             currentSection === id
@@ -97,11 +91,14 @@ export default function Navbar() {
         <Link
           className="wordmark"
           href="/"
-          aria-label="Inzamam Idrees home"
+          aria-label={`${profile.name} home`}
           onClick={closeMenu}
         >
-          inzamam<span className="accent">.</span>
-          <span className="wordmark-sub">IDREES / ENGINEER</span>
+          {profile.name.split(" ")[0].toLowerCase()}
+          <span className="accent">.</span>
+          <span className="wordmark-sub">
+            {profile.name.split(" ").slice(1).join(" ")} / ENGINEER
+          </span>
         </Link>
         <nav aria-label="Main navigation">
           <ul className="main-menu desktop-menu">{items()}</ul>

@@ -1,0 +1,11 @@
+{
+  "email": "inzamamidrees@gmail.com",
+  "phone": "+923345203366",
+  "location": "Lahore, Punjab, Pakistan",
+  "heading": "Let’s build something meaningful.",
+  "introduction": "Have a product to build, a system to improve, or an idea to explore? Tell me what you have in mind.",
+  "form": {
+    "enabled": true,
+    "subjectPrefix": "Portfolio inquiry"
+  }
+}

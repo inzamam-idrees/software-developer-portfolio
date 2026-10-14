@@ -1,8 +1,11 @@
 import { ImageResponse } from "next/og";
-export const alt = "Inzamam Idrees — Senior Software Engineer";
+import { getCurrentPortfolioView } from "@/lib/portfolio/server.mjs";
+
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export function GET() {
+export async function GET() {
+  const { profile, settings } = await getCurrentPortfolioView();
+  const [headlineLead, headlineEmphasis] = profile.headline.split(/\s+with\s+/i);
   return new ImageResponse(
     (
       <div
@@ -19,7 +22,7 @@ export function GET() {
         }}
       >
         <div style={{ fontSize: 24, color: "#91E5C1", letterSpacing: 4 }}>
-          INZAMAM IDREES / SENIOR SOFTWARE ENGINEER
+          {`${profile.name} / ${profile.designation.toUpperCase()}`}
         </div>
         <div
           style={{
@@ -30,12 +33,12 @@ export function GET() {
             marginTop: 48,
           }}
         >
-          Engineering
+          {headlineLead}
           <br />
-          with intention.
+          with {headlineEmphasis}
         </div>
         <div style={{ fontSize: 24, color: "#AEB8C1", marginTop: 48 }}>
-          Web applications. Thoughtful systems. Readable interfaces.
+          {settings.seo.openGraph.description}
         </div>
       </div>
     ),

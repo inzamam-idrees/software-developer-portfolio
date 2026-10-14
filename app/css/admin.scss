@@ -1,0 +1,155 @@
+.admin-surface {
+  min-height: 100vh;
+  padding: clamp(1.25rem, 4vw, 4rem);
+  color: #20201d;
+  background: #f4f0e7;
+}
+
+.admin-panel {
+  width: min(70rem, 100%);
+  margin: 0 auto;
+}
+
+.admin-panel h1,
+.admin-panel h2,
+.admin-panel h3,
+.admin-panel p {
+  margin-top: 0;
+}
+
+.admin-panel a,
+.admin-panel button,
+.admin-panel input {
+  min-height: 2.75rem;
+}
+
+.admin-panel button,
+.admin-panel input {
+  border: 1px solid #20201d;
+  border-radius: 0.25rem;
+  font: inherit;
+}
+
+.admin-panel button {
+  padding: 0.7rem 1rem;
+  color: #fff;
+  background: #20201d;
+  cursor: pointer;
+}
+
+.admin-panel button:disabled {
+  color: #5d5a53;
+  background: #d9d3c7;
+  border-color: #aaa397;
+  cursor: not-allowed;
+}
+
+.admin-panel :focus-visible {
+  outline: 3px solid #b75a2a;
+  outline-offset: 3px;
+}
+
+.admin-eyebrow {
+  color: #8c4320;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.admin-login {
+  max-width: 32rem;
+  padding-top: 10vh;
+}
+
+.admin-login form {
+  display: grid;
+  gap: 0.65rem;
+  margin: 2rem 0;
+}
+
+.admin-login input {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  background: #fffdf8;
+}
+
+.admin-notice,
+.admin-error {
+  padding: 0.9rem 1rem;
+  border-left: 4px solid #8c4320;
+  background: #fff8ec;
+}
+
+.admin-heading,
+.admin-preview-status,
+.admin-theme-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.admin-heading {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #bcb5a8;
+}
+
+.admin-status,
+.admin-activation {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border: 1px solid #bcb5a8;
+  background: #fffdf8;
+}
+
+.admin-status {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.admin-status strong {
+  font-family: Georgia, serif;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+}
+
+.admin-preview-status {
+  margin-bottom: 2rem;
+  padding: 1rem 1.25rem;
+  color: #fff;
+  background: #30475e;
+}
+
+.admin-section-heading {
+  margin-bottom: 1rem;
+}
+
+.admin-theme-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.admin-theme-card {
+  padding: 1.25rem;
+  border-top: 1px solid #bcb5a8;
+}
+
+.admin-secondary {
+  color: #20201d !important;
+  background: transparent !important;
+  border-color: currentColor !important;
+}
+
+@media (max-width: 42rem) {
+  .admin-heading,
+  .admin-preview-status,
+  .admin-theme-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-panel form,
+  .admin-panel button {
+    width: 100%;
+  }
+}

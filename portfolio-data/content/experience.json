@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "company": "Nextbridge Ltd. (Lahore, Pakistan)",
+    "role": "Senior Software Engineer",
+    "startDate": "2022-07",
+    "endDate": null,
+    "current": true,
+    "description": null,
+    "technologies": [],
+    "order": 1
+  },
+  {
+    "id": 2,
+    "company": "Xenex Media (Queensland, Australia)",
+    "role": "Angular Developer (Remote)",
+    "startDate": "2021-02",
+    "endDate": "2022-07",
+    "current": false,
+    "description": null,
+    "technologies": [],
+    "order": 2
+  },
+  {
+    "id": 3,
+    "company": "CODEINFORMATICS (Islamabad, Pakistan)",
+    "role": "Web Developer",
+    "startDate": "2019-01",
+    "endDate": "2021-01",
+    "current": false,
+    "description": null,
+    "technologies": [],
+    "order": 3
+  }
+]

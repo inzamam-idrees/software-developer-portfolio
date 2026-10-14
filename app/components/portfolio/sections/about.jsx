@@ -1,7 +1,6 @@
 import Image from "next/image";
-import { personalData } from "@/utils/data/personal-data";
 import ChapterHeading from "../ui/chapter-heading";
-export default function About() {
+export default function About({ profile, about, social, displayLocation }) {
   return (
     <section
       id="about"
@@ -12,23 +11,19 @@ export default function About() {
         <div data-reveal>
           <ChapterHeading id="about" number="02" title="A builder at heart." />
           <p className="about-lead">
-            The best software makes complexity feel simple.
+            {about.summary}
           </p>
           <div className="about-story">
             <p className="body-copy">
-              Over five years, I’ve designed, developed, and maintained
-              responsive web applications with Angular, React, Next.js,
-              Node.js, Express, and NestJS.
+              {about.personalStatement}
             </p>
             <p className="body-copy">
-              I enjoy turning complex product needs into clear interfaces and
-              maintainable systems, working with cross-functional teams from
-              the first idea through delivery.
+              {about.engineeringPhilosophy}
             </p>
           </div>
           <a
             className="text-link"
-            href={personalData.linkedIn}
+            href={social.linkedIn}
             target="_blank"
             rel="noreferrer"
           >
@@ -37,16 +32,16 @@ export default function About() {
         </div>
         <figure className="portrait">
           <Image
-            src={personalData.profile}
+            src={profile.image}
             width={480}
             height={560}
             sizes="(max-width: 767px) 90vw, 360px"
             quality={85}
-            alt="Inzamam Idrees, Senior Software Engineer"
+            alt={`${profile.name}, ${profile.designation}`}
           />
           <figcaption>
-            <span>INZAMAM IDREES</span>
-            <span>LAHORE, PAKISTAN</span>
+            <span>{profile.name}</span>
+            <span>{displayLocation.toUpperCase()}</span>
           </figcaption>
         </figure>
       </div>

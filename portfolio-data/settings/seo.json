@@ -1,0 +1,18 @@
+{
+  "title": "Inzamam Idrees | Senior Software Engineer",
+  "description": "Inzamam Idrees is a Senior Software Engineer in Lahore, Pakistan, building web applications with React, Angular, Next.js and Node.js.",
+  "keywords": [],
+  "openGraph": {
+    "siteName": "Inzamam Idrees",
+    "title": "Inzamam Idrees | Senior Software Engineer",
+    "description": "Web applications, thoughtful systems and readable interfaces.",
+    "imagePath": "/social-image",
+    "imageAlt": "Inzamam Idrees — Senior Software Engineer"
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "Inzamam Idrees | Senior Software Engineer",
+    "description": "Web applications, thoughtful systems and readable interfaces.",
+    "imagePath": "/social-image"
+  }
+}

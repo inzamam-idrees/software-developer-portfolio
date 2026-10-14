@@ -1,12 +1,8 @@
 import Link from "next/link";
-import { projectsData } from "@/utils/data/projects-data";
-import {
-  featuredProjectIds,
-  projectEditorial,
-} from "@/utils/data/portfolio-content";
+import { projectVisuals } from "../cinematic-presentation";
 import ChapterHeading from "../ui/chapter-heading";
 import ProjectSummary from "../ui/project-summary";
-export default function SelectedWork() {
+export default function SelectedWork({ projects, projectCount }) {
   return (
     <section
       id="projects"
@@ -19,17 +15,17 @@ export default function SelectedWork() {
         title="Built for the real world."
         description="A selection of platforms connecting complex business needs with thoughtful software."
       />
-      {featuredProjectIds.map((id, index) => (
+      {projects.map((project, index) => (
         <ProjectSummary
-          key={id}
-          project={projectsData.find((p) => p.id === id)}
-          editorial={projectEditorial[id]}
+          key={project.id}
+          project={project}
+          visual={projectVisuals[project.id]}
           index={index}
           featured
         />
       ))}
       <Link className="button secondary" href="/project">
-        Explore all eight projects ↗
+        Explore all {projectCount === 8 ? "eight" : projectCount} projects ↗
       </Link>
     </section>
   );

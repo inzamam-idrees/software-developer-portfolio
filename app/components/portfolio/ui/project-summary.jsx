@@ -9,13 +9,13 @@ function publicUrl(value) {
 }
 export default function ProjectSummary({
   project,
-  editorial,
+  visual,
   index,
   featured = false,
 }) {
   const Heading = featured ? "h3" : "h2";
-  const demo = publicUrl(project.demo),
-    code = publicUrl(project.code);
+  const demo = publicUrl(project.links.demo),
+    code = publicUrl(project.links.source);
   return (
     <article
       className={`project-chapter ${featured ? "featured" : "compact-project"}`}
@@ -23,33 +23,33 @@ export default function ProjectSummary({
       <div className="project-meta">
         <span className="eyebrow accent">
           {String(index + 1).padStart(2, "0")} /{" "}
-          {editorial?.category || "Selected application"}
+          {project.category || "Selected application"}
         </span>
         <span className="eyebrow muted">{project.role}</span>
       </div>
       <div className="project-grid">
         <div className="project-copy" data-reveal>
-          <Heading>{project.name}</Heading>
+          <Heading>{project.title}</Heading>
           <p className="project-lead">
-            {editorial?.problem || project.description}
+            {project.problem || project.shortDescription}
           </p>
-          {editorial && (
+          {project.solution && project.outcome && (
             <dl className="project-details">
               <div>
                 <dt>THE BUILD</dt>
-                <dd>{editorial.solution}</dd>
+                <dd>{project.solution}</dd>
               </div>
               <div>
                 <dt>THE RESULT</dt>
-                <dd>{editorial.outcome}</dd>
+                <dd>{project.outcome}</dd>
               </div>
             </dl>
           )}
           <ul
             className="technology-list"
-            aria-label={`${project.name} technologies`}
+            aria-label={`${project.title} technologies`}
           >
-            {[...new Set(project.tools)].map((tool) => (
+            {project.technologies.map((tool) => (
               <li key={tool}>{tool}</li>
             ))}
           </ul>
@@ -71,25 +71,25 @@ export default function ProjectSummary({
         {featured && (
           <div
             className={`system-diagram diagram-${project.id}`}
-            aria-label={`${project.name}: conceptual system diagram, not a product screenshot`}
+            aria-label={`${project.title}: conceptual system diagram, not a product screenshot`}
             role="img"
           >
             <div className="diagram-top">
               <span>ARCHITECTURE STUDY</span>
-              <span>SYS_{editorial.mark}</span>
+              <span>SYS_{visual.mark}</span>
             </div>
             <div className="diagram-world" aria-hidden="true">
               <div className="diagram-orbit orbit-one" />
               <div className="diagram-orbit orbit-two" />
               <div className="diagram-core">
-                <span>{editorial.mark}</span>
+                <span>{visual.mark}</span>
                 <small>
                   CONNECTED
                   <br />
                   BY DESIGN
                 </small>
               </div>
-              {editorial.nodes.map((node, i) => (
+              {visual.nodes.map((node, i) => (
                 <span key={node} className={`diagram-node node-${i}`}>
                   {node}
                 </span>
@@ -97,7 +97,7 @@ export default function ProjectSummary({
             </div>
             <div className="diagram-bottom">
               <span>
-                CONCEPTUAL SYSTEM / {editorial.category.toUpperCase()}
+                CONCEPTUAL SYSTEM / {project.category.toUpperCase()}
               </span>
               <span>↗</span>
             </div>

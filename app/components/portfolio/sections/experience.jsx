@@ -1,6 +1,5 @@
-import { experiences } from "@/utils/data/experience";
 import ChapterHeading from "../ui/chapter-heading";
-export default function Experience() {
+export default function Experience({ experiences }) {
   return (
     <section
       id="experience"
@@ -16,7 +15,7 @@ export default function Experience() {
               <p className="eyebrow accent">
                 {job.duration.replace(/[()]/g, "")}
               </p>
-              <h3>{job.title}</h3>
+              <h3>{job.role}</h3>
               <p className="body-copy">{job.company}</p>
             </div>
             <span className="career-line" aria-hidden="true" />

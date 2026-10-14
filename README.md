@@ -145,36 +145,33 @@ GMAIL_PASSKEY =
 EMAIL_ADDRESS =
 ```
 
-### Then, Customize data in the `utils/data` [folder](https://github.com/inzamam-idrees/software-developer-portfolio/tree/master/utils/data).
+Portfolio content is stored in validated JSON under `portfolio-data/`. See
+[`docs/multi-theme/phase-2-canonical-content.md`](docs/multi-theme/phase-2-canonical-content.md)
+before editing it. The multi-theme registry, contract, and loading boundaries are
+documented in
+[`docs/multi-theme/phase-3-theme-architecture.md`](docs/multi-theme/phase-3-theme-architecture.md).
+Themes receive canonical content through the validated loader; do not create editable
+professional-content copies inside a theme.
 
-Eg:
-
-```javascript
-export const personalData = {
-  name: "INZAMAM IDREES",
-  profile: "/profile.png",
-  designation: "Full-Stack Software Developer",
-  description: "My name is INZAMAM IDREES....",
-  email: "inzamamidrees@gmail.com",
-  phone: "+923345203366",
-  address: "Lahore, Punjab, Pakistan",
-  github: "https://github.com/inzamam-idrees",
-  facebook: "https://www.facebook.com/inzi.smart/",
-  linkedIn: "https://www.linkedin.com/in/inzamam-idrees/",
-  twitter: "https://x.com/smart_inzi",
-  stackOverflow: "https://stackoverflow.com/users/7973760/inzamam-idrees",
-  devUsername: "inzamam-idrees",
-  resume: "...",
-};
-```
-
-`devUsername` is used for fetching blog posts from `dev.to`.
+Private theme preview is documented in
+[`docs/multi-theme/phase-5-preview-activation-hosting.md`](docs/multi-theme/phase-5-preview-activation-hosting.md).
+It requires `PORTFOLIO_ADMIN_PASSWORD_HASH` and
+`PORTFOLIO_ADMIN_SESSION_SECRET`. Preview is cookie-scoped and does not modify the
+public active setting. Runtime theme activation remains disabled until a persistent,
+shared writable deployment, locking, revisions, atomic writes, and backups are
+established.
 
 ---
 
 # Deployment :rocket:
 
 Deploying the app to platforms like Vercel or Netlify is quick and easy.
+
+This applies to the read-only portfolio bundled at build time. Runtime content editing
+through the planned personal CMS requires `PORTFOLIO_DATA_DIR` to point to a persistent,
+writable filesystem. Normal ephemeral Vercel and Netlify filesystems are not compatible
+with durable runtime file persistence; use a deployment with a persistent volume for
+that future mode.
 
 ## Deploying to Vercel:
 
@@ -192,10 +189,19 @@ Whenever you push changes to your GitHub repo, Vercel will automatically redeplo
 
 ## Deploying to Netlify:
 
+The supported Netlify mode is read-only: canonical JSON is validated and bundled into
+the server function, and content changes are published through a new deploy. Runtime
+activation and content editing remain disabled. See
+[`docs/multi-theme/phase-6-netlify-persistence-readiness.md`](docs/multi-theme/phase-6-netlify-persistence-readiness.md)
+for the persistence assessment and future migration path.
+
 1. **Sign up or log in** to [Netlify](https://www.netlify.com/).
 2. In the **Netlify Dashboard**, click **"New site from Git"**.
 3. Connect your **GitHub** account and select your repo.
-4. Configure your environment variables by going to **Site Settings > Build & Deploy > Environment** and adding keys from your `.env` file.
+4. Configure runtime values in Netlify environment settings. Set `SITE_URL`,
+   `PORTFOLIO_ADMIN_PASSWORD_HASH`, and `PORTFOLIO_ADMIN_SESSION_SECRET` for both Builds
+   and Functions where scopes are available. Never use `NEXT_PUBLIC_` for secrets.
+   Leave `PORTFOLIO_DATA_DIR` unset for this read-only deployment.
 5. Click **Deploy Site**. Netlify will build and deploy your portfolio.
 
 ---
@@ -229,7 +235,7 @@ Whenever you push changes to your GitHub repo, Vercel will automatically redeplo
 
 To display your blog posts from dev.to on the portfolio:
 
-1. Set your `devUsername` in the `utils/data.js` file to your dev.to username.
+1. Set `provider.username` in `portfolio-data/content/articles.json` to your dev.to username.
 2. The application will automatically fetch your latest blog posts and display them in the **BLOG** section.
 3. Ensure your blogs are publicly visible on dev.to, and the application will fetch them using the dev.to API.
 
@@ -278,7 +284,10 @@ then do the usual `npm run dev`
 
 Requires Node.js 20.9 or newer (validated with Node 22).
 
-The existing Next.js App Router application keeps all factual content in `utils/data`.
+The existing Next.js App Router application reads all factual content through the
+server-only validated loader in `lib/portfolio`. The bundled development data lives
+in `portfolio-data`; set `PORTFOLIO_DATA_DIR` to an absolute alternative data root
+when a deployment should read the same structure from a persistent volume.
 Server-rendered chapters remain readable without JavaScript or WebGL. One lazy Fiber
 canvas uses Three.js; GSAP owns scroll progression. Native scrolling is the baseline.
 No Drei, Lenis or post-processing is installed. The motion control respects the system

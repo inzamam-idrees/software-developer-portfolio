@@ -1,59 +1,62 @@
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Inter } from "next/font/google";
-import Footer from "./components/footer";
-import Navbar from "./components/navbar";
 import "./css/globals.scss";
+import "./css/card.scss";
 import "./css/portfolio.scss";
+import "./css/executive.scss";
+import "./css/admin.scss";
+import "./css/coding.scss";
 import { getSiteOrigin } from "@/lib/site-origin.mjs";
-const origin = getSiteOrigin();
+import { getCurrentPortfolioView } from "@/lib/portfolio/server.mjs";
+
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata() {
+  const { settings } = await getCurrentPortfolioView();
+  const { seo } = settings;
+  const origin = getSiteOrigin();
+  return {
   ...(origin ? { metadataBase: new URL(origin) } : {}),
-  title: "Inzamam Idrees | Senior Software Engineer",
-  description:
-    "Inzamam Idrees is a Senior Software Engineer in Lahore, Pakistan, building web applications with React, Angular, Next.js and Node.js.",
+  title: seo.title,
+  description: seo.description,
+  keywords: seo.keywords,
   openGraph: {
     type: "website",
     ...(origin
       ? {
           images: [
             {
-              url: "/social-image",
+              url: seo.openGraph.imagePath,
               width: 1200,
               height: 630,
-              alt: "Inzamam Idrees — Senior Software Engineer",
+              alt: seo.openGraph.imageAlt,
             },
           ],
         }
       : {}),
-    locale: "en_US",
-    siteName: "Inzamam Idrees",
-    title: "Inzamam Idrees | Senior Software Engineer",
-    description:
-      "Web applications, thoughtful systems and readable interfaces.",
+    locale: settings.site.locale.replace("-", "_"),
+    siteName: seo.openGraph.siteName,
+    title: seo.openGraph.title,
+    description: seo.openGraph.description,
   },
   twitter: {
-    card: "summary_large_image",
-    ...(origin ? { images: ["/social-image"] } : {}),
-    title: "Inzamam Idrees | Senior Software Engineer",
-    description:
-      "Web applications, thoughtful systems and readable interfaces.",
+    card: seo.twitter.card,
+    ...(origin ? { images: [seo.twitter.imagePath] } : {}),
+    title: seo.twitter.title,
+    description: seo.twitter.description,
   },
-};
+  };
+}
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const portfolio = await getCurrentPortfolioView();
+  const { settings } = portfolio;
   return (
-    <html lang="en">
+    <html lang={settings.site.locale}>
       <body className={inter.className}>
-        <a className="skip-link" href="#main-content">
-          Skip to content
-        </a>
-        <Navbar />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <Footer />
+        {children}
         {/^GTM-[A-Z0-9]+$/.test(process.env.NEXT_PUBLIC_GTM || "") && (
           <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM} />
         )}

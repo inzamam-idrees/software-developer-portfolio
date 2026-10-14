@@ -1,0 +1,67 @@
+.theme-coding .coding-page-frame {
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-coding .coding-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.theme-coding .coding-menu-toggle {
+  min-height: 44px;
+  border: 1px solid #353951;
+  border-radius: 999px;
+  padding: 0.55rem 0.85rem;
+  color: #fff;
+  background: #11152c;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.theme-coding .coding-mobile-menu {
+  position: absolute;
+  z-index: 80;
+  top: calc(100% - 0.5rem);
+  right: 0;
+  width: min(18rem, 100%);
+  overflow: hidden;
+  border: 1px solid #353951;
+  border-radius: 0.75rem;
+  background: #11152c;
+  box-shadow: 0 1.25rem 3rem rgb(0 0 0 / 45%);
+}
+
+.theme-coding .coding-mobile-menu a {
+  display: block;
+  padding: 0.8rem 1rem;
+  color: #fff;
+  font-size: 0.8rem;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.theme-coding .coding-mobile-menu a:hover,
+.theme-coding .coding-mobile-menu a:focus-visible {
+  color: #16f2b3;
+  background: #1a1443;
+}
+
+.theme-coding code,
+.theme-coding .coding-contact-details,
+.theme-coding .coding-contact-details span {
+  overflow-wrap: anywhere;
+}
+
+.theme-coding .coding-social-links {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 399px) {
+  .theme-coding .coding-wordmark {
+    max-width: 10rem;
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "all": ["HTML", "CSS", "JavaScript", "TypeScript", "Angular", "React", "Next.js", "Redux", "Node.js", "Express", "NestJS", "PHP", "Ionic", "Tailwind CSS", "MongoDB", "MySQL", "PostgreSQL", "Git", "AWS", "Bootstrap", "Docker", "Figma", "Firebase", "Material UI", "Nginx", "Ubuntu", "jQuery", "Laravel", "CodeIgniter"],
+  "featured": ["Angular", "React", "Next.js", "Node.js"],
+  "categories": [
+    {
+      "id": "frontend",
+      "label": "FRONTEND",
+      "title": "Interfaces that make sense.",
+      "summary": "Responsive applications, component systems, and consistent interaction patterns.",
+      "technologies": ["Angular", "React", "Next.js", "TypeScript", "Ionic", "Tailwind CSS"],
+      "order": 1
+    },
+    {
+      "id": "backend",
+      "label": "BACKEND & DATA",
+      "title": "Systems that connect.",
+      "summary": "Application services, structured data, and integrations behind the interface.",
+      "technologies": ["Node.js", "Express", "NestJS", "MongoDB", "MySQL", "PostgreSQL", "Laravel"],
+      "order": 2
+    },
+    {
+      "id": "delivery",
+      "label": "ENGINEERING & DELIVERY",
+      "title": "From build to delivery.",
+      "summary": "Version control, infrastructure, and the tools that support maintainable software.",
+      "technologies": ["Git", "AWS", "Docker", "Nginx", "Firebase", "Ubuntu"],
+      "order": 3
+    }
+  ]
+}

@@ -1,9 +1,8 @@
-import { projectsData } from '@/utils/data/projects-data';
 import ProjectCard from './project-card';
 import Link from 'next/link';
 import { FaArrowRight } from 'react-icons/fa';
 
-const Projects = () => {
+const Projects = ({ projectsData }) => {
 
   return (
     <div id='projects' className="relative z-50  my-12 lg:my-24">

@@ -24,6 +24,33 @@ test("returns sorted articles without requiring cover images", async () => {
     [2, 1],
   );
 });
+test("preserves optional visual and engagement metadata for theme presentations", async () => {
+  const source = {
+    ...article(7, "2025-02-03"),
+    cover_image: "https://images.example.com/article-cover.jpg",
+    public_reactions_count: 42,
+    comments_count: 6,
+    reading_time_minutes: 8,
+  };
+  const result = await getArticles("example", {
+    fetchImpl: async () => Response.json([source]),
+  });
+
+  assert.deepEqual(
+    {
+      cover_image: result.articles[0].cover_image,
+      public_reactions_count: result.articles[0].public_reactions_count,
+      comments_count: result.articles[0].comments_count,
+      reading_time_minutes: result.articles[0].reading_time_minutes,
+    },
+    {
+      cover_image: source.cover_image,
+      public_reactions_count: 42,
+      comments_count: 6,
+      reading_time_minutes: 8,
+    },
+  );
+});
 test("empty, invalid and failed data keep writing usable", async () => {
   for (const data of [[], {}]) {
     const r = await getArticles("example", {

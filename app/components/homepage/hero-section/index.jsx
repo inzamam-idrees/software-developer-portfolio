@@ -1,8 +1,8 @@
 // @flow strict
 
-import { personalData } from "@/utils/data/personal-data";
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -10,7 +10,7 @@ import { MdDownload } from "react-icons/md";
 import { RiContactsFill } from "react-icons/ri";
 import { SiLeetcode } from "react-icons/si";
 
-function HeroSection() {
+function HeroSection({ personalData, skillsData }) {
   return (
     <section className="relative flex flex-col items-center justify-between py-4 lg:py-12">
       <Image
@@ -109,56 +109,31 @@ function HeroSection() {
               <div>
                 <span className="ml-4 lg:ml-8 mr-2 text-white">name:</span>
                 <span className="text-gray-400">{`'`}</span>
-                <span className="text-amber-300">Inzamam Idrees</span>
+                <span className="text-amber-300">{personalData.name}</span>
                 <span className="text-gray-400">{`',`}</span>
               </div>
               <div className="ml-4 lg:ml-8 mr-2">
                 <span className=" text-white">skills:</span>
                 <span className="text-gray-400">{`['`}</span>
-                <span className="text-amber-300">Angular 2+</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">ReactJS</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">NextJS</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Redux</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">NodeJS</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Express</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">NestJS</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">MongoDB</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">MySql</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">PHP</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Laravel</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">CodeIgniter</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Docker</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">AWS</span>
+                {skillsData.map((skill, index) => (
+                  <Fragment key={skill}>
+                    <span className="text-amber-300">{skill}</span>
+                    {index < skillsData.length - 1 && (
+                      <span className="text-gray-400">{"', '"}</span>
+                    )}
+                  </Fragment>
+                ))}
                 <span className="text-gray-400">{"'],"}</span>
               </div>
-              <div>
-                <span className="ml-4 lg:ml-8 mr-2 text-white">hardWorker:</span>
-                <span className="text-orange-400">true</span>
-                <span className="text-gray-400">,</span>
-              </div>
-              <div>
-                <span className="ml-4 lg:ml-8 mr-2 text-white">quickLearner:</span>
-                <span className="text-orange-400">true</span>
-                <span className="text-gray-400">,</span>
-              </div>
-              <div>
-                <span className="ml-4 lg:ml-8 mr-2 text-white">problemSolver:</span>
-                <span className="text-orange-400">true</span>
-                <span className="text-gray-400">,</span>
-              </div>
+              {personalData.traits.map((trait) => (
+                <div key={trait.id}>
+                  <span className="ml-4 lg:ml-8 mr-2 text-white">
+                    {trait.id}:
+                  </span>
+                  <span className="text-orange-400">true</span>
+                  <span className="text-gray-400">,</span>
+                </div>
+              ))}
               <div>
                 <span className="ml-4 lg:ml-8 mr-2 text-green-400">hireable:</span>
                 <span className="text-orange-400">function</span>
@@ -170,12 +145,16 @@ function HeroSection() {
               </div>
               <div>
                 <span className="ml-12 lg:ml-24 text-cyan-400">this.</span>
-                <span className="mr-2 text-white">hardWorker</span>
+                <span className="mr-2 text-white">
+                  {personalData.traits[0].id}
+                </span>
                 <span className="text-amber-300">&amp;&amp;</span>
               </div>
               <div>
                 <span className="ml-12 lg:ml-24 text-cyan-400">this.</span>
-                <span className="mr-2 text-white">problemSolver</span>
+                <span className="mr-2 text-white">
+                  {personalData.traits.at(-1).id}
+                </span>
                 <span className="text-amber-300">&amp;&amp;</span>
               </div>
               <div>

@@ -1,0 +1,6 @@
+{
+  "name": "Inzamam Idrees",
+  "locale": "en",
+  "repositoryUrl": "https://github.com/inzamam-idrees/software-developer-portfolio",
+  "publicRoutes": ["/", "/project", "/blog"]
+}

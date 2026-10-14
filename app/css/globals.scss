@@ -64,6 +64,27 @@ section {
 .skip-link:focus {
   transform: translateY(0);
 }
+.theme-coding {
+  min-height: 100vh;
+  overflow-x: clip;
+  color: rgb(211, 216, 232);
+  background: #0d1224;
+}
+.theme-coding #sticky-card-1 {
+  --index: 1;
+}
+.theme-coding #sticky-card-2 {
+  --index: 2;
+}
+.theme-coding #sticky-card-3 {
+  --index: 3;
+}
+.theme-coding #sticky-card-4 {
+  --index: 4;
+}
+.theme-coding .sticky-card {
+  top: calc(var(--index) * 4rem);
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

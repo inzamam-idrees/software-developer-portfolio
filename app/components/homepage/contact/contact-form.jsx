@@ -48,7 +48,7 @@ export default function ContactForm() {
       className="contact-form"
       onSubmit={submit}
       noValidate
-      aria-label="Contact Inzamam"
+      aria-label="Contact form"
     >
       <div className="form-row">
         {[

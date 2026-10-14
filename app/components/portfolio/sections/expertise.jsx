@@ -1,6 +1,5 @@
-import { technologyGroups } from "@/utils/data/portfolio-content";
 import ChapterHeading from "../ui/chapter-heading";
-export default function Expertise() {
+export default function Expertise({ skills }) {
   return (
     <section
       id="skills"
@@ -14,7 +13,7 @@ export default function Expertise() {
         description="From the details people interact with to the services they never see."
       />
       <div className="capability-list">
-        {technologyGroups.map((group, index) => (
+        {skills.categories.map((group, index) => (
           <article key={group.id} data-reveal>
             <span className="capability-number">0{index + 1}</span>
             <div>

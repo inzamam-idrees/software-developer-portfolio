@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "qualification": "Bachelor of Science in Software Engineering (BSSE)",
+    "institution": "University of Gujrat",
+    "startYear": 2014,
+    "endYear": 2018,
+    "description": null,
+    "order": 1
+  },
+  {
+    "id": 2,
+    "qualification": "Intermediate in FSC Pre-Engineering",
+    "institution": "ILM College",
+    "startYear": 2012,
+    "endYear": 2014,
+    "description": null,
+    "order": 2
+  },
+  {
+    "id": 3,
+    "qualification": "Matriculation in Science (Medical)",
+    "institution": "Quaid-e-Azam Public School",
+    "startYear": 2010,
+    "endYear": 2012,
+    "description": null,
+    "order": 3
+  }
+]

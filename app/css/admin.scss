@@ -134,6 +134,12 @@
   border-top: 1px solid #bcb5a8;
 }
 
+.admin-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .admin-secondary {
   color: #20201d !important;
   background: transparent !important;
@@ -143,7 +149,8 @@
 @media (max-width: 42rem) {
   .admin-heading,
   .admin-preview-status,
-  .admin-theme-card {
+  .admin-theme-card,
+  .admin-card-actions {
     align-items: stretch;
     flex-direction: column;
   }

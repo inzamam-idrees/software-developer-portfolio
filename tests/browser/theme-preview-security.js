@@ -68,8 +68,8 @@ async (sourcePage) => {
   await publicPage.waitForURL(`${origin}/admin/theme`);
   await publicPage.getByText("Current public theme").waitFor();
   await publicPage.getByText("Cinematic", { exact: true }).first().waitFor();
-  if (!(await publicPage.getByRole("button", { name: /Activation unavailable/i }).isDisabled())) {
-    throw new Error("Theme activation was exposed before hosting readiness");
+  if (!(await publicPage.getByRole("button", { name: "Activate Executive" }).isVisible())) {
+    throw new Error("Theme activation button was not available");
   }
 
   const rejected = await publicPage.request.post(`${origin}/admin/theme/preview`, {

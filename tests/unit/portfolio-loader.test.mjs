@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { mkdtemp, mkdir, rm, writeFile } from "node:fs/promises";
+import { readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -8,7 +9,20 @@ import {
   loadCanonicalPortfolio,
 } from "../../lib/portfolio/loader.mjs";
 
+const bundledCopy = Object.fromEntries(
+  ["shared", "coding", "cinematic", "executive"].map((name) => [
+    `settings/copy/${name}.json`,
+    JSON.parse(
+      readFileSync(
+        new URL(`../../portfolio-data/settings/copy/${name}.json`, import.meta.url),
+        "utf8",
+      ),
+    ),
+  ]),
+);
+
 const documents = {
+  ...bundledCopy,
   "content/profile.json": {
     name: "INZAMAM IDREES",
     designation: "Senior Software Engineer",

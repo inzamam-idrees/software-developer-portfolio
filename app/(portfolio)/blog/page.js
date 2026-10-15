@@ -1,4 +1,5 @@
 import { canonicalMetadata } from "@/lib/site-origin.mjs";
+import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import { getPortfolioRenderContext } from "@/lib/portfolio/render-context.mjs";
 import { loadSelectedThemeSlot } from "@/lib/themes/registry.mjs";
 export async function generateMetadata() {
@@ -6,7 +7,9 @@ export async function generateMetadata() {
   const { settings } = portfolio;
   return {
     ...canonicalMetadata("/blog"),
-    title: `Writing | ${settings.site.name}`,
+    title: formatCopy(settings.copy.shared.routes.blogTitle, {
+      siteName: settings.site.name,
+    }),
   };
 }
 export default async function BlogPage() {

@@ -1,12 +1,17 @@
 import ChapterHeading from "../ui/chapter-heading";
-export default function Experience({ experiences }) {
+export default function Experience({ experiences, copy }) {
   return (
     <section
       id="experience"
       className="chapter container"
       aria-labelledby="experience-heading"
     >
-      <ChapterHeading id="experience" number="04" title="The journey so far." />
+      <ChapterHeading
+        id="experience"
+        number="04"
+        label={copy.label}
+        title={copy.heading}
+      />
       <ol className="career-timeline">
         {[...experiences].reverse().map((job, index) => (
           <li key={job.id} data-reveal>

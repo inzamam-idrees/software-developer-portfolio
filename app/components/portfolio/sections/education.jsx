@@ -1,5 +1,5 @@
 import ChapterHeading from "../ui/chapter-heading";
-export default function Education({ educations, awards }) {
+export default function Education({ educations, awards, copy }) {
   return (
     <section
       id="education"
@@ -9,7 +9,8 @@ export default function Education({ educations, awards }) {
       <ChapterHeading
         id="education"
         number="05"
-        title="A foundation in engineering."
+        label={copy.label}
+        title={copy.heading}
       />
       <div className="education-list">
         {educations.map((e) => (
@@ -23,7 +24,7 @@ export default function Education({ educations, awards }) {
       {awards.length > 0 && (
         <div className="awards-block" aria-labelledby="awards-heading">
           <h3 id="awards-heading" className="eyebrow accent">
-            AWARDS &amp; HONORS
+            {copy.awardsHeading}
           </h3>
           <ul className="education-list awards-list">
             {awards.map((award) => (

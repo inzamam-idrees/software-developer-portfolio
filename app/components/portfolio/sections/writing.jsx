@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getArticles } from "@/lib/articles.mjs";
 import ChapterHeading from "../ui/chapter-heading";
 import BlogCard from "../../homepage/blog/blog-card";
-export function Writing({ result, profileUrl }) {
+export function Writing({ result, profileUrl, copy, blogCopy }) {
   return (
     <section
       id="writing"
@@ -12,20 +12,19 @@ export function Writing({ result, profileUrl }) {
       <ChapterHeading
         id="writing"
         number="06"
-        title="Notes from the work."
-        description="Ideas, observations, and lessons from building software."
+        label={copy.label}
+        title={copy.heading}
+        description={copy.description}
       />
       {result.articles.length ? (
         <div className="writing-grid">
           {result.articles.slice(0, 3).map((blog) => (
-            <BlogCard key={blog.id} blog={blog} />
+            <BlogCard key={blog.id} blog={blog} copy={blogCopy} />
           ))}
         </div>
       ) : (
         <p className="body-copy">
-          {result.status === "empty"
-            ? "My writing lives on DEV. Explore the notebook there."
-            : "The notebook is temporarily unavailable here. You can visit my DEV profile directly."}
+          {result.status === "empty" ? copy.empty : copy.unavailable}
         </p>
       )}
       <div className="actions writing-actions">
@@ -35,22 +34,24 @@ export function Writing({ result, profileUrl }) {
           target="_blank"
           rel="noreferrer"
         >
-          Visit my notebook ↗
+          {copy.profileAction}
         </a>
         {result.articles.length > 0 && (
           <Link className="text-link" href="/blog">
-            All articles ↗
+            {copy.allArticles}
           </Link>
         )}
       </div>
     </section>
   );
 }
-export default async function WritingLoader({ articles, social }) {
+export default async function WritingLoader({ articles, social, copy, blogCopy }) {
   return (
     <Writing
       result={await getArticles(articles.provider.username)}
       profileUrl={social.dev}
+      copy={copy}
+      blogCopy={blogCopy}
     />
   );
 }

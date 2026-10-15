@@ -2,7 +2,7 @@ import ProjectCard from "@/app/components/homepage/projects/project-card";
 import { createCodingPresentation } from "./adapter.mjs";
 
 export default function CodingProjects({ portfolio }) {
-  const { projectsData } = createCodingPresentation(portfolio);
+  const { projectsData, copy } = createCodingPresentation(portfolio);
 
   return (
     <section className="relative z-50 py-8" aria-labelledby="projects-title">
@@ -13,7 +13,7 @@ export default function CodingProjects({ portfolio }) {
           id="projects-title"
             className="bg-[#1a1443] w-fit whitespace-nowrap text-white p-2 px-5 text-xl sm:text-2xl rounded-md"
         >
-            All Projects
+            {copy.projects.heading}
         </h1>
           <span className="w-12 sm:w-24 h-[2px] bg-[#1a1443]" />
         </div>

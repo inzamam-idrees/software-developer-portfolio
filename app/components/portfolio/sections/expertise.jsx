@@ -1,5 +1,5 @@
 import ChapterHeading from "../ui/chapter-heading";
-export default function Expertise({ skills }) {
+export default function Expertise({ skills, copy }) {
   return (
     <section
       id="skills"
@@ -9,8 +9,9 @@ export default function Expertise({ skills }) {
       <ChapterHeading
         id="skills"
         number="03"
-        title="Depth across the stack."
-        description="From the details people interact with to the services they never see."
+        label={copy.label}
+        title={copy.heading}
+        description={copy.description}
       />
       <div className="capability-list">
         {skills.categories.map((group, index) => (

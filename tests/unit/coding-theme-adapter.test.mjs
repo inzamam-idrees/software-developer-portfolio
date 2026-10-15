@@ -51,3 +51,16 @@ test("Coding presentation maps resume detail and awards", async () => {
   });
   assert.ok(coding.skillsData.includes("RAG"));
 });
+
+test("Coding presentation exposes merged Coding copy", async () => {
+  const portfolio = buildCurrentPortfolioView(
+    await loadCanonicalPortfolio({ env: {} }),
+  );
+  const changed = structuredClone(portfolio);
+  changed.settings.copy.coding.home.hero.resumeAction = "Download CV";
+  const coding = createCodingPresentation(changed);
+
+  assert.equal(coding.copy.home.hero.resumeAction, "Download CV");
+  assert.equal(coding.copy.navigation.skipToContent, "Skip to content");
+  assert.equal(coding.copy.contactForm.heading, "Contact with me");
+});

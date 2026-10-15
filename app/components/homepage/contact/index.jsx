@@ -7,12 +7,12 @@ import { FaXTwitter } from "react-icons/fa6";
 import { IoLogoGithub, IoMdCall } from "react-icons/io";
 import { MdAlternateEmail } from "react-icons/md";
 
-function ContactSection({ personalData, form }) {
+function ContactSection({ personalData, form, copy }) {
   return (
     <div id="contact" className="my-12 lg:my-16 relative mt-24 text-white">
       <div className="hidden lg:flex flex-col items-center absolute top-24 -right-8">
         <span className="bg-[#1a1443] w-fit text-white rotate-90 p-2 px-5 text-xl rounded-md">
-          CONTACT
+          {copy.rail}
         </span>
         <span className="h-36 w-[2px] bg-[#1a1443]"></span>
       </div>

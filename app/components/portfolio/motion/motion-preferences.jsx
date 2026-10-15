@@ -41,7 +41,7 @@ export default function MotionPreferences({ children }) {
     <MotionContext.Provider value={value}>{children}</MotionContext.Provider>
   );
 }
-export function MotionControl() {
+export function MotionControl({ copy }) {
   const { enabled, reduced, ready, setEnabled } = useMotion();
   const [slot, setSlot] = useState(null);
   useEffect(() => {
@@ -54,23 +54,19 @@ export function MotionControl() {
         type="button"
         className="motion-button"
         disabled={!ready || reduced}
-        aria-label={enabled ? "Pause motion" : "Enable motion"}
+        aria-label={enabled ? copy.pause : copy.enable}
         aria-pressed={enabled}
         aria-describedby={reduced ? "motion-note" : undefined}
         onClick={() => setEnabled(!enabled)}
       >
         <span aria-hidden="true">{enabled ? "Ⅱ" : "▷"}</span>{" "}
         <span className="motion-label">
-          {reduced
-            ? "Reduced motion"
-            : enabled
-              ? "Pause motion"
-              : "Enable motion"}
+          {reduced ? copy.reduced : enabled ? copy.pause : copy.enable}
         </span>
       </button>
       {reduced && (
         <span id="motion-note" className="sr-only">
-          Motion is disabled by your system preference.
+          {copy.systemNote}
         </span>
       )}
     </div>,

@@ -1,6 +1,7 @@
 import Image from "next/image";
+import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import ChapterHeading from "../ui/chapter-heading";
-export default function About({ profile, about, social, displayLocation }) {
+export default function About({ profile, about, social, displayLocation, copy }) {
   return (
     <section
       id="about"
@@ -9,7 +10,7 @@ export default function About({ profile, about, social, displayLocation }) {
     >
       <div className="about-grid">
         <div data-reveal>
-          <ChapterHeading id="about" number="02" title="A builder at heart." />
+          <ChapterHeading id="about" number="02" label={copy.label} title={copy.heading} />
           <p className="about-lead">
             {about.summary}
           </p>
@@ -27,7 +28,7 @@ export default function About({ profile, about, social, displayLocation }) {
             target="_blank"
             rel="noreferrer"
           >
-            More about my journey ↗
+            {copy.journeyLink}
           </a>
         </div>
         <figure className="portrait">
@@ -37,7 +38,10 @@ export default function About({ profile, about, social, displayLocation }) {
             height={560}
             sizes="(max-width: 767px) 90vw, 360px"
             quality={85}
-            alt={`${profile.name}, ${profile.designation}`}
+            alt={formatCopy(copy.portraitAlt, {
+              name: profile.name,
+              designation: profile.designation,
+            })}
           />
           <figcaption>
             <span>{profile.name}</span>

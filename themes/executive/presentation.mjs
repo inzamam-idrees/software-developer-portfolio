@@ -3,12 +3,29 @@ import { createExecutiveView } from "./view.mjs";
 
 export { projectDetailSections };
 
-const professionalSocialLabels = Object.freeze({
-  linkedIn: "LinkedIn",
-  github: "GitHub",
-  stackOverflow: "Stack Overflow",
-  dev: "DEV Community",
+const professionalSocialKeys = Object.freeze([
+  "linkedIn",
+  "github",
+  "stackOverflow",
+  "dev",
+]);
+
+const linkLabelKeys = Object.freeze({
+  demo: "viewProject",
+  source: "viewSource",
 });
+
+export function projectLinkLabel(kind, labels) {
+  return labels[linkLabelKeys[kind]] ?? kind;
+}
+
+function monogramOf(name) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word[0].toUpperCase())
+    .join("");
+}
 
 export function createExecutivePresentation(portfolio) {
   const view = createExecutiveView(portfolio);
@@ -16,13 +33,18 @@ export function createExecutivePresentation(portfolio) {
     .filter((item) => item.enabled)
     .sort((left, right) => left.order - right.order)
     .map(({ id, label, href }) => ({ id, label, href }));
-  const professionalSocials = Object.entries(professionalSocialLabels)
-    .filter(([key]) => Boolean(view.social[key]))
-    .map(([key, label]) => ({ key, label, href: view.social[key] }));
+  const professionalSocials = professionalSocialKeys
+    .filter((key) => Boolean(view.social[key]))
+    .map((key) => ({
+      key,
+      label: view.copy.socialLabels[key],
+      href: view.social[key],
+    }));
 
   return Object.freeze({
     ...view,
     navigation,
     professionalSocials,
+    monogram: monogramOf(view.profile.name),
   });
 }

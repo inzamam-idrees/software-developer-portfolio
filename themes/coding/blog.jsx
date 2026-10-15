@@ -7,21 +7,28 @@ export default async function CodingBlog({ portfolio }) {
   const result = await getArticles(view.articles.provider.username);
 
   return result.articles.length ? (
-    <CodingBlogList blogs={result.articles} showMore={false} routeTitle="All Blog" />
+    <CodingBlogList
+      blogs={result.articles}
+      copy={view.copy}
+      showMore={false}
+      routeTitle={view.copy.blog.routeHeading}
+    />
   ) : (
     <section className="my-12 lg:my-24 text-white">
-      <h1 className="text-3xl text-[#16f2b3] mb-5">Blogs</h1>
+      <h1 className="text-3xl text-[#16f2b3] mb-5">
+        {view.copy.blog.emptyHeading}
+      </h1>
       <p>
         {result.status === "empty"
-          ? "No articles to show here yet."
-          : "Articles are temporarily unavailable."}{" "}
+          ? view.copy.blog.empty
+          : view.copy.blog.unavailable}{" "}
         <a
           className="text-[#16f2b3] hover:text-pink-500"
           href={view.social.dev}
           target="_blank"
           rel="noreferrer"
         >
-          Visit my DEV profile ↗
+          {view.copy.blog.profileAction}
         </a>
       </p>
     </section>

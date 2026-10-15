@@ -6,7 +6,7 @@ import { validateContact } from "@/lib/contact.mjs";
 
 const empty = { name: "", email: "", message: "" };
 
-export default function CodingContactForm() {
+export default function CodingContactForm({ copy }) {
   const [input, setInput] = useState(empty);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("");
@@ -36,11 +36,9 @@ export default function CodingContactForm() {
       const data = await response.json();
       if (!response.ok || !data.success) throw new Error("Delivery failed");
       setInput(empty);
-      setStatus("Message sent. Thank you for reaching out.");
+      setStatus(copy.sent);
     } catch {
-      setStatus(
-        "Could not send your message. Please try again or email me directly.",
-      );
+      setStatus(copy.failed);
     } finally {
       sending.current = false;
       setBusy(false);
@@ -50,23 +48,21 @@ export default function CodingContactForm() {
   return (
     <div>
       <p className="font-medium mb-5 text-[#16f2b3] text-xl uppercase">
-        Contact with me
+        {copy.heading}
       </p>
       <form
         className="max-w-3xl text-white rounded-lg border border-[#464c6a] p-3 lg:p-5"
         onSubmit={submit}
         noValidate
-        aria-label="Contact form"
+        aria-label={copy.label}
       >
         <p className="text-sm text-[#d3d8e8]">
-          If you have any questions or concerns, please don&apos;t hesitate to
-          contact me. I am open to opportunities that align with my skills and
-          interests.
+          {copy.intro}
         </p>
         <div className="mt-6 flex flex-col gap-4">
           {[
-            ["name", "Your Name", "text", "name"],
-            ["email", "Your Email", "email", "email"],
+            ["name", copy.name, "text", "name"],
+            ["email", copy.email, "email", "email"],
           ].map(([field, label, type, autoComplete]) => (
             <div className="flex flex-col gap-2" key={field}>
               <label htmlFor={`contact-${field}`} className="text-base">
@@ -96,7 +92,7 @@ export default function CodingContactForm() {
           ))}
           <div className="flex flex-col gap-2">
             <label htmlFor="contact-message" className="text-base">
-              Your Message:
+              {copy.message}:
             </label>
             <textarea
               id="contact-message"
@@ -125,10 +121,10 @@ export default function CodingContactForm() {
               disabled={busy}
             >
               {busy ? (
-                <span>Sending Message...</span>
+                <span>{copy.sending}</span>
               ) : (
                 <span className="flex items-center gap-1">
-                  Send Message <TbMailForward size={20} />
+                  {copy.send} <TbMailForward size={20} />
                 </span>
               )}
             </button>

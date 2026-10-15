@@ -1,55 +1,117 @@
 # CLAUDE.md
 
-This file gives Claude Code the repo-specific context it should not have to rediscover.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project
+Read this file and `README.md` before making changes. Phase designs and results live in `docs/multi-theme/` (phase-1 … phase-6); read the relevant one before touching that area.
 
-- Portfolio of Inzamam Idrees.
-- Built with: React, Next.js, Tailwind CSS.
+## Project overview
 
-## Package manager
+A long-term, production-quality **multi-theme personal portfolio platform** for a Senior Software Engineer / Full-Stack Developer (~7 years: PHP, Laravel, CodeIgniter, JavaScript/TypeScript, React, Angular, Node.js, Python, SQL/NoSQL).
 
-- Use `npm` for this workspace. The lockfile is `package-lock.json`.
-- Run package scripts with `npm run <script>`.
+One professional identity, presented through several genuinely distinct themes, all consuming **one canonical, validated content source**. Includes a private admin area for theme preview and activation.
+
+Audience: recruiters, hiring managers, clients, engineering teams. The site should communicate credibility, technical depth, problem-solving ability, and outcomes quickly.
+
+## Current status
+
+> Update this section as phases are approved and completed.
+
+- Phases 1–6 complete (see `docs/multi-theme/phase-*-result.md`); latest work added admin theme activation.
+- Phase 7 in progress (spec `docs/superpowers/specs/2026-10-15-admin-content-and-resume-import-design.md`): 7A resume/CV data import (`phase-7a-result.md`) and 7B theme copy as data (`phase-7b-result.md`) implemented; 7C admin content editor + GitHub storage is planned in `docs/superpowers/plans/`.
+- Stack: Next.js 15 App Router, React 19, plain JS (`.js`/`.jsx`/`.mjs`, no TypeScript), Tailwind 3 + Sass, Zod 4 schemas. Cinematic theme uses Three.js via `@react-three/fiber` and GSAP.
+- Deployment: Netlify, **read-only** mode (`netlify.toml` bundles `portfolio-data/**` into the server function). Node 22 (`.nvmrc`; engines `>=20.9`).
+- Database: **none** (do not introduce one without a concrete, documented requirement).
+- Unresolved: `POST /admin/theme/activate` writes `settings/theme.json` to the data root. On Netlify's ephemeral filesystem that write does not persist or propagate across instances — durable activation needs `PORTFOLIO_DATA_DIR` on a persistent volume (see `docs/multi-theme/phase-6-netlify-persistence-readiness.md`).
 
 ## Commands
 
+npm only (`package-lock.json`).
+
 ```bash
-npm run lint         # run linter
+npm install
+npm run dev                  # next dev on :3000
+npm run validate:content     # Zod-validate portfolio-data/ (also runs automatically as prebuild)
+npm run build                # prebuild validation + next build
+npm run start
+npm run lint                 # next lint
+npm run test:unit            # node --test tests/unit/*.test.mjs
+node --test tests/unit/theme-registry.test.mjs                 # single file
+node --test --test-name-pattern="<regex>" tests/unit/x.test.mjs # single test
 ```
 
-No formatter, test runner is configured.
+- Browser tests in `tests/browser/*.js` run against a running server with the Playwright CLI, e.g. `playwright-cli -s=portfolio run-code --filename=tests/browser/navigation.js`.
+- If another Next process uses the checkout, isolate output: `PORTFOLIO_BUILD_DIR=.next-portfolio-dev npm run dev -- --port 3001` (`next.config.js` reads it as `distDir`). Use the same value for `build` and `start`.
+- Generate the admin password hash with the one-liner in `docs/multi-theme/phase-5-preview-activation-hosting.md` (uses `createPasswordHash` from `lib/admin/auth.mjs`). Escape `$` as `\$` in `.env`.
 
 ## Architecture
 
-- Project: software-developer-portfolio.
+### Content pipeline
+- All factual content is JSON under `portfolio-data/` (`content/*.json` + `settings/*.json`, including `settings/theme.json` → `activeTheme`). `PORTFOLIO_DATA_DIR` can point at an alternative root with the same layout.
+- `lib/portfolio/loader.mjs` (`loadCanonicalPortfolio`) reads a fixed document manifest and validates each file against `lib/portfolio/schemas.mjs`; failures throw `PortfolioDataError` with a code and document name. Adding a content file means updating the manifest, the schema, and `canonicalPortfolioSchema`.
+- `lib/portfolio/current-view.mjs` derives display fields (formatted durations, sorted featured projects, compact location). `lib/portfolio/server.mjs` is the `server-only` entry point.
 
-## Testing and launch
+### Theme rendering
+- `lib/themes/ids.mjs` (`THEME_IDS`) and `lib/themes/registry.mjs` must list themes in the same order (asserted at import). Each theme provides exactly four lazy-loaded slots: `shell`, `home`, `projects`, `blog` (`THEME_SLOTS`); missing or extra slots throw.
+- Routes in `app/(portfolio)/` (`/`, `/project`, `/blog`) call `getPortfolioRenderContext()` (`lib/portfolio/render-context.mjs`), which loads content + admin request state and resolves the theme via `lib/themes/selection.mjs`, then render the selected theme's slot with `portfolio` as a prop. The layout renders the `shell` slot and sets `noindex` in preview mode.
+- Each theme in `themes/<id>/` has a `view.mjs` wrapping `createThemeView` (`lib/themes/create-view.mjs`), which asserts required canonical keys. `themes/shared/` holds cross-theme pieces (Person JSON-LD).
+- Presentation component locations: Coding uses `app/components/homepage/*` (the original template's components); Cinematic uses `app/components/portfolio/*` (sections, GSAP motion, lazy R3F scene with error boundary + fallback); Executive is self-contained in `themes/executive/`. Per-theme styles are in `app/css/` (`coding.scss`, `portfolio.scss`, `executive.scss`, `admin.scss`).
+- Tests enforce theme isolation (`theme-content-isolation.test.mjs`) — themes must not embed factual content.
+- **All visible wording is data too.** `portfolio-data/settings/copy/{shared,coding,cinematic,executive}.json` (strict schemas in `lib/portfolio/copy-schemas.mjs`) load into `settings.copy`; `createThemeView` exposes `view.copy` = shared deep-merged with that theme's copy. Use `formatCopy(template, values)` for `{placeholder}` strings. `tests/unit/no-hardcoded-copy.test.mjs` (scanner in `tests/unit/support/copy-scan.mjs`) fails on any literal UI text in themes, components, `app/(portfolio)`, the 404 page, or the social image — add a copy key instead (decorative Coding code tokens are allowlisted there).
 
-- Tests are present, but no `test` package script was detected; inspect the test config before running broad suites.
+### Admin, preview, activation
+- `lib/admin/auth.mjs`: scrypt password verification and HMAC-signed session/preview tokens. `lib/admin/server.mjs`: cookie names (`portfolio_admin_session`, `portfolio_theme_preview`), cookie options, `getAdminRequestState()`. `lib/admin/request-security.mjs`: same-origin checks for POSTs.
+- Routes: `app/admin/{login,session,logout,theme,theme/preview,theme/activate}`. All mutating routes require a valid session **and** same-origin.
+- Preview is a signed, 2-hour cookie bound to the admin session; only authorized requests with an `available` theme get `mode: "preview"`, anything invalid silently falls back to the public active theme.
+- Activation (`lib/themes/activation.mjs`) validates the theme, writes `theme.json` atomically (temp file + rename), then `revalidatePath("/", "layout")` and clears the preview cookie.
 
-## Key Conventions
+### Other server code
+- `app/api/contact/route.js` + `lib/contact.mjs` (Gmail via nodemailer, reCAPTCHA verify with server-only `RECAPTCHA_SECRET_KEY`); `lib/articles.mjs` fetches dev.to posts for the username in `content/articles.json`.
+- `lib/site-origin.mjs`: canonical URLs/sitemap only when `SITE_URL` is a valid HTTPS origin; otherwise they are omitted.
+- Environment variables are documented in `.env.example`; secrets never use the `NEXT_PUBLIC_` prefix.
 
-- Components use JSX/TSX; prefer functional components.
+## Architecture principles
 
-## Comment style
+### Content
+- All content passes **strict schema validation** with clear, actionable error messages. Invalid content must fail the build/validation step, not render silently.
+- Themes **never** contain factual content (names, dates, roles, metrics, project details). They only render data from the shared data layer.
 
-- Never place comments on the first two lines of a source file; start with imports or declarations.
-- Prefer concise section headings such as `// ── Constants ──` or a three-line banner for major sections so files remain easy to scan.
-- Use JSDoc blocks only when an API, intent, edge case, or constraint needs explanation; do not restate the code.
+### Themes
+- Each theme must have a distinct visual purpose — not a recolor of another theme:
+  - **Coding** — developer-centric, code-inspired, strong technical personality.
+  - **Cinematic** — premium editorial design, coordinated motion, optional 3D.
+  - **Executive** — recruiter-first, highly readable, focused on career evidence.
+- Shared logic (data access, SEO, accessibility primitives) lives outside themes; no theme imports another theme's components.
 
-## Caveats
+### Public site vs. admin
+- Keep separate: **public rendering**, **private administration**, **theme preview**, **theme activation**.
+- Theme preview is **session-scoped** and must never affect what public visitors see.
+- Do not add runtime content writes beyond theme activation until persistence (locking, revisions, backups) is proven safe for the deployment platform. Put any new storage behind a clear interface.
+- Keep a path open to a future multi-user platform, but do not build multi-user infrastructure now.
 
-- No formatter detected — no Prettier config or format script.
-- `node_modules/` is not listed in `.gitignore`.
+## Quality bar
 
-## Boundaries
+- **Responsive:** mobile, tablet, laptop, desktop.
+- **Accessibility:** semantic HTML, full keyboard access, visible focus states, sufficient contrast, `prefers-reduced-motion` respected.
+- **Performance:** minimal JavaScript; lazy-load heavy assets; 3D/WebGL only in themes that need it (Coding/Executive must not pull in the Cinematic runtime).
+- **Graceful fallbacks** for WebGL, animation, and JavaScript failure — server-rendered content stays readable without either.
+- **Tests** for: content validation, theme resolution, admin access control, preview isolation, routes, responsive behavior.
 
-- Prefer existing local patterns and helper APIs before adding new abstractions.
-- Keep generated, packaged, and runtime asset boundaries intact; do not move files across host/webview ownership without updating build and packaging config.
+## Working rules (must follow)
 
-## Claude Code workflow
+1. Before coding, inspect the repository, requirements, available skills, and deployment target.
+2. Propose a concise architecture and phased plan before major changes.
+3. Implement **one approved phase at a time**. After each phase, report: changed files, decisions, tests run (and results), risks, remaining work.
+4. **Never invent** professional experience, achievements, client names, metrics, or project facts. Use explicit placeholders such as `[TODO: project outcome metric]`.
+5. Never trade accessibility, security, performance, or maintainability for visual effects.
+6. Do not add dependencies or infrastructure without stating a clear reason (record decisions in `docs/portfolio/dependency-decisions.md`).
+7. Preserve existing routes, content, and functionality unless a change is explicitly approved.
+8. Never claim tests, builds, deployments, or integrations succeeded unless actually verified in this session.
+9. No destructive Git operations, no overwriting user changes, and **no commits or pushes without explicit authorization**.
+10. Clearly label what is implemented vs. planned vs. an unresolved deployment assumption.
 
-- For broad or uncertain changes, explore first and propose a plan before editing.
-- Prefer focused verification commands while iterating, then run the full gate before finishing.
-- Keep this file concise; move shared agent instructions to `AGENTS.md` if that file is added later.
+## Conventions
+
+- Import alias `@/` maps to the repo root (`jsconfig.json`).
+- Server-only modules import `"server-only"`; keep pure logic in `.mjs` files so `node --test` can import it without Next.
+- Comment style (from `AGENTS.md`): no comments on the first two lines of a file; prefer short section headings like `// ── Constants ──`; JSDoc only when intent or constraints need explaining.
+- No formatter is configured; match surrounding style.

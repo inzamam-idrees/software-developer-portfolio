@@ -56,3 +56,14 @@ test("Cinematic project detail sections omit empty lists", () => {
     [{ kind: "responsibilities", items: ["b"] }],
   );
 });
+
+test("Cinematic diagram labels come from the Cinematic copy document", async () => {
+  const view = structuredClone(
+    buildCurrentPortfolioView(await loadCanonicalPortfolio({ env: {} })),
+  );
+  view.settings.copy.cinematic.project.diagram.nodes["9"] = ["WIDGETS"];
+  const { featuredProjects, copy } = createCinematicPresentation(view);
+
+  assert.deepEqual(featuredProjects[0].diagram.nodes, ["WIDGETS"]);
+  assert.equal(copy.home.selectedWork.heading, "Built for the real world.");
+});

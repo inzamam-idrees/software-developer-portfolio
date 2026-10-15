@@ -2,7 +2,12 @@ import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
 import CodingBlogCard from "./blog-card";
 
-export default function CodingBlogList({ blogs, showMore = true, routeTitle }) {
+export default function CodingBlogList({
+  blogs,
+  copy,
+  showMore = true,
+  routeTitle,
+}) {
   const Heading = showMore ? "h2" : "h1";
   return (
     <section
@@ -22,14 +27,14 @@ export default function CodingBlogList({ blogs, showMore = true, routeTitle }) {
         <div className="flex items-center">
           <span className="w-24 h-[2px] bg-[#1a1443]" />
           <Heading className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">
-            {routeTitle || "Blogs"}
+            {routeTitle || copy.home.blog.heading}
           </Heading>
           <span className="w-24 h-[2px] bg-[#1a1443]" />
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-5 lg:gap-8 xl:gap-10">
         {blogs.slice(0, showMore ? 6 : undefined).map((blog) => (
-          <CodingBlogCard blog={blog} key={blog.id} />
+          <CodingBlogCard blog={blog} copy={copy} key={blog.id} />
         ))}
       </div>
       {showMore && (
@@ -38,7 +43,7 @@ export default function CodingBlogList({ blogs, showMore = true, routeTitle }) {
             className="flex items-center gap-1 hover:gap-3 rounded-full bg-gradient-to-r from-pink-500 to-violet-600 px-3 md:px-8 py-3 md:py-4 text-center text-xs md:text-sm font-medium uppercase tracking-wider text-white transition-all duration-200 md:font-semibold"
             href="/blog"
           >
-            <span>View More</span> <FaArrowRight size={16} />
+            <span>{copy.home.blog.viewMore}</span> <FaArrowRight size={16} />
           </Link>
         </div>
       )}

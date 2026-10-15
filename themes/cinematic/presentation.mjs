@@ -3,28 +3,22 @@ import { createCinematicView } from "./view.mjs";
 
 export { projectDetailSections };
 
-// ── Conceptual diagram labels per project id ──
-const projectDiagramNodes = Object.freeze({
-  1: ["ASSETS", "LDAP", "AUDIT"],
-  5: ["DOCUMENTS", "TASKS", "ROLES"],
-  4: ["CONTACTS", "PROPERTY", "WORKFLOW"],
-});
-
-export function projectDiagram(project, index) {
+export function projectDiagram(project, index, nodesById = {}) {
   return {
     mark: String(index + 1).padStart(2, "0"),
-    nodes: projectDiagramNodes[project.id] ?? [],
+    nodes: nodesById[String(project.id)] ?? [],
     category: project.category ?? null,
   };
 }
 
 export function createCinematicPresentation(portfolio) {
   const view = createCinematicView(portfolio);
+  const nodesById = view.copy.project.diagram.nodes;
   return Object.freeze({
     ...view,
     featuredProjects: view.featuredProjects.map((project, index) => ({
       ...project,
-      diagram: projectDiagram(project, index),
+      diagram: projectDiagram(project, index, nodesById),
     })),
   });
 }

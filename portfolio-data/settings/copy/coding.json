@@ -1,0 +1,73 @@
+{
+  "navigation": {
+    "items": {
+      "about": "ABOUT",
+      "experience": "EXPERIENCE",
+      "skills": "SKILLS",
+      "education": "EDUCATION",
+      "blogs": "BLOGS",
+      "projects": "PROJECTS"
+    }
+  },
+  "footer": {
+    "credit": "© Software Developer Portfolio by",
+    "star": "Star",
+    "fork": "Fork"
+  },
+  "home": {
+    "hero": {
+      "greeting": "Hello,",
+      "introPrefix": "This is",
+      "introMiddle": ", I'm a Professional",
+      "introSuffix": ".",
+      "contactAction": "Contact me",
+      "resumeAction": "Get Resume"
+    },
+    "about": {
+      "rail": "ABOUT ME",
+      "heading": "Who I am?"
+    },
+    "experience": {
+      "heading": "Experiences"
+    },
+    "skills": {
+      "heading": "Skills"
+    },
+    "projects": {
+      "heading": "PROJECTS",
+      "viewMore": "View More"
+    },
+    "education": {
+      "heading": "Educations",
+      "awardLabel": "Award"
+    },
+    "blog": {
+      "heading": "Blogs",
+      "viewMore": "View More"
+    },
+    "contact": {
+      "rail": "CONTACT"
+    }
+  },
+  "contactForm": {
+    "heading": "Contact with me",
+    "intro": "If you have any questions or concerns, please don't hesitate to contact me. I am open to opportunities that align with my skills and interests.",
+    "name": "Your Name",
+    "email": "Your Email",
+    "message": "Your Message",
+    "send": "Send Message",
+    "sending": "Sending Message..."
+  },
+  "projects": {
+    "heading": "All Projects"
+  },
+  "blog": {
+    "routeHeading": "All Blog",
+    "emptyHeading": "Blogs",
+    "empty": "No articles to show here yet.",
+    "unavailable": "Articles are temporarily unavailable.",
+    "profileAction": "Visit my DEV profile ↗",
+    "fallbackDate": "From the notebook",
+    "readingTime": "{minutes} Min Read"
+  }
+}

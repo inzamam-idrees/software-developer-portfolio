@@ -1,8 +1,13 @@
+import { splitHeadline } from "@/lib/portfolio/format-copy.mjs";
 import SceneFallback from "../scene/scene-fallback";
 import { FiArrowDownRight, FiArrowUpRight } from "react-icons/fi";
 
-export default function Hero({ profile, resume, skills, displayLocation }) {
-  const [headlineLead, headlineEmphasis] = profile.headline.split(/\s+with\s+/i);
+export default function Hero({ profile, resume, skills, displayLocation, copy }) {
+  const connector = copy.headlineConnector;
+  const [headlineLead, headlineEmphasis] = splitHeadline(
+    profile.headline,
+    connector,
+  );
   return (
     <section id="hero" className="hero container" aria-labelledby="hero-title">
       <div className="hero-top hero-metadata">
@@ -21,15 +26,20 @@ export default function Hero({ profile, resume, skills, displayLocation }) {
           <p className="hero-name">{profile.name}</p>
           <h1 id="hero-title" data-reveal>
             {headlineLead}
-            <br />
-            with <span className="serif-word">{headlineEmphasis}</span>
+            {headlineEmphasis && (
+              <>
+                <br />
+                {connector}{" "}
+                <span className="serif-word">{headlineEmphasis}</span>
+              </>
+            )}
           </h1>
           <p className="hero-description" data-reveal>
             {profile.shortIntroduction}
           </p>
           <div className="actions" data-reveal>
             <a className="button primary" href="#projects">
-              Explore my work <FiArrowDownRight aria-hidden="true" />
+              {copy.primaryAction} <FiArrowDownRight aria-hidden="true" />
             </a>
             <a
               className="button secondary"
@@ -37,28 +47,28 @@ export default function Hero({ profile, resume, skills, displayLocation }) {
               target="_blank"
               rel="noreferrer"
             >
-              Résumé <FiArrowUpRight aria-hidden="true" />
+              {copy.resumeAction} <FiArrowUpRight aria-hidden="true" />
             </a>
           </div>
         </div>
         <div className="hero-visual" aria-hidden="true">
           <SceneFallback />
           <span className="visual-caption">
-            SYSTEM_01 <span>INTERFACE → INFRASTRUCTURE</span>
+            {copy.visualCaption} <span>{copy.visualCaptionDetail}</span>
           </span>
         </div>
       </div>
       <div className="hero-bottom">
         <p>
-          Frontend precision.
+          {copy.closingLead}
           <br />
-          <span className="muted">Full-stack perspective.</span>
+          <span className="muted">{copy.closingMuted}</span>
         </p>
         <div className="hero-tech">
           {skills.featured.join(" / ").toUpperCase()}
         </div>
         <a href="#projects" className="scroll-cue">
-          SCROLL TO EXPLORE <span aria-hidden="true">↓</span>
+          {copy.scrollCue} <span aria-hidden="true">↓</span>
         </a>
       </div>
     </section>

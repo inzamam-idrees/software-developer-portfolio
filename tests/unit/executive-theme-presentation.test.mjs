@@ -5,6 +5,7 @@ import { buildCurrentPortfolioView } from "../../lib/portfolio/current-view.mjs"
 import {
   createExecutivePresentation,
   projectDetailSections,
+  projectLinkLabel,
 } from "../../themes/executive/presentation.mjs";
 
 const portfolio = buildCurrentPortfolioView(await loadCanonicalPortfolio());
@@ -68,4 +69,22 @@ test("project detail sections omit empty lists", () => {
 test("Executive presentation exposes the canonical awards", () => {
   const presentation = createExecutivePresentation(portfolio);
   assert.equal(presentation.awards.length, 3);
+});
+
+test("Executive social labels and monogram come from canonical data", () => {
+  const changed = structuredClone(portfolio);
+  changed.settings.copy.shared.socialLabels.linkedIn = "LinkedIn profile";
+  changed.profile.name = "Ada Lovelace King";
+  const presentation = createExecutivePresentation(changed);
+
+  assert.equal(presentation.professionalSocials[0].label, "LinkedIn profile");
+  assert.equal(presentation.monogram, "ALK");
+  assert.equal(createExecutivePresentation(portfolio).monogram, "II");
+});
+
+test("Executive project link labels come from copy for every link kind", () => {
+  const labels = createExecutivePresentation(portfolio).copy.project;
+  assert.equal(projectLinkLabel("demo", labels), "View project");
+  assert.equal(projectLinkLabel("source", labels), labels.viewSource);
+  assert.equal(projectLinkLabel("source", { ...labels, viewSource: "Code" }), "Code");
 });

@@ -1,9 +1,11 @@
 "use client";
 import Link from "next/link";
+import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export default function Navbar({ profile, links }) {
+export default function Navbar({ profile, links, copy }) {
+  const navigation = copy.navigation;
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
   const [activeSection, setActiveSection] = useState(null);
@@ -91,16 +93,17 @@ export default function Navbar({ profile, links }) {
         <Link
           className="wordmark"
           href="/"
-          aria-label={`${profile.name} home`}
+          aria-label={formatCopy(navigation.homeLink, { name: profile.name })}
           onClick={closeMenu}
         >
           {profile.name.split(" ")[0].toLowerCase()}
           <span className="accent">.</span>
           <span className="wordmark-sub">
-            {profile.name.split(" ").slice(1).join(" ")} / ENGINEER
+            {profile.name.split(" ").slice(1).join(" ")} /{" "}
+            {navigation.wordmarkRole}
           </span>
         </Link>
-        <nav aria-label="Main navigation">
+        <nav aria-label={navigation.main}>
           <ul className="main-menu desktop-menu">{items()}</ul>
           <details
             className="mobile-disclosure"
@@ -112,11 +115,17 @@ export default function Navbar({ profile, links }) {
               ref={summary}
               className="menu-toggle"
               role="button"
-              aria-label={ready ? (open ? "Close menu" : "Open menu") : "Menu"}
+              aria-label={
+                ready
+                  ? open
+                    ? navigation.closeMenu
+                    : navigation.openMenu
+                  : navigation.menu
+              }
               aria-expanded={ready ? open : undefined}
               aria-controls="main-menu"
             >
-              {open ? "Close −" : "Menu +"}
+              {open ? navigation.menuToggleClose : navigation.menuToggleOpen}
             </summary>
             <ul id="main-menu" className="main-menu mobile-menu">
               {items()}

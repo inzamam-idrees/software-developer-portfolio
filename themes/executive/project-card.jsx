@@ -1,12 +1,12 @@
-import { projectDetailSections } from "./presentation.mjs";
-
-const detailLabels = { features: "Key features", responsibilities: "My role" };
+import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
+import { projectDetailSections, projectLinkLabel } from "./presentation.mjs";
 
 function ProjectLink({ href, children }) {
   return <a href={href} target="_blank" rel="noreferrer">{children} <span aria-hidden="true">↗</span></a>;
 }
 
-export default function ExecutiveProjectCard({ project, index, detailed = false }) {
+export default function ExecutiveProjectCard({ project, index, copy, detailed = false }) {
+  const labels = copy.project;
   const links = Object.entries(project.links);
   return (
     <article className="executive-project">
@@ -17,22 +17,22 @@ export default function ExecutiveProjectCard({ project, index, detailed = false 
             <p className="executive-kicker">{[project.category, project.role].filter(Boolean).join(" / ")}</p>
             <h3>{project.title}</h3>
           </div>
-          {links.length > 0 && <div className="executive-project-links">{links.map(([kind, href]) => <ProjectLink href={href} key={kind}>{kind === "demo" ? "View project" : kind}</ProjectLink>)}</div>}
+          {links.length > 0 && <div className="executive-project-links">{links.map(([kind, href]) => <ProjectLink href={href} key={kind}>{projectLinkLabel(kind, labels)}</ProjectLink>)}</div>}
         </div>
         {detailed && project.problem && project.solution ? (
           <div className="executive-project-story">
-            <div><p className="executive-label">Challenge</p><p>{project.problem}</p></div>
-            <div><p className="executive-label">Approach</p><p>{project.solution}</p></div>
-            {project.outcome && <div><p className="executive-label">Outcome</p><p>{project.outcome}</p></div>}
+            <div><p className="executive-label">{labels.challenge}</p><p>{project.problem}</p></div>
+            <div><p className="executive-label">{labels.approach}</p><p>{project.solution}</p></div>
+            {project.outcome && <div><p className="executive-label">{labels.outcome}</p><p>{project.outcome}</p></div>}
           </div>
         ) : <p className="executive-project-description">{project.longDescription || project.shortDescription}</p>}
         {detailed && projectDetailSections(project).map(({ kind, items }) => (
           <div className="executive-project-details" key={kind}>
-            <p className="executive-label">{detailLabels[kind]}</p>
+            <p className="executive-label">{labels[kind]}</p>
             <ul>{items.map((item) => <li key={item}>{item}</li>)}</ul>
           </div>
         ))}
-        <ul className="executive-tech-list" aria-label={`${project.title} technologies`}>
+        <ul className="executive-tech-list" aria-label={formatCopy(copy.projects.technologiesLabel, { title: project.title })}>
           {project.technologies.map((technology) => <li key={technology}>{technology}</li>)}
         </ul>
       </div>

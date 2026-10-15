@@ -9,13 +9,17 @@ export default function CinematicShell({ portfolio, children }) {
   return (
     <div className="theme-cinematic" data-theme-id="cinematic">
       <a className="skip-link" href="#main-content">
-        Skip to content
+        {view.copy.navigation.skipToContent}
       </a>
-      <Navbar profile={view.profile} links={links} />
+      <Navbar profile={view.profile} links={links} copy={view.copy} />
       <main id="main-content" tabIndex={-1}>
         {children}
       </main>
-      <Footer profile={view.profile} site={view.settings.site} />
+      <Footer
+        profile={view.profile}
+        site={view.settings.site}
+        copy={view.copy}
+      />
     </div>
   );
 }

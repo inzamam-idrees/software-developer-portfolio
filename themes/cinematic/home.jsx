@@ -13,39 +13,56 @@ import { createCinematicPresentation } from "./presentation.mjs";
 
 export default function CinematicHome({ portfolio }) {
   const view = createCinematicPresentation(portfolio);
+  const copy = view.copy;
+  const home = copy.home;
 
   return (
-    <ExperienceShell>
+    <ExperienceShell motionCopy={copy.motion}>
       <PersonJsonLd portfolio={view} />
       <Hero
         profile={view.profile}
         resume={view.resume}
         skills={view.skills}
         displayLocation={view.displayLocation}
+        copy={home.hero}
       />
       <SelectedWork
         projects={view.featuredProjects}
         projectCount={view.projects.length}
+        copy={copy}
       />
       <About
         profile={view.profile}
         about={view.about}
         social={view.social}
         displayLocation={view.displayLocation}
+        copy={home.about}
       />
-      <Expertise skills={view.skills} />
-      <Experience experiences={view.experience} />
-      <Education educations={view.education} awards={view.awards} />
+      <Expertise skills={view.skills} copy={home.expertise} />
+      <Experience experiences={view.experience} copy={home.experience} />
+      <Education
+        educations={view.education}
+        awards={view.awards}
+        copy={home.education}
+      />
       <Suspense
         fallback={
-          <section className="chapter container" aria-label="Loading writing">
-            <p className="body-copy">Loading the notebook…</p>
+          <section
+            className="chapter container"
+            aria-label={home.writing.loadingLabel}
+          >
+            <p className="body-copy">{home.writing.loading}</p>
           </section>
         }
       >
-        <Writing articles={view.articles} social={view.social} />
+        <Writing
+          articles={view.articles}
+          social={view.social}
+          copy={home.writing}
+          blogCopy={copy.blog}
+        />
       </Suspense>
-      <ContactSection contact={view.contact} social={view.social} />
+      <ContactSection contact={view.contact} social={view.social} copy={copy} />
     </ExperienceShell>
   );
 }

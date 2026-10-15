@@ -13,6 +13,7 @@ import CodingContactForm from "./contact-form";
 
 export default async function CodingHome({ portfolio }) {
   const presentation = createCodingPresentation(portfolio);
+  const home = presentation.copy.home;
   const result = await getArticles(presentation.personalData.devUsername);
 
   return (
@@ -21,21 +22,30 @@ export default async function CodingHome({ portfolio }) {
       <HeroSection
         personalData={presentation.personalData}
         skillsData={presentation.skillsData}
+        copy={home.hero}
       />
-      <AboutSection personalData={presentation.personalData} />
-      <Experience experiences={presentation.experiences} />
-      <Skills skillsData={presentation.skillsData} />
-      <Projects projectsData={presentation.projectsData} />
+      <AboutSection personalData={presentation.personalData} copy={home.about} />
+      <Experience
+        experiences={presentation.experiences}
+        copy={home.experience}
+      />
+      <Skills skillsData={presentation.skillsData} copy={home.skills} />
+      <Projects projectsData={presentation.projectsData} copy={home.projects} />
       <Education
         educations={presentation.educations}
         awards={presentation.awards}
+        copy={home.education}
       />
       {result.articles.length > 0 && (
-        <CodingBlogList blogs={result.articles} />
+        <CodingBlogList
+          blogs={result.articles}
+          copy={presentation.copy}
+        />
       )}
       <ContactSection
         personalData={presentation.personalData}
-        form={<CodingContactForm />}
+        copy={home.contact}
+        form={<CodingContactForm copy={presentation.copy.contactForm} />}
       />
     </>
   );

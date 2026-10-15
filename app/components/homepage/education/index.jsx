@@ -5,12 +5,12 @@ import lottieFile from '../../../assets/lottie/study.json';
 import AnimationLottie from "../../helper/animation-lottie";
 import GlowCard from "../../helper/glow-card";
 
-function Education({ educations, awards = [] }) {
+function Education({ educations, awards = [], copy }) {
   return (
     <div id="education" className="relative z-50 border-t my-12 lg:my-24 border-[#25213b]">
       <Image
         src="/section.svg"
-        alt="Hero"
+        alt=""
         width={1572}
         height={795}
         className="absolute top-0 -z-10"
@@ -25,7 +25,7 @@ function Education({ educations, awards = [] }) {
         <div className="flex  items-center">
           <span className="w-24 h-[2px] bg-[#1a1443]"></span>
           <span className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">
-            Educations
+            {copy.heading}
           </span>
           <span className="w-24 h-[2px] bg-[#1a1443]"></span>
         </div>
@@ -47,7 +47,7 @@ function Education({ educations, awards = [] }) {
                     <div className="p-3 relative text-white">
                       <Image
                         src="/blur-23.svg"
-                        alt="Hero"
+                        alt=""
                         width={1080}
                         height={200}
                         className="absolute bottom-0 opacity-80"
@@ -87,7 +87,7 @@ function Education({ educations, awards = [] }) {
                         </div>
                         <div>
                           <p className="text-xs mb-1 font-mono uppercase tracking-widest text-violet-400">
-                            Award
+                            {copy.awardLabel}
                           </p>
                           <p className="text-base sm:text-xl mb-2 font-medium uppercase">
                             {award.title}

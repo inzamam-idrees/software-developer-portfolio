@@ -3,16 +3,17 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-const items = [
-  ["ABOUT", "/#about"],
-  ["EXPERIENCE", "/#experience"],
-  ["SKILLS", "/#skills"],
-  ["EDUCATION", "/#education"],
-  ["BLOGS", "/blog"],
-  ["PROJECTS", "/#projects"],
+const destinations = [
+  ["about", "/#about"],
+  ["experience", "/#experience"],
+  ["skills", "/#skills"],
+  ["education", "/#education"],
+  ["blogs", "/blog"],
+  ["projects", "/#projects"],
 ];
 
-export default function CodingNavigation({ profile }) {
+export default function CodingNavigation({ profile, copy }) {
+  const items = destinations.map(([id, href]) => [copy.items[id], href]);
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
   const button = useRef(null);
@@ -35,7 +36,7 @@ export default function CodingNavigation({ profile }) {
   return (
     <nav
       className="coding-navigation bg-transparent"
-      aria-label="Main navigation"
+      aria-label={copy.main}
       onKeyDown={(event) => {
         if (event.key === "Escape" && open) {
           event.preventDefault();
@@ -60,12 +61,14 @@ export default function CodingNavigation({ profile }) {
           type="button"
           aria-controls="coding-mobile-menu"
           aria-expanded={open}
-          aria-label={open ? "Close menu" : "Open menu"}
+          aria-label={open ? copy.closeMenu : copy.openMenu}
           data-ready={ready}
           disabled={!ready}
           onClick={() => setOpen((current) => !current)}
         >
-          <span aria-hidden="true">{open ? "Close −" : "Menu +"}</span>
+          <span aria-hidden="true">
+            {open ? copy.menuToggleClose : copy.menuToggleOpen}
+          </span>
         </button>
         <ul
           className="hidden text-sm lg:flex lg:flex-row lg:space-x-1"

@@ -1,11 +1,16 @@
 import { ImageResponse } from "next/og";
+import { splitHeadline } from "@/lib/portfolio/format-copy.mjs";
 import { getCurrentPortfolioView } from "@/lib/portfolio/server.mjs";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export async function GET() {
   const { profile, settings } = await getCurrentPortfolioView();
-  const [headlineLead, headlineEmphasis] = profile.headline.split(/\s+with\s+/i);
+  const connector = settings.copy.shared.socialImage.headlineConnector;
+  const [headlineLead, headlineEmphasis] = splitHeadline(
+    profile.headline,
+    connector,
+  );
   return new ImageResponse(
     (
       <div
@@ -34,8 +39,8 @@ export async function GET() {
           }}
         >
           {headlineLead}
-          <br />
-          with {headlineEmphasis}
+          {headlineEmphasis && <br />}
+          {headlineEmphasis && `${connector} ${headlineEmphasis}`}
         </div>
         <div style={{ fontSize: 24, color: "#AEB8C1", marginTop: 48 }}>
           {settings.seo.openGraph.description}

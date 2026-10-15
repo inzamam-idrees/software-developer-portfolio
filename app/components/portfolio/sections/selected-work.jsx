@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import ChapterHeading from "../ui/chapter-heading";
 import ProjectSummary from "../ui/project-summary";
-export default function SelectedWork({ projects, projectCount }) {
+export default function SelectedWork({ projects, projectCount, copy }) {
+  const section = copy.home.selectedWork;
   return (
     <section
       id="projects"
@@ -11,8 +13,9 @@ export default function SelectedWork({ projects, projectCount }) {
       <ChapterHeading
         id="projects"
         number="01"
-        title="Built for the real world."
-        description="A selection of platforms connecting complex business needs with thoughtful software."
+        label={section.label}
+        title={section.heading}
+        description={section.description}
       />
       {projects.map((project, index) => (
         <ProjectSummary
@@ -20,11 +23,12 @@ export default function SelectedWork({ projects, projectCount }) {
           project={project}
           visual={project.diagram}
           index={index}
+          copy={copy}
           featured
         />
       ))}
       <Link className="button secondary" href="/project">
-        Explore all {projectCount} projects ↗
+        {formatCopy(section.exploreAll, { count: projectCount })}
       </Link>
     </section>
   );

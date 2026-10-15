@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { validateContact } from "@/lib/contact.mjs";
 const empty = { name: "", email: "", message: "" };
-export default function ContactForm() {
+export default function ContactForm({ copy }) {
   const [ready, setReady] = useState(false);
   useEffect(() => setReady(true), []);
   const [input, setInput] = useState(empty),
@@ -33,11 +33,9 @@ export default function ContactForm() {
       const data = await response.json();
       if (!response.ok || !data.success) throw new Error("Delivery failed");
       setInput(empty);
-      setStatus("Message sent. Thank you for reaching out.");
+      setStatus(copy.sent);
     } catch {
-      setStatus(
-        "Could not send your message. Please try again or email me directly.",
-      );
+      setStatus(copy.failed);
     } finally {
       sending.current = false;
       setBusy(false);
@@ -48,12 +46,12 @@ export default function ContactForm() {
       className="contact-form"
       onSubmit={submit}
       noValidate
-      aria-label="Contact form"
+      aria-label={copy.label}
     >
       <div className="form-row">
         {[
-          ["name", "Your name", "text", "name"],
-          ["email", "Email address", "email", "email"],
+          ["name", copy.name, "text", "name"],
+          ["email", copy.email, "email", "email"],
         ].map(([field, label, type, autocomplete]) => (
           <div className="form-field" key={field}>
             <label htmlFor={"contact-" + field}>{label}</label>
@@ -78,7 +76,7 @@ export default function ContactForm() {
         ))}
       </div>
       <div className="form-field">
-        <label htmlFor="contact-message">What are you building?</label>
+        <label htmlFor="contact-message">{copy.message}</label>
         <textarea
           id="contact-message"
           name="message"
@@ -102,10 +100,10 @@ export default function ContactForm() {
           type="submit"
           disabled={busy || !ready}
         >
-          {busy ? "Sending…" : "Send message"}{" "}
+          {busy ? copy.sending : copy.send}{" "}
           <span aria-hidden="true">↗</span>
         </button>
-        <p className="eyebrow muted">A CONVERSATION STARTS HERE.</p>
+        <p className="eyebrow muted">{copy.note}</p>
       </div>
       <p
         className="form-status"

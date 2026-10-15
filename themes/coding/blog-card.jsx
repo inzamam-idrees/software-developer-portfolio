@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { BsHeartFill } from "react-icons/bs";
 import { FaCommentAlt } from "react-icons/fa";
+import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import { timeConverter } from "@/utils/time-converter";
 
-export default function CodingBlogCard({ blog }) {
+export default function CodingBlogCard({ blog, copy }) {
   return (
     <article
       className="border border-[#1d293a] hover:border-[#464c6a] transition-all duration-500 bg-[#1b203e] rounded-lg relative group overflow-hidden"
@@ -15,7 +16,7 @@ export default function CodingBlogCard({ blog }) {
           href={blog.url}
           target="_blank"
           rel="noreferrer"
-          aria-label={`Read ${blog.title}`}
+          aria-label={formatCopy(copy.articles.readArticle, { title: blog.title })}
         >
           <Image
             src={blog.cover_image}
@@ -31,7 +32,9 @@ export default function CodingBlogCard({ blog }) {
           className="flex justify-between items-center gap-3 text-[#16f2b3] text-sm"
           data-coding-blog-engagement="true"
         >
-          <p>{blog.published_at ? timeConverter(blog.published_at) : "From the notebook"}</p>
+          <p>{blog.published_at
+              ? timeConverter(blog.published_at)
+              : copy.blog.fallbackDate}</p>
           <div className="flex items-center gap-3 shrink-0">
             <p className="flex items-center gap-1">
               <BsHeartFill aria-hidden="true" />
@@ -52,7 +55,9 @@ export default function CodingBlogCard({ blog }) {
         </h2>
         {blog.reading_time_minutes && (
           <p className="mb-2 text-sm text-[#16f2b3]">
-            {blog.reading_time_minutes} Min Read
+            {formatCopy(copy.blog.readingTime, {
+              minutes: blog.reading_time_minutes,
+            })}
           </p>
         )}
         {blog.description && (

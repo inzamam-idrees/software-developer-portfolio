@@ -14,6 +14,7 @@ export function createCodingPresentation(portfolio) {
   const view = createCodingView(portfolio);
   return {
     view,
+    copy: view.copy,
     personalData: {
       name: view.profile.name,
       profile: view.profile.image,

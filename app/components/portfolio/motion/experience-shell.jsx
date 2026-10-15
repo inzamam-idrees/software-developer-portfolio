@@ -7,7 +7,7 @@ import MotionPreferences, {
 } from "./motion-preferences";
 import { createSceneState } from "./scene-state.mjs";
 import SceneLayer from "../scene/scene-layer";
-function Experience({ children }) {
+function Experience({ children, motionCopy }) {
   const { enabled } = useMotion();
   const stateRef = useRef(createSceneState());
   const rootRef = useRef(null);
@@ -23,14 +23,14 @@ function Experience({ children }) {
       <ScrollCoordinator stateRef={stateRef} rootRef={rootRef} />
       <SceneLayer stateRef={stateRef} onStatus={setSceneStatus} />
       <div className="story-content">{children}</div>
-      <MotionControl />
+      <MotionControl copy={motionCopy} />
     </div>
   );
 }
-export default function ExperienceShell({ children }) {
+export default function ExperienceShell({ children, motionCopy }) {
   return (
     <MotionPreferences>
-      <Experience>{children}</Experience>
+      <Experience motionCopy={motionCopy}>{children}</Experience>
     </MotionPreferences>
   );
 }

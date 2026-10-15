@@ -1,3 +1,7 @@
+import { projectDetailSections } from "./presentation.mjs";
+
+const detailLabels = { features: "Key features", responsibilities: "My role" };
+
 function ProjectLink({ href, children }) {
   return <a href={href} target="_blank" rel="noreferrer">{children} <span aria-hidden="true">↗</span></a>;
 }
@@ -22,6 +26,12 @@ export default function ExecutiveProjectCard({ project, index, detailed = false 
             {project.outcome && <div><p className="executive-label">Outcome</p><p>{project.outcome}</p></div>}
           </div>
         ) : <p className="executive-project-description">{project.longDescription || project.shortDescription}</p>}
+        {detailed && projectDetailSections(project).map(({ kind, items }) => (
+          <div className="executive-project-details" key={kind}>
+            <p className="executive-label">{detailLabels[kind]}</p>
+            <ul>{items.map((item) => <li key={item}>{item}</li>)}</ul>
+          </div>
+        ))}
         <ul className="executive-tech-list" aria-label={`${project.title} technologies`}>
           {project.technologies.map((technology) => <li key={technology}>{technology}</li>)}
         </ul>

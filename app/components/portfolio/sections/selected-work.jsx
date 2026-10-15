@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { projectVisuals } from "../cinematic-presentation";
 import ChapterHeading from "../ui/chapter-heading";
 import ProjectSummary from "../ui/project-summary";
 export default function SelectedWork({ projects, projectCount }) {
@@ -19,13 +18,13 @@ export default function SelectedWork({ projects, projectCount }) {
         <ProjectSummary
           key={project.id}
           project={project}
-          visual={projectVisuals[project.id]}
+          visual={project.diagram}
           index={index}
           featured
         />
       ))}
       <Link className="button secondary" href="/project">
-        Explore all {projectCount === 8 ? "eight" : projectCount} projects ↗
+        Explore all {projectCount} projects ↗
       </Link>
     </section>
   );

@@ -30,10 +30,14 @@ async (sourcePage) => {
     await page.goto(origin, { waitUntil: "domcontentloaded" });
     await page.locator('[data-theme-id="executive"]').waitFor();
     await page.getByRole("heading", { level: 1, name: /Engineering with intention/i }).waitFor();
-    for (const text of ["Senior Software Engineer", "Over 5 years", "Full-stack engineering", "Selected work", "Professional experience", "Technical expertise", "Get Resume"]) {
-      if (!(await page.getByText(text, { exact: text !== "Get Resume" }).first().isVisible())) throw new Error(`${text} is not readily visible in the Executive document at ${viewport.width}`);
+    for (const text of ["Senior Full Stack Engineer", "7+ years", "Full-stack engineering", "Selected work", "Professional experience", "Technical expertise", "Get Resume"]) {
+      if (!(await page.getByText(text, { exact: !["Get Resume", "Senior Full Stack Engineer"].includes(text) }).first().isVisible())) throw new Error(`${text} is not readily visible in the Executive document at ${viewport.width}`);
     }
     if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error(`Executive horizontal overflow at ${viewport.width}`);
+    const awards = await page.locator("#awards h3").allTextContents();
+    if (awards.join("|") !== "Student of the Year|High GPA Achievers|Coding Competition Winner") throw new Error(`Executive awards missing at ${viewport.width}: ${awards}`);
+    if ((await page.locator(".executive-timeline .executive-highlights").count()) !== 3) throw new Error(`Executive highlights missing at ${viewport.width}`);
+    if ((await page.locator(".executive-timeline ul:empty").count()) !== 0) throw new Error(`Executive empty highlight list at ${viewport.width}`);
     if (await page.locator("canvas,.experience-shell,.motion-control").count()) throw new Error(`Executive initialized Cinematic UI at ${viewport.width}`);
 
     if (viewport.width <= 980) {
@@ -45,7 +49,7 @@ async (sourcePage) => {
       if (await page.getByRole("navigation", { name: "Mobile navigation" }).isVisible()) throw new Error(`Mobile menu did not close at ${viewport.width}`);
     }
 
-    await page.screenshot({ path: `artifacts/portfolio/phase4-executive-${viewport.width}x${viewport.height}.png`, fullPage: true });
+    await page.screenshot({ path: `artifacts/portfolio/phase4-executive-${viewport.width}x${viewport.height}.png`, fullPage: true, caret: "initial" });
     const heavyScripts = [...scripts.entries()].filter(([, body]) => signature.test(Buffer.from(body).toString("utf8"))).map(([url, body]) => ({ url, bytes: body.length }));
     if (heavyScripts.length) throw new Error(`Executive downloaded Cinematic heavy chunks: ${JSON.stringify(heavyScripts)}`);
     if (failures.length) throw new Error(`Executive browser errors at ${viewport.width}: ${failures.join(" | ")}`);

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  awardSchema,
   educationSchema,
   experienceSchema,
   profileSchema,
@@ -11,6 +12,7 @@ import {
 const validProfile = {
   name: "INZAMAM IDREES",
   designation: "Senior Software Engineer",
+  tagline: "Senior Full Stack Engineer | AI-Enabled Web Applications",
   headline: "Engineering with intention.",
   location: "Lahore, Punjab, Pakistan",
   image: "/inzamam_profile.jpg",
@@ -44,6 +46,8 @@ const validProject = {
   problem: "IT assets need a clear history.",
   solution: "A role-based inventory platform.",
   outcome: "A connected view of the hardware lifecycle.",
+  features: ["Role-based access control with user authentication"],
+  responsibilities: ["Led frontend Angular development"],
 };
 
 test("profile schema accepts the existing factual profile shape", () => {
@@ -94,12 +98,14 @@ test("project schema rejects featured priority on a non-featured project", () =>
 test("experience schema accepts supplied date precision and optional details", () => {
   const result = experienceSchema.parse({
     id: 1,
-    company: "Nextbridge Ltd. (Lahore, Pakistan)",
+    company: "Nextbridge Ltd.",
+    location: "Lahore, Punjab",
     role: "Senior Software Engineer",
     startDate: "2022-07",
     endDate: null,
     current: true,
     description: null,
+    highlights: ["Developed lightweight JavaScript e-commerce widgets."],
     technologies: [],
     order: 1,
   });
@@ -111,11 +117,13 @@ test("experience schema rejects impossible date formats and contradictory curren
     experienceSchema.safeParse({
       id: 1,
       company: "Nextbridge Ltd.",
+      location: "Lahore, Punjab",
       role: "Senior Software Engineer",
       startDate: "July 2022",
       endDate: "2024-01",
       current: true,
       description: null,
+      highlights: [],
       technologies: [],
       order: 1,
     }).success,
@@ -155,6 +163,7 @@ test("skills schema accepts categorized technologies and featured ordering", () 
   const result = skillsSchema.parse({
     all: ["Angular", "React", "Figma"],
     featured: ["Angular", "React"],
+    proficiency: { Angular: 5, React: 5 },
     categories: [
       {
         id: "frontend",
@@ -174,6 +183,7 @@ test("skills schema rejects duplicate technologies and unknown featured skills",
     skillsSchema.safeParse({
       all: ["Angular", "Angular"],
       featured: ["Vue"],
+      proficiency: {},
       categories: [
         {
           id: "frontend",
@@ -187,4 +197,101 @@ test("skills schema rejects duplicate technologies and unknown featured skills",
     }).success,
     false,
   );
+});
+
+const validExperience = {
+  id: 1,
+  company: "Nextbridge Ltd.",
+  location: "Lahore, Punjab",
+  role: "Senior Software Engineer",
+  startDate: "2022-07",
+  endDate: null,
+  current: true,
+  description: null,
+  highlights: [],
+  technologies: [],
+  order: 1,
+};
+
+const validSkills = {
+  all: ["Angular", "React"],
+  featured: ["Angular"],
+  proficiency: { Angular: 5 },
+  categories: [
+    {
+      id: "frontend",
+      label: "FRONTEND",
+      title: "Interfaces",
+      summary: "Frontend systems.",
+      technologies: ["Angular", "React"],
+      order: 1,
+    },
+  ],
+};
+
+const validAward = {
+  id: 1,
+  title: "Student of the Year",
+  issuer: "University of Gujrat",
+  location: "Sialkot, Punjab",
+  startDate: "2015-09",
+  endDate: "2016-08",
+  order: 1,
+};
+
+function issuePaths(result) {
+  return result.error.issues.map((issue) => issue.path.join("."));
+}
+
+test("award schema accepts a dated award", () => {
+  assert.equal(awardSchema.parse(validAward).title, "Student of the Year");
+});
+
+test("award schema rejects reversed dates", () => {
+  const result = awardSchema.safeParse({ ...validAward, endDate: "2015-08" });
+  assert.equal(result.success, false);
+  assert.deepEqual(issuePaths(result), ["endDate"]);
+});
+
+test("experience schema requires location and highlights", () => {
+  const { location, ...withoutLocation } = validExperience;
+  assert.equal(experienceSchema.safeParse(withoutLocation).success, false);
+  const { highlights, ...withoutHighlights } = validExperience;
+  assert.equal(experienceSchema.safeParse(withoutHighlights).success, false);
+  assert.equal(
+    experienceSchema.safeParse({ ...validExperience, highlights: ["a", "a"] })
+      .success,
+    false,
+  );
+});
+
+test("project schema requires features and responsibilities arrays", () => {
+  const { features, ...withoutFeatures } = validProject;
+  assert.equal(projectSchema.safeParse(withoutFeatures).success, false);
+  const { responsibilities, ...withoutResponsibilities } = validProject;
+  assert.equal(projectSchema.safeParse(withoutResponsibilities).success, false);
+  assert.equal(
+    projectSchema.safeParse({ ...validProject, features: [] }).success,
+    true,
+  );
+});
+
+test("skills schema rejects proficiency for unknown skills", () => {
+  const unknown = skillsSchema.safeParse({
+    ...validSkills,
+    proficiency: { RAG: 3 },
+  });
+  assert.equal(unknown.success, false);
+  assert.ok(issuePaths(unknown).includes("proficiency.RAG"));
+  assert.equal(
+    skillsSchema.safeParse({ ...validSkills, proficiency: { Angular: 6 } })
+      .success,
+    false,
+  );
+});
+
+test("profile schema requires a tagline", () => {
+  const { tagline, ...withoutTagline } = validProfile;
+  assert.equal(profileSchema.safeParse(withoutTagline).success, false);
+  assert.equal(profileSchema.safeParse(validProfile).success, true);
 });

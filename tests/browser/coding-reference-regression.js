@@ -31,13 +31,30 @@ async (sourcePage) => {
       }
       const routeName = route === "/" ? "home" : route.slice(1);
       const path = `artifacts/portfolio/coding-reference-${routeName}-${viewport.width}x${viewport.height}.png`;
-      await sourcePage.screenshot({ path, fullPage: true });
+      await sourcePage.screenshot({ path, fullPage: true, caret: "initial" });
       screenshots.push(path);
     }
   }
 
   await sourcePage.setViewportSize({ width: 1280, height: 800 });
   await sourcePage.goto(origin, { waitUntil: "domcontentloaded" });
+  await sourcePage.locator("#education [data-award]").first().waitFor();
+  const awardCount = await sourcePage.locator("#education [data-award]").count();
+  if (awardCount !== 3) throw new Error(`Coding awards expected 3, got ${awardCount}`);
+  const labelledAwards = await sourcePage
+    .locator("#education [data-award]")
+    .filter({ has: sourcePage.getByText("Award", { exact: true }) })
+    .count();
+  if (labelledAwards !== 3)
+    throw new Error(`Coding award cards must carry a visible Award label, got ${labelledAwards}`);
+  if ((await sourcePage.locator("#experience [data-highlights]").count()) !== 3)
+    throw new Error("Coding experience highlights missing");
+  const ragBadge = sourcePage.locator("#skills").getByText("RAG", { exact: true }).first();
+  await ragBadge.waitFor({ timeout: 15000 }).catch(() => {
+    throw new Error("RAG skill badge missing");
+  });
+  if (await sourcePage.locator('#skills img[alt="RAG"]').count())
+    throw new Error("RAG must render as a text badge, not an image");
   if (await sourcePage.locator('button[aria-controls="coding-mobile-menu"]').isVisible()) {
     throw new Error("Coding mobile menu control is visible on desktop");
   }

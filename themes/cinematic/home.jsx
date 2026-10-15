@@ -9,10 +9,10 @@ import Hero from "@/app/components/portfolio/sections/hero";
 import SelectedWork from "@/app/components/portfolio/sections/selected-work";
 import Writing from "@/app/components/portfolio/sections/writing";
 import PersonJsonLd from "@/themes/shared/person-json-ld";
-import { createCinematicView } from "./view.mjs";
+import { createCinematicPresentation } from "./presentation.mjs";
 
 export default function CinematicHome({ portfolio }) {
-  const view = createCinematicView(portfolio);
+  const view = createCinematicPresentation(portfolio);
 
   return (
     <ExperienceShell>
@@ -35,7 +35,7 @@ export default function CinematicHome({ portfolio }) {
       />
       <Expertise skills={view.skills} />
       <Experience experiences={view.experience} />
-      <Education educations={view.education} />
+      <Education educations={view.education} awards={view.awards} />
       <Suspense
         fallback={
           <section className="chapter container" aria-label="Loading writing">

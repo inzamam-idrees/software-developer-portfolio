@@ -1,4 +1,7 @@
+import { projectDetailSections } from "../shared/project-detail.mjs";
 import { createExecutiveView } from "./view.mjs";
+
+export { projectDetailSections };
 
 const professionalSocialLabels = Object.freeze({
   linkedIn: "LinkedIn",

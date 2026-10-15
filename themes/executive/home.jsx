@@ -49,13 +49,19 @@ export default function ExecutiveHome({ portfolio }) {
       <section className="executive-section" id="experience" aria-labelledby="executive-experience-title">
         <div className="executive-section-heading"><div><p className="executive-kicker">Professional experience</p><h2 id="executive-experience-title">Progression through product engineering.</h2></div></div>
         <ol className="executive-timeline">{view.experience.map((item, index) => (
-          <li key={item.id}><span className="executive-timeline-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><div><h3>{item.role}</h3><p>{item.company}</p></div><p className="executive-duration">{item.duration.replace(/[()]/g, "")}</p>{item.description && <p>{item.description}</p>}</li>
+          <li key={item.id}><span className="executive-timeline-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><div><h3>{item.role}</h3><p>{item.company} · {item.location}</p></div><p className="executive-duration">{item.duration.replace(/[()]/g, "")}</p>{item.description && <p>{item.description}</p>}{item.highlights.length > 0 && <ul className="executive-highlights">{item.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul>}</li>
         ))}</ol>
       </section>
       <section className="executive-section executive-education" id="education" aria-labelledby="executive-education-title">
         <div><p className="executive-kicker">Education</p><h2 id="executive-education-title">Foundations in software engineering.</h2></div>
         <div>{view.education.map((item) => <article key={item.id}><p className="executive-label">{item.duration}</p><h3>{item.qualification}</h3><p>{item.institution}</p></article>)}</div>
       </section>
+      {view.awards.length > 0 && (
+        <section className="executive-section executive-education" id="awards" aria-labelledby="executive-awards-title">
+          <div><p className="executive-kicker">Recognition</p><h2 id="executive-awards-title">Awards &amp; honors.</h2></div>
+          <div>{view.awards.map((award) => <article key={award.id}><p className="executive-label">{award.duration}</p><h3>{award.title}</h3><p>{award.issuer}, {award.location}</p></article>)}</div>
+        </section>
+      )}
       <section className="executive-contact" id="contact" aria-labelledby="executive-contact-title">
         <div className="executive-contact-intro"><p className="executive-kicker">Contact</p><h2 id="executive-contact-title">{view.contact.heading}</h2><p>{view.contact.introduction}</p><a className="executive-email" href={`mailto:${view.contact.email}`}>{view.contact.email}</a><p>{view.contact.location}</p></div>
         {view.settings.features.contactForm && view.contact.form.enabled && <ContactForm />}

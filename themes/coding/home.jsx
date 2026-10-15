@@ -26,7 +26,10 @@ export default async function CodingHome({ portfolio }) {
       <Experience experiences={presentation.experiences} />
       <Skills skillsData={presentation.skillsData} />
       <Projects projectsData={presentation.projectsData} />
-      <Education educations={presentation.educations} />
+      <Education
+        educations={presentation.educations}
+        awards={presentation.awards}
+      />
       {result.articles.length > 0 && (
         <CodingBlogList blogs={result.articles} />
       )}

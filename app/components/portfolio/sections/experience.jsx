@@ -16,7 +16,16 @@ export default function Experience({ experiences }) {
                 {job.duration.replace(/[()]/g, "")}
               </p>
               <h3>{job.role}</h3>
-              <p className="body-copy">{job.company}</p>
+              <p className="body-copy">
+                {job.company} · {job.location}
+              </p>
+              {job.highlights.length > 0 && (
+                <ul className="career-highlights">
+                  {job.highlights.map((highlight) => (
+                    <li key={highlight}>{highlight}</li>
+                  ))}
+                </ul>
+              )}
             </div>
             <span className="career-line" aria-hidden="true" />
           </li>

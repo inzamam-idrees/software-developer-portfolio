@@ -1,17 +1,27 @@
 {
   "name": "INZAMAM IDREES",
-  "designation": "Senior Software Engineer",
+  "designation": "Senior Full Stack Engineer",
+  "tagline": "Senior Full Stack Engineer | AI-Enabled Web Applications | JavaScript, React, Angular, Node.js, Python",
   "headline": "Engineering with intention.",
   "location": "Lahore, Punjab, Pakistan",
   "image": "/inzamam_profile.jpg",
   "shortIntroduction": "I build thoughtful interfaces and the systems behind them. From a first interaction to a scalable application.",
-  "longIntroduction": "Results-driven Web Developer with over 5 years of hands-on experience in designing, developing, and maintaining responsive, user-friendly web applications. Specialized in JavaScript technologies, with strong proficiency in Angular, React, Next.js, Node.js, Express and NestJS. Demonstrated ability to build scalable frontend and backend solutions using modern frameworks and best practices. Adept at working in Agile environments, collaborating with cross-functional teams, and delivering high-quality code. Passionate about learning emerging technologies and contributing to innovative software solutions that drive business success.",
-  "experienceLabel": "Over 5 years",
+  "longIntroduction": "Senior Full Stack Engineer with 7+ years of experience designing, developing, and delivering scalable web applications, SaaS platforms, and enterprise solutions for international clients. Strong expertise across modern JavaScript ecosystems including React, Angular, Node.js, Express, NestJS, TypeScript, and REST/GraphQL APIs, with hands-on experience building high-performance frontend and backend systems. Experienced in developing client-focused products for USA-based and global businesses, collaborating with cross-functional teams, and delivering production-ready solutions in Agile environments. Recently expanded expertise into Python-based development and AI technologies including FastAPI, Flask, Django, Generative AI, Agentic AI, Prompt Engineering, RAG architectures, Vector Databases, and AI-assisted development tools. Passionate about integrating emerging AI capabilities into modern applications to improve automation, user experience, and business efficiency.",
+  "experienceLabel": "7+ years",
   "focusLabel": "Full-stack engineering",
   "traits": [
-    { "id": "hardWorker", "label": "Hard worker" },
-    { "id": "quickLearner", "label": "Quick learner" },
-    { "id": "problemSolver", "label": "Problem solver" }
+    {
+      "id": "hardWorker",
+      "label": "Hard worker"
+    },
+    {
+      "id": "quickLearner",
+      "label": "Quick learner"
+    },
+    {
+      "id": "problemSolver",
+      "label": "Problem solver"
+    }
   ],
   "resumeId": "primary"
 }

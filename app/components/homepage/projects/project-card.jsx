@@ -62,6 +62,22 @@ function ProjectCard({ project }) {
             <span className="text-cyan-400">{' ' + project.description}</span>
             <span className="text-gray-400">,</span>
           </div>
+          {[["features:", project.features], ["tasks:", project.responsibilities]]
+            .filter(([, items]) => items?.length > 0)
+            .map(([key, items]) => (
+              <div className="ml-4 lg:ml-8 mr-2" key={key} data-project-detail>
+                <span className="text-white">{key}</span>
+                <span className="text-gray-400">{" ["}</span>
+                {items.map((item) => (
+                  <div className="ml-4 lg:ml-8" key={item}>
+                    <span className="text-gray-400">{"'"}</span>
+                    <span className="text-amber-300">{item}</span>
+                    <span className="text-gray-400">{"',"}</span>
+                  </div>
+                ))}
+                <span className="text-gray-400">{"],"}</span>
+              </div>
+            ))}
           <div className="ml-4 lg:ml-8 mr-2">
             <span className="text-white">Demo:</span>
             { project.demo ? (

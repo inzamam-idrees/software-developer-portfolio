@@ -40,12 +40,22 @@ export function createCodingPresentation(portfolio) {
       role: project.role,
       code: project.links.source || "",
       demo: project.links.demo || "",
+      features: project.features,
+      responsibilities: project.responsibilities,
     })),
     experiences: view.experience.map((experience) => ({
       id: experience.id,
       title: experience.role,
       company: experience.company,
+      location: experience.location,
+      highlights: experience.highlights,
       duration: experience.duration,
+    })),
+    awards: view.awards.map(({ id, title, issuer, duration }) => ({
+      id,
+      title,
+      issuer,
+      duration,
     })),
     educations: view.education.map((education) => ({
       id: education.id,

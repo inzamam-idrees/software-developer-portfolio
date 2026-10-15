@@ -29,3 +29,25 @@ test("Coding projection reflects changed canonical content instead of local copi
   assert.equal(coding.projectsData[0].name, "Coding fixture project");
   assert.equal(coding.experiences[0].title, "Coding fixture role");
 });
+
+test("Coding presentation maps resume detail and awards", async () => {
+  const portfolio = buildCurrentPortfolioView(
+    await loadCanonicalPortfolio({ env: {} }),
+  );
+  const coding = createCodingPresentation(portfolio);
+
+  assert.equal(coding.experiences[0].location, portfolio.experience[0].location);
+  assert.equal(coding.experiences[0].highlights, portfolio.experience[0].highlights);
+  assert.equal(coding.projectsData[0].features, portfolio.projects[0].features);
+  assert.equal(
+    coding.projectsData[0].responsibilities,
+    portfolio.projects[0].responsibilities,
+  );
+  assert.deepEqual(coding.awards[0], {
+    id: 1,
+    title: "Student of the Year",
+    issuer: "University of Gujrat",
+    duration: "Sep 2015 - Aug 2016",
+  });
+  assert.ok(coding.skillsData.includes("RAG"));
+});

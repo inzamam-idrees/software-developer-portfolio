@@ -197,7 +197,7 @@ async (page) => {
     for (let i = 0; i < 3; i++) {
       await p
         .getByRole("link", {
-          name: "Explore all eight projects ↗",
+          name: "Explore all 9 projects ↗",
           exact: true,
         })
         .click();

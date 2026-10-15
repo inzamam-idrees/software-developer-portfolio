@@ -12,6 +12,7 @@ const documents = {
   "content/profile.json": {
     name: "INZAMAM IDREES",
     designation: "Senior Software Engineer",
+    tagline: "Senior Full Stack Engineer | AI-Enabled Web Applications",
     headline: "Engineering with intention.",
     location: "Lahore, Punjab, Pakistan",
     image: "/inzamam_profile.jpg",
@@ -46,6 +47,8 @@ const documents = {
       featured: false,
       featuredOrder: null,
       order: 2,
+      features: [],
+      responsibilities: [],
     },
     {
       id: 1,
@@ -61,17 +64,21 @@ const documents = {
       featured: true,
       featuredOrder: 1,
       order: 1,
+      features: ["Feature"],
+      responsibilities: ["Responsibility"],
     },
   ],
   "content/experience.json": [
     {
       id: 1,
       company: "Company",
+      location: "Lahore, Punjab",
       role: "Engineer",
       startDate: "2022-07",
       endDate: null,
       current: true,
       description: null,
+      highlights: ["Built things."],
       technologies: [],
       order: 1,
     },
@@ -90,6 +97,7 @@ const documents = {
   "content/skills.json": {
     all: ["Angular", "React"],
     featured: ["Angular"],
+    proficiency: { Angular: 5 },
     categories: [
       {
         id: "frontend",
@@ -101,6 +109,26 @@ const documents = {
       },
     ],
   },
+  "content/awards.json": [
+    {
+      id: 2,
+      title: "Second award",
+      issuer: "University",
+      location: "Sialkot, Punjab",
+      startDate: "2016-09",
+      endDate: "2017-08",
+      order: 2,
+    },
+    {
+      id: 1,
+      title: "First award",
+      issuer: "University",
+      location: "Sialkot, Punjab",
+      startDate: "2015-09",
+      endDate: "2016-08",
+      order: 1,
+    },
+  ],
   "content/resume.json": {
     id: "primary",
     title: "Resume",
@@ -262,5 +290,33 @@ test("missing required canonical files fail clearly without leaking paths", asyn
       assert.equal(error.cause, undefined);
       return true;
     },
+  );
+});
+
+test("a missing awards document fails with a document-scoped error", async (context) => {
+  const root = await createDataRoot({ omit: "content/awards.json" });
+  context.after(() => rm(root, { recursive: true, force: true }));
+
+  await assert.rejects(
+    () => loadCanonicalPortfolio({ env: { PORTFOLIO_DATA_DIR: root } }),
+    (error) => {
+      assert.ok(error instanceof PortfolioDataError);
+      assert.equal(error.code, "MISSING_DOCUMENT");
+      assert.equal(error.document, "awards");
+      return true;
+    },
+  );
+});
+
+test("awards are normalized by order", async (context) => {
+  const root = await createDataRoot();
+  context.after(() => rm(root, { recursive: true, force: true }));
+
+  const portfolio = await loadCanonicalPortfolio({
+    env: { PORTFOLIO_DATA_DIR: root },
+  });
+  assert.deepEqual(
+    portfolio.content.awards.map((award) => award.title),
+    ["First award", "Second award"],
   );
 });

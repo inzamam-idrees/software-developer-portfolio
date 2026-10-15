@@ -543,6 +543,22 @@
   line-height: 1.7;
   max-width: 510px;
 }
+.project-detail-list {
+  margin-top: 24px;
+  max-width: 510px;
+}
+.project-detail-list ul,
+.career-highlights {
+  list-style: disc;
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.career-highlights {
+  max-width: 720px;
+}
 .technology-list {
   list-style: none;
   padding: 0;
@@ -771,7 +787,7 @@
   display: flex;
   flex-direction: column;
 }
-.career-timeline li {
+.career-timeline > li {
   position: relative;
   padding: 36px 0 36px 80px;
   border-top: 1px solid var(--rule);
@@ -798,7 +814,7 @@
   width: 1px;
   background: var(--rule);
 }
-.career-timeline li:last-child .career-line {
+.career-timeline > li:last-child .career-line {
   display: none;
 }
 .career-timeline h3 {
@@ -811,11 +827,21 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 32px;
 }
-.education-list article {
+.education-list > article,
+.education-list > li {
   border-top: 1px solid var(--rule);
   padding-top: 24px;
 }
-.education-list h3 {
+.awards-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.awards-block {
+  margin-top: 56px;
+}
+.education-list h3,
+.education-list h4 {
   font-size: 18px;
   line-height: 1.5;
   margin: 20px 0 8px;
@@ -895,7 +921,7 @@
   .capability-list h3 {
     font-size: 23px;
   }
-  .career-timeline li {
+  .career-timeline > li {
     padding-left: 60px;
   }
   .career-timeline h3 {

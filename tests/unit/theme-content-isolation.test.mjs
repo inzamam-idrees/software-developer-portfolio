@@ -77,3 +77,18 @@ test("theme modules contain no editable content stores or legacy data imports", 
     assert.doesNotMatch(source, /portfolio-data\//, `${file} reads canonical files directly`);
   }
 });
+
+test("awards reach every theme view with formatted durations", async () => {
+  const canonical = await loadCanonicalPortfolio({ env: {} });
+  const portfolio = buildCurrentPortfolioView(canonical);
+
+  assert.equal(portfolio.awards[0].duration, "Sep 2015 - Aug 2016");
+  for (const [, createView] of themeViews) {
+    assert.equal(createView(portfolio).awards, portfolio.awards);
+  }
+  const { awards, ...withoutAwards } = portfolio;
+  assert.throws(
+    () => createCodingView(withoutAwards),
+    /requires canonical awards content/,
+  );
+});

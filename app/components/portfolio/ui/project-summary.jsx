@@ -1,4 +1,7 @@
 import { FiArrowUpRight } from "react-icons/fi";
+import { projectDetailSections } from "@/themes/shared/project-detail.mjs";
+
+const detailLabels = { features: "KEY FEATURES", responsibilities: "MY ROLE" };
 function publicUrl(value) {
   try {
     const url = new URL(value);
@@ -45,6 +48,16 @@ export default function ProjectSummary({
               </div>
             </dl>
           )}
+          {projectDetailSections(project).map(({ kind, items }) => (
+            <div className="project-detail-list" key={kind}>
+              <p className="eyebrow muted">{detailLabels[kind]}</p>
+              <ul>
+                {items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
           <ul
             className="technology-list"
             aria-label={`${project.title} technologies`}
@@ -97,7 +110,8 @@ export default function ProjectSummary({
             </div>
             <div className="diagram-bottom">
               <span>
-                CONCEPTUAL SYSTEM / {project.category.toUpperCase()}
+                CONCEPTUAL SYSTEM /{" "}
+                {(visual.category || "Selected application").toUpperCase()}
               </span>
               <span>↗</span>
             </div>

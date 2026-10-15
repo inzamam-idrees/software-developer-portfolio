@@ -11,14 +11,14 @@ export default function CinematicShell({ portfolio, children }) {
       <a className="skip-link" href="#main-content">
         {view.copy.navigation.skipToContent}
       </a>
-      <Navbar profile={view.profile} links={links} copy={view.copy} />
+      <Navbar profile={view.profile} links={links} copy={view.copy.navigation} />
       <main id="main-content" tabIndex={-1}>
         {children}
       </main>
       <Footer
         profile={view.profile}
         site={view.settings.site}
-        copy={view.copy}
+        copy={{ navigation: view.copy.navigation, footer: view.copy.footer }}
       />
     </div>
   );

@@ -75,3 +75,44 @@ test("read-only store reads but refuses writes", async (context) => {
     rejectsWith("READ_ONLY"),
   );
 });
+
+test("filesystem writes to different documents validate inside one store-wide lock", async (context) => {
+  const root = await dataRoot(context);
+  const store = createFilesystemStore({ root });
+  const profile = await store.read("profile");
+  const about = await store.read("about");
+  let seenHeadline;
+  await Promise.all([
+    store.write("profile", { ...profile.data, headline: "First writer." }, {
+      expectedRevision: profile.revision,
+      message: "m",
+      validate: () => new Promise((resolve) => setTimeout(() => resolve([]), 20)),
+    }),
+    store.write("about", about.data, {
+      expectedRevision: about.revision,
+      message: "m",
+      validate: (current) => {
+        seenHeadline = current.profile.headline;
+        return [];
+      },
+    }),
+  ]);
+  assert.equal(seenHeadline, "First writer.");
+});
+
+test("filesystem store refuses a write whose validation fails against current documents", async (context) => {
+  const root = await dataRoot(context);
+  const store = createFilesystemStore({ root });
+  const before = await readFile(path.join(root, "content/profile.json"), "utf8");
+  const { data, revision } = await store.read("profile");
+  const issues = [{ path: "profile.resumeId", message: "mismatch" }];
+  await assert.rejects(
+    () => store.write("profile", { ...data, headline: "Never written." }, {
+      expectedRevision: revision,
+      message: "m",
+      validate: () => issues,
+    }),
+    (error) => error.code === "INVALID" && error.issues === issues,
+  );
+  assert.equal(await readFile(path.join(root, "content/profile.json"), "utf8"), before);
+});

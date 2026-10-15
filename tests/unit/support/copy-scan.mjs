@@ -21,7 +21,6 @@ export const DECORATIVE_TOKENS = Object.freeze([
   "Demo:",
   "features:",
   "tasks:",
-  "N/A",
 ]);
 
 // Literals that are protocol or keyboard identifiers rather than visible copy.
@@ -33,9 +32,67 @@ export const NON_COPY_LITERALS = Object.freeze([
   "PUT",
   "PATCH",
   "DELETE",
+  "play none none reverse", // GSAP ScrollTrigger toggleActions
 ]);
 
+// Per-file literals that are data lookups rather than theme wording.
+export const FILE_EXCEPTIONS = Object.freeze({
+  // Aliases mapping canonical skill names to the original template's icon labels.
+  "themes/coding/adapter.mjs": [
+    "Javascript",
+    "Typescript",
+    "Next.js",
+    "Next JS",
+    "Node.js",
+    "Node JS",
+    "Tailwind CSS",
+    "Tailwind",
+    "Material UI",
+    "MaterialUI",
+    "JQuery",
+  ],
+});
+
 const COPY_ATTRIBUTES = ["aria-label", "alt", "title", "placeholder", "description"];
+
+// Lowercase JSX props whose string values are markup or behaviour, not copy.
+const NON_COPY_PROPS = new Set([
+  "className",
+  "href",
+  "src",
+  "id",
+  "type",
+  "rel",
+  "target",
+  "d",
+  "viewBox",
+  "fill",
+  "stroke",
+  "xmlns",
+  "role",
+  "name",
+  "method",
+  "action",
+  "autoComplete",
+  "as",
+  "lang",
+  "dir",
+  "sizes",
+  "srcSet",
+  "media",
+  "htmlFor",
+  "points",
+  "transform",
+  "preserveAspectRatio",
+  "loading",
+  "decoding",
+  "inputMode",
+  "pattern",
+  "accept",
+  "encType",
+  "key",
+]);
+const DIRECTIVES = /^use (?:client|server|strict)$/;
 const hasLetters = /[A-Za-z]/;
 
 function lineOf(source, index) {
@@ -63,8 +120,9 @@ export function findHardcodedCopy(source) {
   const textPattern = /((?<![=\-])>|\})([^<>{}]+)(?=[<{])/g;
   for (const match of code.matchAll(textPattern)) {
     const afterExpression = match[1] === "}";
+    // Entities become spaces so their ";" is not mistaken for code.
     const text = match[2]
-      .replace(/&(?:amp|lt|gt|quot|apos|nbsp|ldquo|rdquo|rsquo);/g, "&")
+      .replace(/&(?:#\d+|#x[0-9a-f]+|[a-z]+\d*);/gi, " ")
       .replace(/\s+/g, " ")
       .trim();
     if (!text || !hasLetters.test(text) || isDecorative(text)) continue;
@@ -80,6 +138,16 @@ export function findHardcodedCopy(source) {
     const value = (match[3] ?? match[4]).replace(/\$\{[^}]*\}/g, "");
     if (!hasLetters.test(value)) continue;
     findings.push({ line: lineOf(code, match.index), text: `${match[1]}=${match[2]}` });
+  }
+
+  // Other string props on elements or custom components (label="…",
+  // heading="…") whose value reads as prose.
+  const propLiteral = /(?<=\s)([a-z][A-Za-z]*)="([^"]*)"/g;
+  for (const match of code.matchAll(propLiteral)) {
+    const [, name, value] = match;
+    if (NON_COPY_PROPS.has(name) || COPY_ATTRIBUTES.includes(name)) continue;
+    if (!hasLetters.test(value) || !/\s|^[A-Z]/.test(value.trim())) continue;
+    findings.push({ line: lineOf(code, match.index), text: `${name}="${value}"` });
   }
 
   // String-literal props and children such as title="…" on custom components
@@ -98,7 +166,20 @@ export function findHardcodedCopy(source) {
     if (/^\s*import\b|className=|\b(?:aria-label|alt|title|placeholder|description)=["']/.test(lineText)) continue;
     if (isDecorative(match[2]) || NON_COPY_LITERALS.includes(match[2].trim())) continue;
     if (/new Error\(|"@(?:type|context)"/.test(lineText)) continue;
+    if (code[match.index - 1] === "=") continue;
     if (/\bd=["']/.test(lineText) || /^[A-Za-z0-9]+_[A-Za-z0-9_]+$/.test(match[2])) continue;
+    findings.push({ line: lineOf(code, match.index), text: match[2] });
+  }
+
+  // Lowercase prose in JavaScript: two or more plain words ("read more").
+  // Lines naming classes or styles hold utility lists rather than copy.
+  const lowercaseProse = /(["'])([a-z]+(?: [a-z]+)+)\1/g;
+  for (const match of code.matchAll(lowercaseProse)) {
+    const lineStart = code.lastIndexOf("\n", match.index) + 1;
+    const lineText = code.slice(lineStart, code.indexOf("\n", match.index));
+    if (/class|style|^\s*import\b/i.test(lineText) || DIRECTIVES.test(match[2])) continue;
+    if (code[match.index - 1] === "=" || isDecorative(match[2])) continue;
+    if (NON_COPY_LITERALS.includes(match[2])) continue;
     findings.push({ line: lineOf(code, match.index), text: match[2] });
   }
 
@@ -128,19 +209,25 @@ async function listSources(directory, pattern = /\.jsx$/) {
   return nested.flat();
 }
 
-export async function scanThemeSources(root = process.cwd()) {
-  const files = [
-    ...(await listSources(path.join(root, "themes"))),
+export async function themeSourceFiles(root = process.cwd()) {
+  return [
+    ...(await listSources(path.join(root, "themes"), /\.(?:jsx|mjs)$/)),
     ...(await listSources(path.join(root, "app/components"))),
     ...(await listSources(path.join(root, "app/(portfolio)"), /\.jsx?$/)),
     path.join(root, "app/not-found.jsx"),
     path.join(root, "app/social-image/route.js"),
   ].sort();
+}
+
+export async function scanThemeSources(root = process.cwd()) {
+  const files = await themeSourceFiles(root);
   const results = [];
   for (const file of files) {
+    const relative = path.relative(root, file);
+    const allowed = FILE_EXCEPTIONS[relative] ?? [];
     const findings = findHardcodedCopy(await readFile(file, "utf8"));
     for (const finding of findings) {
-      results.push({ file: path.relative(root, file), ...finding });
+      if (!allowed.includes(finding.text)) results.push({ file: relative, ...finding });
     }
   }
   return results;

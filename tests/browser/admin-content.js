@@ -70,6 +70,10 @@ async (sourcePage) => {
   if ((await page.getByLabel("Name", { exact: true }).getAttribute("aria-invalid")) !== "true") {
     throw new Error("Name field is not marked invalid");
   }
+  const alerts = await page.locator('.admin-schema-form [role="alert"]').count();
+  if (alerts !== 1) throw new Error(`Expected one error summary alert, found ${alerts}`);
+  const summaryLink = page.locator('.admin-schema-form [role="alert"] a[href="#field-name"]');
+  if (!(await summaryLink.isVisible())) throw new Error("Error summary does not link to the Name field");
   evidence.push("field error");
 
   // ── Concurrent edit is rejected without losing the form ──
@@ -92,7 +96,8 @@ async (sourcePage) => {
   await second.reload().catch(() => {});
   const expired = await signedInContext();
   const stale = await expired.newPage();
-  await stale.goto(`${origin}/admin/content/about`);
+  // Wait for hydration so the fill is not overwritten by the server-rendered value.
+  await stale.goto(`${origin}/admin/content/about`, { waitUntil: "networkidle" });
   await expired.clearCookies();
   await stale.getByLabel("Summary", { exact: true }).fill("Unsaved summary");
   const sessionStatus = await saveAndWait(stale);
@@ -114,6 +119,29 @@ async (sourcePage) => {
     throw new Error("Keyboard Add item did not create an item");
   }
   evidence.push("keyboard add item");
+
+  // ── Focus follows a moved item ──
+  await keyboardPage.reload();
+  await keyboardPage.getByRole("button", { name: "Move item 1 down in Projects" }).focus();
+  await keyboardPage.keyboard.press("Enter");
+  await keyboardPage.waitForFunction(() =>
+    /^Move item 2 (?:up|down) in Projects$/.test(document.activeElement?.getAttribute("aria-label") ?? ""),
+  ).catch(async () => {
+    const focused = await keyboardPage.evaluate(() => document.activeElement?.getAttribute("aria-label"));
+    throw new Error(`Focus did not follow the moved item: ${focused}`);
+  });
+  evidence.push("focus follows moved item");
+
+  // ── Nullable groups can be cleared ──
+  await keyboardPage.goto(`${origin}/admin/content/resume`);
+  await keyboardPage.getByLabel("File type", { exact: true }).fill("PDF");
+  const clearMetadata = keyboardPage.getByRole("button", { name: "Clear Metadata" });
+  await clearMetadata.click();
+  if ((await keyboardPage.getByLabel("File type", { exact: true }).inputValue()) !== "") {
+    throw new Error("Clearing Metadata kept its values");
+  }
+  if (await clearMetadata.count()) throw new Error("Clear Metadata is still offered after clearing");
+  evidence.push("nullable group cleared");
 
   // ── Invalid JSON blocks saving without sending a request ──
   let saveRequests = 0;

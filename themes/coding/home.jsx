@@ -30,7 +30,11 @@ export default async function CodingHome({ portfolio }) {
         copy={home.experience}
       />
       <Skills skillsData={presentation.skillsData} copy={home.skills} />
-      <Projects projectsData={presentation.projectsData} copy={home.projects} />
+      <Projects
+        projectsData={presentation.projectsData}
+        copy={home.projects}
+        noDemoLabel={presentation.copy.projects.noDemo}
+      />
       <Education
         educations={presentation.educations}
         awards={presentation.awards}

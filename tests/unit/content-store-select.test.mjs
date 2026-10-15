@@ -29,11 +29,22 @@ test("incomplete or invalid configuration fails with STORE_UNAVAILABLE naming th
     [{ ...github, GITHUB_CONTENT_TOKEN: "" }, "GITHUB_CONTENT_TOKEN"],
     [{ ...github, GITHUB_CONTENT_BRANCH: undefined }, "GITHUB_CONTENT_BRANCH"],
     [{ ...github, GITHUB_CONTENT_REPO: "not-a-repo" }, "GITHUB_CONTENT_REPO"],
+    [{ ...github, GITHUB_CONTENT_REPO: "../r" }, "GITHUB_CONTENT_REPO"],
+    [{ ...github, GITHUB_CONTENT_REPO: "o/.." }, "GITHUB_CONTENT_REPO"],
+    [{ ...github, GITHUB_CONTENT_REPO: "o/." }, "GITHUB_CONTENT_REPO"],
+    [{ ...github, GITHUB_CONTENT_REPO: "o.k/r" }, "GITHUB_CONTENT_REPO"],
+    [{ ...github, GITHUB_CONTENT_REPO: "o/r/x" }, "GITHUB_CONTENT_REPO"],
     [{ PORTFOLIO_CONTENT_STORE: "s3" }, "PORTFOLIO_CONTENT_STORE"],
   ]) {
     assert.throws(
       () => createContentStore(env),
       (error) => error.code === "STORE_UNAVAILABLE" && error.message.includes(name),
     );
+  }
+});
+
+test("typical GitHub repository names are accepted", () => {
+  for (const repo of ["owner/repo", "my-org/site.v2", "a1/_private-repo", "o/.github"]) {
+    assert.equal(createContentStore({ ...github, GITHUB_CONTENT_REPO: repo }).kind, "github", repo);
   }
 });

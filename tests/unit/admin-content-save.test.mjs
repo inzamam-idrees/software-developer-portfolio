@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
-import { handleContentSave } from "../../lib/admin/content-save.mjs";
+import { handleContentSave, MAX_CONTENT_BYTES, readContentPayload } from "../../lib/admin/content-save.mjs";
 import { ContentStoreError } from "../../lib/content-store/errors.mjs";
 import { documentRegistry } from "../../lib/portfolio/documents.mjs";
 
@@ -56,7 +56,9 @@ test("a valid save writes through the store with the admin commit message", asyn
   assert.deepEqual(body, { ok: true, revision: "rev-2", commitUrl: null, liveAfterWrite: true });
   assert.equal(store.writes.length, 1);
   assert.equal(store.writes[0].data.headline, "New headline.");
-  assert.deepEqual(store.writes[0].options, {
+  const { validate, ...options } = store.writes[0].options;
+  assert.equal(typeof validate, "function");
+  assert.deepEqual(options, {
     expectedRevision: "rev-1",
     message: "content: update profile via admin",
   });
@@ -154,4 +156,83 @@ test("unexpected store errors return a generic 500", async () => {
   const { status, body } = await save({ store }).result;
   assert.equal(status, 500);
   assert.deepEqual(body, { ok: false, code: "SAVE_FAILED" });
+});
+
+function streamedRequest({ chunkBytes = 64 * 1024, totalBytes, headers = {} }) {
+  let pulled = 0;
+  const body = new ReadableStream({
+    pull(controller) {
+      if (pulled >= totalBytes) return controller.close();
+      pulled += chunkBytes;
+      controller.enqueue(new Uint8Array(chunkBytes).fill(0x20));
+    },
+  });
+  const request = new Request("http://localhost/admin/content/profile/save", {
+    method: "POST",
+    body,
+    duplex: "half",
+    headers,
+  });
+  return { request, pulled: () => pulled };
+}
+
+test("payload reading stops at the size limit when Content-Length is missing", async () => {
+  const totalBytes = 16 * MAX_CONTENT_BYTES;
+  const { request, pulled } = streamedRequest({ totalBytes });
+  const { contentLength, payload } = await readContentPayload(request);
+  assert.ok(contentLength > MAX_CONTENT_BYTES);
+  assert.equal(payload, null);
+  assert.ok(pulled() < totalBytes / 2, `read ${pulled()} of ${totalBytes} bytes`);
+});
+
+test("payload reading treats a non-numeric Content-Length as undeclared", async () => {
+  const totalBytes = 16 * MAX_CONTENT_BYTES;
+  const { request, pulled } = streamedRequest({ totalBytes, headers: { "content-length": "abc" } });
+  const { contentLength, payload } = await readContentPayload(request);
+  assert.ok(contentLength > MAX_CONTENT_BYTES);
+  assert.equal(payload, null);
+  assert.ok(pulled() < totalBytes / 2);
+});
+
+test("payload reading parses a JSON body within the limit", async () => {
+  const text = JSON.stringify({ data: { a: "é" }, expectedRevision: "r" });
+  const request = new Request("http://localhost/x", { method: "POST", body: text });
+  const result = await readContentPayload(request);
+  assert.equal(result.contentLength, Buffer.byteLength(text));
+  assert.deepEqual(result.payload, { data: { a: "é" }, expectedRevision: "r" });
+  const invalid = await readContentPayload(new Request("http://localhost/x", { method: "POST", body: "{" }));
+  assert.equal(invalid.payload, null);
+});
+
+test("saves re-validate the whole portfolio against the store's state at write time", async () => {
+  const store = fakeStore();
+  const write = store.write;
+  store.write = async (id, data, options) => {
+    const changed = { ...structuredClone(documents), resume: { ...documents.resume, id: "replaced" } };
+    const issues = options.validate(changed);
+    if (issues.length) {
+      const error = new ContentStoreError("INVALID", "stale cross-document state");
+      error.issues = issues;
+      throw error;
+    }
+    return write(id, data, options);
+  };
+  const { status, body } = await save({ store }).result;
+  assert.equal(status, 422);
+  assert.equal(body.code, "INVALID");
+  assert.ok(body.issues.some(({ path: issuePath }) => issuePath === "resumeId"), JSON.stringify(body.issues));
+  assert.equal(store.writes.length, 0);
+});
+
+test("saves keep the stored document's key order", async () => {
+  for (const id of ["site", "navigation", "copy-shared", "copy-cinematic", "copy-executive"]) {
+    const store = fakeStore();
+    const { status } = await save({
+      store,
+      id,
+      payload: { data: structuredClone(documents[id]), expectedRevision: "rev-1" },
+    }).result;
+    assert.equal(status, 200, id);
+    assert.equal(JSON.stringify(store.writes[0].data), JSON.stringify(documents[id]), id);
+  }
 });

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import * as React from 'react';
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, noDemoLabel }) {
 
   return (
     <div className="from-[#0d1224] border-[#1b2c68a0] relative rounded-lg border bg-gradient-to-r to-[#0a0d37] w-full">
@@ -85,7 +85,7 @@ function ProjectCard({ project }) {
                 <span className="text-red-400">{' ' + project.demo}</span>
               </Link>
             ) : (
-              <span className="text-red-400"> N/A</span>
+              <span className="text-red-400">{' ' + noDemoLabel}</span>
             )}
             <span className="text-gray-400">,</span>
           </div>

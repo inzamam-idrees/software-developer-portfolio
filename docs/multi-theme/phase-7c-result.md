@@ -97,6 +97,37 @@ Deferred minors:
   - nullable objects and arrays have no Clear control.
 - `GITHUB_CONTENT_REPO` accepts `..` segments (operator-controlled).
 
+## Follow-up fixes (deferred minors from the 7B and 7C reviews)
+
+Each item got a test that failed before the fix.
+
+| Item | Fix | Test |
+|---|---|---|
+| Body read before the 256 KiB check when `Content-Length` is missing or non-numeric | `readContentPayload` (`lib/admin/content-save.mjs`) refuses a declared oversize body unread and otherwise counts streamed bytes, cancelling the stream once over the limit. The save route uses it. | `admin-content-save.test.mjs`: a 4 MiB stream without (or with a non-numeric) `Content-Length` stops after a fraction is read |
+| GitHub 403 rate limits read as "credentials rejected"; non-sha 422s read as conflicts | The store reads GitHub's error `message` and rate-limit headers: rate limits (403/429 with `rate limit` text, `x-ratelimit-remaining: 0`, or `Retry-After`) → `STORE_UNAVAILABLE` "rate limited"; 422 is `CONFLICT` only when the message mentions `sha`, otherwise `STORE_UNAVAILABLE` quoting GitHub's message (max 200 chars). | `content-store-github.test.mjs` |
+| `GITHUB_CONTENT_REPO` accepted `..` | Owner must be letters, digits, hyphens; the name may not be `.` or `..`; exactly one `/`. | `content-store-select.test.mjs` |
+| Cross-document validation race | `store.write` takes a `validate(currentDocuments)` hook. The filesystem store now runs all writes through one store-wide queue and re-validates the whole portfolio inside it; issues come back as `INVALID` → 422 with field paths. **Limitation:** the GitHub store cannot lock, so two different documents saved at the same moment there may still each pass against the other's previous version (the next build's `validate:content` would catch it). | `content-store-filesystem.test.mjs`, `admin-content-save.test.mjs` |
+| First save reordered JSON keys | `orderKeysLike` (`lib/content-store/errors.mjs`) restores the stored document's key order (recursively) before writing; new keys go last. | `admin-content-save.test.mjs` (site, navigation and three copy documents round-trip byte-identical) |
+| Editor accessibility | Focus follows a moved item to an enabled Move control; field errors are no longer `role="alert"` each — one summary alert lists them with links to the fields; nullable objects, arrays and records get a Clear control. | `admin-form-model.test.mjs` (`focusAfterMove`, `issueSummary`, `canClear`); `tests/browser/admin-content.js` adds summary, focus and clear steps |
+| Copy-guard gaps | The scanner now flags lowercase prose literals (`"read more"`), JSX text containing entities (`&copy; All rights reserved`), and prose in other string props (`label="…"`, `heading="…"`), and scans `themes/**/*.mjs`. `N/A` is no longer allowlisted: it moved to the `coding.projects.noDemo` copy key. The GSAP value `play none none reverse` is a listed non-copy literal; the Coding adapter's legacy skill-name aliases are a named per-file exception. | `no-hardcoded-copy.test.mjs` |
+| Cinematic navbar received all copy; repeated reads per request | The client `Navbar` gets only `copy.navigation`; `Footer` gets `{ navigation, footer }`. `lib/portfolio/server.mjs` wraps the load and the derived view in React `cache()`. | `request-scoped-data.test.mjs` (source-level: `.jsx` and `server-only` modules cannot be imported by `node --test`); the rendered payload was checked to carry only navigation copy for the navbar |
+
+Also: `tests/browser/admin-content.js` now waits for hydration before filling the
+expired-session form; without it the fill raced hydration under `next dev`.
+
+Verification after the follow-up fixes (this session):
+
+| Check | Result |
+|---|---|
+| `npm run validate:content` | Canonical portfolio content is valid |
+| `npm run test:unit` | 156 pass, 1 fail (the existing theme-settings "temporary Cinematic default", unchanged) |
+| `npm run lint` | No ESLint warnings or errors |
+| `PORTFOLIO_BUILD_DIR=.next-fixes-build npm run build` | Succeeded; `/admin/content/[id]` ships 4.5 kB of route JavaScript |
+| `tests/browser/admin-content.js` (dev on :3018, filesystem store, temporary data copy, Cinematic active) | Pass, including the new error-summary, focus-after-move and clear-nullable-group steps |
+| Rendered pages (dev) | Cinematic navbar props carry only navigation copy; Coding `/project` still shows `N/A` for projects without a demo |
+
+Not re-run: the other browser scripts (public themes, preview security, read-only admin).
+
 ## Not verified (deployment assumptions)
 
 - **The GitHub store has been tested only with a mocked `fetch`.** No real token was

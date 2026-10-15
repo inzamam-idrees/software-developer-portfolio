@@ -5,8 +5,13 @@ import { createGithubStore } from "../../lib/content-store/github.mjs";
 const token = "ghp_secret_test_token";
 const profile = { name: "INZAMAM IDREES" };
 
-function response(status, body) {
-  return { ok: status >= 200 && status < 300, status, json: async () => body };
+function response(status, body, headers = {}) {
+  return {
+    ok: status >= 200 && status < 300,
+    status,
+    headers: new Headers(headers),
+    json: async () => body,
+  };
 }
 
 function fakeFetch(handler) {
@@ -69,6 +74,14 @@ test("GitHub store maps API failures to store error codes without leaking the to
   const cases = [
     [() => response(409, { message: "conflict" }), "CONFLICT"],
     [() => response(422, { message: "sha mismatch" }), "CONFLICT"],
+    [() => response(422, { message: "Invalid request.\n\n\"sha\" wasn't supplied." }), "CONFLICT"],
+    [() => response(422, { message: "Branch nope not found" }), "STORE_UNAVAILABLE"],
+    [() => response(422, {}), "STORE_UNAVAILABLE"],
+    [() => response(403, { message: "You have exceeded a secondary rate limit." }), "STORE_UNAVAILABLE"],
+    [() => response(403, { message: "API rate limit exceeded" }, { "x-ratelimit-remaining": "0" }), "STORE_UNAVAILABLE"],
+    [() => response(403, { message: "forbidden" }, { "retry-after": "60" }), "STORE_UNAVAILABLE"],
+    [() => response(429, { message: "slow down" }), "STORE_UNAVAILABLE"],
+    [() => response(403, { message: "Resource not accessible by personal access token" }), "UNAUTHORIZED_STORE"],
     [() => response(401, { message: "Bad credentials" }), "UNAUTHORIZED_STORE"],
     [() => response(403, { message: "forbidden" }), "UNAUTHORIZED_STORE"],
     [() => response(502, { message: "bad gateway" }), "STORE_UNAVAILABLE"],
@@ -108,4 +121,17 @@ test("GitHub store reads all documents concurrently", async () => {
   assert.equal(calls.length, 20);
   assert.equal(Object.keys(all).length, 20);
   assert.equal(peak, 20);
+});
+
+test("GitHub rate limits and non-revision rejections explain themselves", async () => {
+  const rateLimited = fakeFetch(() => response(403, { message: "You have exceeded a secondary rate limit." }));
+  await assert.rejects(
+    () => store(rateLimited.fetch).write("profile", profile, { expectedRevision: "abc", message: "m" }),
+    (error) => error.code === "STORE_UNAVAILABLE" && /rate limit/i.test(error.message),
+  );
+  const badBranch = fakeFetch(() => response(422, { message: "Branch nope not found" }));
+  await assert.rejects(
+    () => store(badBranch.fetch).write("profile", profile, { expectedRevision: "abc", message: "m" }),
+    (error) => error.code === "STORE_UNAVAILABLE" && error.message.includes("Branch nope not found"),
+  );
 });

@@ -59,7 +59,8 @@
     "sending": "Sending Message..."
   },
   "projects": {
-    "heading": "All Projects"
+    "heading": "All Projects",
+    "noDemo": "N/A"
   },
   "blog": {
     "routeHeading": "All Blog",

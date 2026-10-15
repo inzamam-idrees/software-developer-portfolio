@@ -69,7 +69,8 @@ After the fixes: 102 of 103 unit tests pass (the 1 failure is pre-existing), lin
 build pass, the old-vs-new text comparison shows only the intended changes, and all nine
 browser scripts pass.
 
-Deferred minors:
+Deferred minors (the first three are fixed; see "Follow-up fixes" in
+`phase-7c-result.md`):
 
 - The guard does not catch lowercase JavaScript literals, `&copy;`-style entities, or
   lowercase custom props, and it does not scan `themes/**/*.mjs`.

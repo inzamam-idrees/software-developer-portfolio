@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import {
+  canClear,
   emptyValueFor,
+  fieldId,
   fieldKind,
+  focusAfterMove,
+  issueSummary,
   moveItem,
   normalizeFormValue,
   setAtPath,
@@ -33,10 +37,6 @@ function itemLabel(item, index) {
   return `Item ${index + 1}`;
 }
 
-function fieldId(path) {
-  return `field-${path.length ? path.join("-") : "document"}`;
-}
-
 function issueKey(path) {
   return path.join(".");
 }
@@ -60,12 +60,22 @@ const STATUS_MESSAGES = Object.freeze({
 });
 
 // ── Field renderers ──
+// Field errors are announced once, by the form's error summary.
 function ErrorText({ id, message }) {
   if (!message) return null;
   return (
-    <p className="admin-field-error" id={`${id}-error`} role="alert">
+    <p className="admin-field-error" id={`${id}-error`}>
       {message}
     </p>
+  );
+}
+
+function ClearButton({ schema, path, value, label, onChange }) {
+  if (!canClear(schema, value)) return null;
+  return (
+    <button type="button" className="admin-secondary" onClick={() => onChange(path, null)}>
+      Clear {label}
+    </button>
   );
 }
 
@@ -84,7 +94,7 @@ function controlProps(path, issues) {
 }
 
 function ScalarField({ schema, path, value, label, onChange, issues }) {
-  const { schema: inner, nullable } = unwrapNullable(schema);
+  const { schema: inner } = unwrapNullable(schema);
   const kind = fieldKind(inner);
   const { id, message, attributes } = controlProps(path, issues);
   const display = value ?? "";
@@ -137,11 +147,7 @@ function ScalarField({ schema, path, value, label, onChange, issues }) {
       <label htmlFor={id}>{label}</label>
       <div className="admin-field-control">
         {control}
-        {nullable && kind !== "boolean" && value !== null && value !== undefined && (
-          <button type="button" className="admin-secondary" onClick={() => onChange(path, null)}>
-            Clear {label}
-          </button>
-        )}
+        <ClearButton schema={schema} path={path} value={value} label={label} onChange={onChange} />
       </div>
       <ErrorText id={id} message={message} />
     </div>
@@ -181,9 +187,20 @@ function ArrayField({ schema, path, value, label, onChange, issues, disabled, on
   const { schema: inner } = unwrapNullable(schema);
   const items = Array.isArray(value) ? value : [];
   const { id, message } = controlProps(path, issues);
+  const moveControlId = (index, control) => `${id}-item-${index}-move-${control}`;
+
+  function move(index, direction) {
+    onChange(path, moveItem(items, index, direction === "up" ? index - 1 : index + 1));
+    const target = focusAfterMove(index, direction, items.length);
+    requestAnimationFrame(() =>
+      document.getElementById(moveControlId(target.index, target.control))?.focus(),
+    );
+  }
+
   return (
     <fieldset className="admin-fieldset" aria-describedby={message ? `${id}-error` : undefined}>
       <legend>{label}</legend>
+      <ClearButton schema={schema} path={path} value={value} label={label} onChange={onChange} />
       <ErrorText id={id} message={message} />
       <ol className="admin-array">
         {items.map((item, index) => (
@@ -201,18 +218,20 @@ function ArrayField({ schema, path, value, label, onChange, issues, disabled, on
             <div className="admin-array-actions">
               <button
                 type="button"
+                id={moveControlId(index, "up")}
                 className="admin-secondary"
                 disabled={index === 0}
-                onClick={() => onChange(path, moveItem(items, index, index - 1))}
+                onClick={() => move(index, "up")}
                 aria-label={`Move item ${index + 1} up in ${label}`}
               >
                 Move up
               </button>
               <button
                 type="button"
+                id={moveControlId(index, "down")}
                 className="admin-secondary"
                 disabled={index === items.length - 1}
-                onClick={() => onChange(path, moveItem(items, index, index + 1))}
+                onClick={() => move(index, "down")}
                 aria-label={`Move item ${index + 1} down in ${label}`}
               >
                 Move down
@@ -250,6 +269,7 @@ function RecordField({ schema, path, value, label, onChange, issues, disabled, o
   return (
     <fieldset className="admin-fieldset">
       <legend>{label}</legend>
+      <ClearButton schema={schema} path={path} value={value} label={label} onChange={onChange} />
       <ErrorText id={id} message={message} />
       {entries.map(([key, entry]) => (
         <div className="admin-record-row" key={key}>
@@ -315,6 +335,7 @@ function ObjectField({ schema, path, value, label, onChange, issues, disabled, o
   return (
     <fieldset className="admin-fieldset">
       <legend>{label}</legend>
+      <ClearButton schema={schema} path={path} value={value} label={label} onChange={onChange} />
       <ErrorText id={id} message={message} />
       {fields}
     </fieldset>
@@ -347,6 +368,8 @@ export default function SchemaForm({
   const [status, setStatus] = useState({ message: "", commitUrl: null });
   const [busy, setBusy] = useState(false);
   const [invalidJson, setInvalidJson] = useState(() => new Set());
+
+  const summary = issueSummary(issues);
 
   function onJsonValidity(key, valid) {
     setInvalidJson((current) => {
@@ -434,10 +457,18 @@ export default function SchemaForm({
           disabled={!writable}
         />
       </fieldset>
-      {otherIssues.length > 0 && (
+      {(summary.length > 0 || otherIssues.length > 0) && (
         <div className="admin-error" role="alert">
           <p>These problems must be fixed before saving:</p>
           <ul>
+            {summary.map((issue) => (
+              <li key={`field:${issue.path}`}>
+                <a href={issue.href}>
+                  <code>{issue.path}</code>
+                </a>
+                : {issue.message}
+              </li>
+            ))}
             {otherIssues.map((issue) => (
               <li key={`${issue.path}:${issue.message}`}>
                 {issue.path ? <code>{issue.path}</code> : "Document"}: {issue.message}

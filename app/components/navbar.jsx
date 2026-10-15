@@ -4,8 +4,7 @@ import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export default function Navbar({ profile, links, copy }) {
-  const navigation = copy.navigation;
+export default function Navbar({ profile, links, copy: navigation }) {
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
   const [activeSection, setActiveSection] = useState(null);

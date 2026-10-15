@@ -2,8 +2,12 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { documentFormSchema } from "../../lib/admin/form-schema.mjs";
 import {
+  canClear,
   emptyValueFor,
+  fieldId,
   fieldKind,
+  focusAfterMove,
+  issueSummary,
   moveItem,
   normalizeFormValue,
   setAtPath,
@@ -86,4 +90,34 @@ test("setAtPath and moveItem never mutate their input", () => {
   assert.deepEqual(moveItem(list, 2, 0), ["c", "a", "b"]);
   assert.deepEqual(moveItem(list, 0, 5), ["a", "b", "c"]);
   assert.deepEqual(list, ["a", "b", "c"]);
+});
+
+test("nullable objects and arrays can be cleared, like nullable scalars", () => {
+  const project = documentFormSchema("projects").items;
+  const metadata = documentFormSchema("resume").properties.metadata;
+  assert.equal(fieldKind(metadata), "object");
+  assert.equal(canClear(metadata, { fileType: "PDF" }), true);
+  assert.equal(canClear(metadata, null), false);
+  assert.equal(canClear(project.properties.longDescription, "Text"), true);
+  assert.equal(canClear({ anyOf: [{ type: "array", items: { type: "string" } }, { type: "null" }] }, []), true);
+  assert.equal(canClear(project.properties.title, "Required"), false);
+  assert.equal(canClear({ anyOf: [{ type: "boolean" }, { type: "null" }] }, true), false);
+});
+
+test("field issues become one summary that links to each field", () => {
+  assert.equal(fieldId([]), "field-document");
+  assert.equal(fieldId(["items", 2, "title"]), "field-items-2-title");
+  assert.deepEqual(issueSummary({ name: "Required", "items.2.title": "Too short" }), [
+    { href: "#field-name", path: "name", message: "Required" },
+    { href: "#field-items-2-title", path: "items.2.title", message: "Too short" },
+  ]);
+  assert.deepEqual(issueSummary({}), []);
+});
+
+test("focus follows a moved item to an enabled move control", () => {
+  assert.deepEqual(focusAfterMove(2, "up", 5), { index: 1, control: "up" });
+  assert.deepEqual(focusAfterMove(1, "up", 5), { index: 0, control: "down" });
+  assert.deepEqual(focusAfterMove(2, "down", 5), { index: 3, control: "down" });
+  assert.deepEqual(focusAfterMove(3, "down", 5), { index: 4, control: "up" });
+  assert.deepEqual(focusAfterMove(0, "down", 2), { index: 1, control: "up" });
 });

@@ -54,3 +54,43 @@ test("server secrets do not use a browser-exposed environment prefix", async () 
   assert.match(captchaRoute, /process\.env\.RECAPTCHA_SECRET_KEY/);
   assert.match(envExample, /^RECAPTCHA_SECRET_KEY=$/m);
 });
+
+test("content storage settings are documented server-only variables", async () => {
+  const envExample = await read(".env.example");
+  for (const name of [
+    "PORTFOLIO_CONTENT_STORE",
+    "GITHUB_CONTENT_TOKEN",
+    "GITHUB_CONTENT_REPO",
+    "GITHUB_CONTENT_BRANCH",
+  ]) {
+    assert.match(envExample, new RegExp(`^# .+\\n${name}=$`, "m"), `${name} needs a comment line`);
+  }
+  assert.doesNotMatch(envExample, /NEXT_PUBLIC_(?:GITHUB|PORTFOLIO_CONTENT)/);
+});
+
+test("no client component can reach content storage or its credentials", async () => {
+  const { readdir } = await import("node:fs/promises");
+  const pathModule = await import("node:path");
+  async function sources(directory) {
+    const entries = await readdir(directory, { withFileTypes: true });
+    const nested = await Promise.all(
+      entries.map((entry) => {
+        const target = pathModule.join(directory, entry.name);
+        if (entry.isDirectory()) return sources(target);
+        return /\.(?:jsx?|mjs)$/.test(entry.name) ? [target] : [];
+      }),
+    );
+    return nested.flat();
+  }
+  for (const file of [...(await sources("app")), ...(await sources("themes"))]) {
+    const source = await read(file);
+    assert.doesNotMatch(source, /NEXT_PUBLIC_GITHUB|NEXT_PUBLIC_PORTFOLIO_CONTENT/, file);
+    if (/^\s*["']use client["']/.test(source)) {
+      assert.doesNotMatch(
+        source,
+        /from\s+["'][^"']*(?:content-store|form-schema|portfolio\/documents)|process\.env\.(?:GITHUB_CONTENT|PORTFOLIO_CONTENT)/,
+        file,
+      );
+    }
+  }
+});

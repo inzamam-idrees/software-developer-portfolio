@@ -16,12 +16,12 @@ Audience: recruiters, hiring managers, clients, engineering teams. The site shou
 
 > Update this section as phases are approved and completed.
 
-- Phases 1–6 complete (see `docs/multi-theme/phase-*-result.md`); latest work added admin theme activation.
-- Phase 7 in progress (spec `docs/superpowers/specs/2026-10-15-admin-content-and-resume-import-design.md`): 7A resume/CV data import (`phase-7a-result.md`) and 7B theme copy as data (`phase-7b-result.md`) implemented; 7C admin content editor + GitHub storage is planned in `docs/superpowers/plans/`.
+- Phases 1–6 complete (see `docs/multi-theme/phase-*-result.md`).
+- Phase 7 (spec `docs/superpowers/specs/2026-10-15-admin-content-and-resume-import-design.md`): 7A resume/CV data import, 7B theme copy as data, and 7C admin content editor + content stores implemented (`docs/multi-theme/phase-7{a,b,c}-result.md`).
 - Stack: Next.js 15 App Router, React 19, plain JS (`.js`/`.jsx`/`.mjs`, no TypeScript), Tailwind 3 + Sass, Zod 4 schemas. Cinematic theme uses Three.js via `@react-three/fiber` and GSAP.
 - Deployment: Netlify, **read-only** mode (`netlify.toml` bundles `portfolio-data/**` into the server function). Node 22 (`.nvmrc`; engines `>=20.9`).
 - Database: **none** (do not introduce one without a concrete, documented requirement).
-- Unresolved: `POST /admin/theme/activate` writes `settings/theme.json` to the data root. On Netlify's ephemeral filesystem that write does not persist or propagate across instances — durable activation needs `PORTFOLIO_DATA_DIR` on a persistent volume (see `docs/multi-theme/phase-6-netlify-persistence-readiness.md`).
+- Unverified deployment assumption: production editing uses the GitHub store (admin saves commit to `GITHUB_CONTENT_BRANCH`, Netlify redeploys). It is tested only with a mocked GitHub API; a real token and live save have not been exercised.
 
 ## Commands
 
@@ -39,7 +39,8 @@ node --test tests/unit/theme-registry.test.mjs                 # single file
 node --test --test-name-pattern="<regex>" tests/unit/x.test.mjs # single test
 ```
 
-- Browser tests in `tests/browser/*.js` run against a running server with the Playwright CLI, e.g. `playwright-cli -s=portfolio run-code --filename=tests/browser/navigation.js`.
+- Browser tests in `tests/browser/*.js` run against a running server with the Playwright CLI, e.g. `playwright-cli -s=portfolio run-code --filename=tests/browser/navigation.js`. Scripts with a hardcoded origin expect a specific port and theme (e.g. `admin-content.js`: port 3018, a writable data copy in `PORTFOLIO_DATA_DIR`, and an admin hash for the password in the script).
+- Unit tests must never write the real `portfolio-data/`: give stores a temporary copy (`cp -r portfolio-data`) as their root.
 - If another Next process uses the checkout, isolate output: `PORTFOLIO_BUILD_DIR=.next-portfolio-dev npm run dev -- --port 3001` (`next.config.js` reads it as `distDir`). Use the same value for `build` and `start`.
 - Generate the admin password hash with the one-liner in `docs/multi-theme/phase-5-preview-activation-hosting.md` (uses `createPasswordHash` from `lib/admin/auth.mjs`). Escape `$` as `\$` in `.env`.
 
@@ -60,9 +61,12 @@ node --test --test-name-pattern="<regex>" tests/unit/x.test.mjs # single test
 
 ### Admin, preview, activation
 - `lib/admin/auth.mjs`: scrypt password verification and HMAC-signed session/preview tokens. `lib/admin/server.mjs`: cookie names (`portfolio_admin_session`, `portfolio_theme_preview`), cookie options, `getAdminRequestState()`. `lib/admin/request-security.mjs`: same-origin checks for POSTs.
-- Routes: `app/admin/{login,session,logout,theme,theme/preview,theme/activate}`. All mutating routes require a valid session **and** same-origin.
+- Routes: `app/admin/{login,session,logout,theme,theme/preview,theme/activate,content,content/[id],content/[id]/save}`. All mutating routes require a valid session **and** same-origin.
 - Preview is a signed, 2-hour cookie bound to the admin session; only authorized requests with an `available` theme get `mode: "preview"`, anything invalid silently falls back to the public active theme.
-- Activation (`lib/themes/activation.mjs`) validates the theme, writes `theme.json` atomically (temp file + rename), then `revalidatePath("/", "layout")` and clears the preview cookie.
+- `lib/portfolio/documents.mjs` (`documentRegistry`) is the single list of the 20 canonical documents (id, file path, schema, canonical location); the loader, editor, and stores all use it, and only registry ids are addressable. `validateDocument` / `validatePortfolio` in the loader return `{ path, message }` issues.
+- `lib/content-store/` — `createContentStore(env)` picks `filesystem` (dev default; sha256 revisions, per-document lock, temp+rename), `github` (contents API via `fetch`; blob sha is the revision, 409/422 → `CONFLICT`), or `readonly` (production default) via `PORTFOLIO_CONTENT_STORE`. Every write passes `expectedRevision` (optimistic locking).
+- Content editor: `/admin/content/[id]` renders `SchemaForm` (client, `app/admin/content/schema-form.jsx`) from `z.toJSONSchema` (`lib/admin/form-schema.mjs`, server-only); browser-safe helpers live in `lib/admin/form-model.mjs` (keep Zod/schemas out of it). Saves POST to `/admin/content/[id]/save` → `handleContentSave` (`lib/admin/content-save.mjs`): auth → origin → 256 KiB → registry id → document + whole-portfolio validation → store write; issue paths are relative to the edited document.
+- Activation (`lib/themes/activation.mjs`) requires a store and writes the `theme` document through it; live stores revalidate immediately, the GitHub store redirects with `pending=1`.
 
 ### Other server code
 - `app/api/contact/route.js` + `lib/contact.mjs` (Gmail via nodemailer, reCAPTCHA verify with server-only `RECAPTCHA_SECRET_KEY`); `lib/articles.mjs` fetches dev.to posts for the username in `content/articles.json`.
@@ -85,7 +89,7 @@ node --test --test-name-pattern="<regex>" tests/unit/x.test.mjs # single test
 ### Public site vs. admin
 - Keep separate: **public rendering**, **private administration**, **theme preview**, **theme activation**.
 - Theme preview is **session-scoped** and must never affect what public visitors see.
-- Do not add runtime content writes beyond theme activation until persistence (locking, revisions, backups) is proven safe for the deployment platform. Put any new storage behind a clear interface.
+- Runtime content writes go only through a `ContentStore` (revisions + optimistic locking; GitHub history is the backup). Never write the deployment filesystem directly from request handlers.
 - Keep a path open to a future multi-user platform, but do not build multi-user infrastructure now.
 
 ## Quality bar
@@ -113,5 +117,5 @@ node --test --test-name-pattern="<regex>" tests/unit/x.test.mjs # single test
 
 - Import alias `@/` maps to the repo root (`jsconfig.json`).
 - Server-only modules import `"server-only"`; keep pure logic in `.mjs` files so `node --test` can import it without Next.
-- Comment style (from `AGENTS.md`): no comments on the first two lines of a file; prefer short section headings like `// ── Constants ──`; JSDoc only when intent or constraints need explaining.
+- Comment style: no comments on the first two lines of a file; prefer short section headings like `// ── Constants ──`; JSDoc only when intent or constraints need explaining.
 - No formatter is configured; match surrounding style.

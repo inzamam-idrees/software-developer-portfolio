@@ -1,7 +1,26 @@
+import AdminNav from "@/app/admin/admin-nav";
+import { createContentStore } from "@/lib/content-store/index.mjs";
 import { getAdminRequestState } from "@/lib/admin/server.mjs";
 import { getCurrentPortfolioView } from "@/lib/portfolio/server.mjs";
 import { listPreviewableThemes } from "@/lib/themes/selection.mjs";
 import { redirect } from "next/navigation";
+
+const ACTIVATION_ERRORS = Object.freeze({
+  READ_ONLY: "Activation is not configured for this deployment: the content store is read-only.",
+  CONFLICT: "The active theme changed elsewhere. Reload and try again.",
+  UNAUTHORIZED_STORE: "The storage credentials were rejected. Check GITHUB_CONTENT_TOKEN.",
+  STORE_UNAVAILABLE: "Content storage is unavailable. Try again later.",
+  INVALID_THEME: "That theme does not exist.",
+  UNAVAILABLE_THEME: "That theme is not available for activation.",
+});
+
+function activationStore() {
+  try {
+    return createContentStore();
+  } catch {
+    return null;
+  }
+}
 
 export default async function ThemeManagementPage({ searchParams }) {
   const admin = await getAdminRequestState();
@@ -15,6 +34,11 @@ export default async function ThemeManagementPage({ searchParams }) {
   const activatedTheme = themes.find(
     (theme) => theme.id === resolvedParams.activated,
   );
+  const store = activationStore();
+  const canActivate = Boolean(store?.capabilities.writable);
+  const activationError = resolvedParams.error
+    ? ACTIVATION_ERRORS[resolvedParams.error] ?? "Activation failed. Try again."
+    : null;
 
   return (
     <main className="admin-panel admin-theme-manager" id="main-content">
@@ -23,17 +47,27 @@ export default async function ThemeManagementPage({ searchParams }) {
           <p className="admin-eyebrow">Private theme management</p>
           <h1>Theme review &amp; activation</h1>
         </div>
-        <form action="/admin/logout" method="post">
-          <button className="admin-secondary" type="submit">
-            Sign out
-          </button>
-        </form>
+        <AdminNav current="theme" />
       </header>
+
+      {activationError && (
+        <p className="admin-error" role="alert">
+          {activationError}
+        </p>
+      )}
+
+      {!canActivate && (
+        <p className="admin-notice">
+          This deployment is read-only, so themes can be previewed but not activated.
+          Configure PORTFOLIO_CONTENT_STORE to enable activation.
+        </p>
+      )}
 
       {activatedTheme && (
         <aside className="admin-notice" role="status" aria-live="polite">
-          Theme &ldquo;{activatedTheme.label}&rdquo; has been activated and is now
-          live for all visitors.
+          {resolvedParams.pending
+            ? <>Theme &ldquo;{activatedTheme.label}&rdquo; was committed and goes live after the next deploy.</>
+            : <>Theme &ldquo;{activatedTheme.label}&rdquo; has been activated and is now live for all visitors.</>}
         </aside>
       )}
 
@@ -97,7 +131,9 @@ export default async function ThemeManagementPage({ searchParams }) {
                   ) : (
                     <form action="/admin/theme/activate" method="post">
                       <input type="hidden" name="themeId" value={theme.id} />
-                      <button type="submit">Activate {theme.label}</button>
+                      <button type="submit" disabled={!canActivate}>
+                        Activate {theme.label}
+                      </button>
                     </form>
                   )}
                 </div>
@@ -110,8 +146,9 @@ export default async function ThemeManagementPage({ searchParams }) {
       <section className="admin-activation" aria-labelledby="activation-title">
         <h2 id="activation-title">Activation</h2>
         <p>
-          Activating a theme updates the public layout across all routes immediately.
-          Select any available theme above to activate it.
+          Activating a theme saves it through the configured content store. Local
+          files update the public layout immediately; GitHub storage publishes after
+          the next deploy. Read-only deployments cannot activate themes.
         </p>
       </section>
     </main>

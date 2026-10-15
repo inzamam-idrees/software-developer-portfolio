@@ -157,9 +157,29 @@ Private theme preview is documented in
 [`docs/multi-theme/phase-5-preview-activation-hosting.md`](docs/multi-theme/phase-5-preview-activation-hosting.md).
 It requires `PORTFOLIO_ADMIN_PASSWORD_HASH` and
 `PORTFOLIO_ADMIN_SESSION_SECRET`. Preview is cookie-scoped and does not modify the
-public active setting. Runtime theme activation remains disabled until a persistent,
-shared writable deployment, locking, revisions, atomic writes, and backups are
-established.
+public active setting.
+
+### Admin content editing
+
+Signed-in administrators can edit every portfolio document, including theme copy and
+the active theme, at `/admin/content`. Forms are generated from the same Zod schemas
+the build uses. Every save is validated on the server, both the document alone and
+the whole portfolio together, before it is stored. Two tabs editing the same document
+cannot overwrite each other: the second save is rejected as a conflict.
+
+Saves go through the store selected by `PORTFOLIO_CONTENT_STORE`:
+
+| Store | Use | Where a save goes |
+|---|---|---|
+| `filesystem` | Local development (default outside production) | Writes `portfolio-data/` (or `PORTFOLIO_DATA_DIR`) and is live immediately. |
+| `github` | Production on Netlify | Commits the JSON file to `GITHUB_CONTENT_BRANCH`; Netlify redeploys and the change is live in about 1–2 minutes. Git history is the revision log and backup. |
+| `readonly` | Production default | Editing and activation are disabled. |
+
+To enable GitHub storage, create a **fine-grained personal access token** limited to
+this repository with **Contents: Read and write** permission only, then set
+`PORTFOLIO_CONTENT_STORE=github`, `GITHUB_CONTENT_TOKEN`, `GITHUB_CONTENT_REPO`
+(`owner/name`) and `GITHUB_CONTENT_BRANCH` (the branch Netlify deploys) in the host's
+environment settings. Never prefix them with `NEXT_PUBLIC_`.
 
 ---
 
@@ -167,11 +187,10 @@ established.
 
 Deploying the app to platforms like Vercel or Netlify is quick and easy.
 
-This applies to the read-only portfolio bundled at build time. Runtime content editing
-through the planned personal CMS requires `PORTFOLIO_DATA_DIR` to point to a persistent,
-writable filesystem. Normal ephemeral Vercel and Netlify filesystems are not compatible
-with durable runtime file persistence; use a deployment with a persistent volume for
-that future mode.
+Content is bundled at build time. Runtime edits from the admin are persisted by
+committing to GitHub (see Admin content editing), never by writing the host's
+ephemeral filesystem. A host with a persistent volume can instead use
+`PORTFOLIO_CONTENT_STORE=filesystem` with `PORTFOLIO_DATA_DIR`.
 
 ## Deploying to Vercel:
 
@@ -189,9 +208,10 @@ Whenever you push changes to your GitHub repo, Vercel will automatically redeplo
 
 ## Deploying to Netlify:
 
-The supported Netlify mode is read-only: canonical JSON is validated and bundled into
-the server function, and content changes are published through a new deploy. Runtime
-activation and content editing remain disabled. See
+Canonical JSON is validated and bundled into the server function, and content changes
+are published through a new deploy. With GitHub content storage configured, admin
+edits and theme activation commit to the repository and Netlify's continuous
+deployment publishes them; without it the deployment is read-only. See
 [`docs/multi-theme/phase-6-netlify-persistence-readiness.md`](docs/multi-theme/phase-6-netlify-persistence-readiness.md)
 for the persistence assessment and future migration path.
 
@@ -201,7 +221,13 @@ for the persistence assessment and future migration path.
 4. Configure runtime values in Netlify environment settings. Set `SITE_URL`,
    `PORTFOLIO_ADMIN_PASSWORD_HASH`, and `PORTFOLIO_ADMIN_SESSION_SECRET` for both Builds
    and Functions where scopes are available. Never use `NEXT_PUBLIC_` for secrets.
-   Leave `PORTFOLIO_DATA_DIR` unset for this read-only deployment.
+   Leave `PORTFOLIO_DATA_DIR` unset. To enable admin editing, also set
+   `PORTFOLIO_CONTENT_STORE=github`, `GITHUB_CONTENT_TOKEN`, `GITHUB_CONTENT_REPO`
+   and `GITHUB_CONTENT_BRANCH` (Functions scope is enough). If sign-in then reports
+   that administrator access is unavailable, escape every `$` in
+   `PORTFOLIO_ADMIN_PASSWORD_HASH` as `\$`: in local testing Next.js expanded `$` in
+   this value even when it was set as a process environment variable. This has not
+   been verified on Netlify.
 5. Click **Deploy Site**. Netlify will build and deploy your portfolio.
 
 ---

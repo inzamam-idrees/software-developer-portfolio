@@ -17,6 +17,16 @@
   margin-top: 0;
 }
 
+.admin-panel h1 {
+  margin-bottom: 0;
+  font-size: clamp(1.75rem, 4vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.admin-panel h2 {
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+}
+
 .admin-panel a,
 .admin-panel button,
 .admin-panel input {
@@ -159,4 +169,173 @@
   .admin-panel button {
     width: 100%;
   }
+}
+
+.admin-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.admin-nav ul {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.85rem;
+  color: #20201d;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.admin-nav a[aria-current="page"] {
+  border-color: #20201d;
+  font-weight: 700;
+}
+
+.admin-document-list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-document-list li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #fffdf8;
+  border: 1px solid #d9d3c7;
+  border-radius: 0.25rem;
+}
+
+.admin-document-list span,
+.admin-hint {
+  color: #5d5a53;
+  font-size: 0.9rem;
+}
+
+.admin-schema-form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.admin-form-body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.admin-form-fields,
+.admin-fieldset {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.admin-fieldset {
+  margin: 0;
+  padding: 1rem;
+  background: #fffdf8;
+  border: 1px solid #d9d3c7;
+  border-radius: 0.25rem;
+}
+
+.admin-fieldset legend {
+  padding: 0 0.35rem;
+  font-weight: 700;
+}
+
+.admin-field {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.admin-field label {
+  font-weight: 600;
+}
+
+.admin-field-control {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.admin-field input[type="text"],
+.admin-field input[type="number"],
+.admin-field select,
+.admin-field textarea,
+.admin-record-add input {
+  flex: 1 1 16rem;
+  min-width: 0;
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  color: #20201d;
+  background: #fff;
+  border: 1px solid #8b857a;
+  border-radius: 0.25rem;
+  font: inherit;
+}
+
+.admin-field input[type="checkbox"] {
+  width: 1.4rem;
+  min-height: 1.4rem;
+}
+
+.admin-field [aria-invalid="true"] {
+  border-color: #a5281b;
+  box-shadow: 0 0 0 1px #a5281b;
+}
+
+.admin-field-error {
+  margin: 0;
+  color: #a5281b;
+  font-size: 0.9rem;
+}
+
+.admin-array {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.admin-array-item {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.admin-array-actions,
+.admin-record-row,
+.admin-record-add,
+.admin-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.admin-form-actions {
+  position: sticky;
+  bottom: 0;
+  padding: 0.75rem 0;
+  background: #f4f0e7;
+  border-top: 1px solid #d9d3c7;
+}
+
+.admin-save-status {
+  margin: 0;
 }

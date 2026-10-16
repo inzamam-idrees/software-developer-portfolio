@@ -1,46 +1,66 @@
 import { getAdminRequestState } from "@/lib/admin/server.mjs";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import Icon from "../icons";
+
+export const metadata = { title: "Sign in" };
 
 export default async function AdminLoginPage({ searchParams }) {
   const admin = await getAdminRequestState();
   if (admin.session) redirect("/admin/theme");
   const query = await searchParams;
+  const failed = query?.error === "credentials";
 
   return (
-    <main className="admin-panel admin-login" id="main-content">
-      <p className="admin-eyebrow">Private portfolio controls</p>
-      <h1>Administrator sign in</h1>
-      <p>
-        Sign in to preview registered themes. Preview never changes the public
-        active theme.
-      </p>
-      {!admin.configured && (
-        <p className="admin-notice" role="status">
-          Administrator access is not configured on this deployment.
+    <main className="admin-login" id="main-content">
+      <div className="admin-login-card">
+        <p className="admin-brand admin-login-brand">
+          <Icon name="mark" className="admin-brand-mark" />
+          <span>Portfolio admin</span>
         </p>
-      )}
-      {query?.error === "credentials" && (
-        <p className="admin-error" role="alert">
-          Unable to sign in with those credentials.
+        <h1>Sign in</h1>
+        <p className="admin-login-lede">
+          Preview and publish themes, and edit the portfolio&rsquo;s content. Previews stay
+          private to this session.
         </p>
-      )}
-      <form action="/admin/session" method="post">
-        <label htmlFor="admin-password">Administrator password</label>
-        <input
-          id="admin-password"
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          minLength={12}
-          required
-          disabled={!admin.configured}
-        />
-        <button type="submit" disabled={!admin.configured}>
-          Sign in
-        </button>
-      </form>
-      <Link href="/">Return to the public portfolio</Link>
+        {!admin.configured && (
+          <p className="admin-callout" data-tone="warning" role="status">
+            <Icon name="lock" />
+            <span>Administrator access is not configured on this deployment.</span>
+          </p>
+        )}
+        {failed && (
+          <p className="admin-callout" data-tone="error" role="alert" id="admin-login-error">
+            <Icon name="alert" />
+            <span>Unable to sign in with those credentials.</span>
+          </p>
+        )}
+        <form className="admin-login-form" action="/admin/session" method="post">
+          <label className="admin-label" htmlFor="admin-password">
+            Administrator password
+          </label>
+          <input
+            className="admin-input"
+            id="admin-password"
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            minLength={12}
+            required
+            autoFocus={admin.configured}
+            aria-invalid={failed ? "true" : undefined}
+            aria-describedby={failed ? "admin-login-error" : undefined}
+            disabled={!admin.configured}
+          />
+          <button className="admin-button" data-variant="primary" type="submit" disabled={!admin.configured}>
+            Sign in
+            <Icon name="arrowRight" />
+          </button>
+        </form>
+      </div>
+      <Link className="admin-login-back" href="/">
+        Return to the public portfolio
+      </Link>
     </main>
   );
 }

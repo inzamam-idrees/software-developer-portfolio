@@ -11,12 +11,6 @@ async (sourcePage) => {
       maxRedirects: 0,
     });
     if (login.status() !== 303) throw new Error(`Preview proof login returned ${login.status()}`);
-    const select = await context.request.post(`${origin}/admin/theme/preview`, {
-      form: { themeId },
-      headers: { origin },
-      maxRedirects: 0,
-    });
-    if (select.status() !== 303) throw new Error(`${themeId} preview selection returned ${select.status()}`);
 
     const page = await context.newPage();
     const scripts = [];
@@ -25,7 +19,7 @@ async (sourcePage) => {
       const body = await response.body().catch(() => new Uint8Array());
       scripts.push({ url: response.url(), body });
     });
-    await page.goto(origin, { waitUntil: "networkidle" });
+    await page.goto(`${origin}/preview/${themeId}`, { waitUntil: "networkidle" });
     await page.locator(`[data-theme-id="${themeId}"]`).waitFor();
     const heavy = scripts.filter(({ body }) => heavySignature.test(Buffer.from(body).toString("utf8")));
     if (heavy.length) {
@@ -80,15 +74,26 @@ async (sourcePage) => {
     throw new Error(`Invalid preview theme returned ${rejected.status()}`);
   }
 
-  await publicPage.getByRole("button", { name: "Preview Executive" }).click();
-  await publicPage.waitForURL(origin + "/");
+  // ── Previews live on their own route and never change the public routes ──
+  await publicPage.getByRole("link", { name: "Preview Executive" }).click();
+  await publicPage.waitForURL(`${origin}/preview/executive`);
   await publicPage.locator('[data-theme-id="executive"]').waitFor();
   if (!(await publicPage.locator('meta[name="robots"][content*="noindex"]').count())) {
     throw new Error("Private preview response can be indexed");
   }
-  for (const route of ["/project", "/blog"]) {
+  await publicPage.getByRole("complementary", { name: "Theme preview controls" }).waitFor();
+  await publicPage.locator('[data-theme-id="executive"] a[href="/project"]:visible').first().click();
+  await publicPage.waitForURL(`${origin}/preview/executive/project`);
+  await publicPage.locator('[data-theme-id="executive"]').waitFor();
+  await publicPage.goto(`${origin}/preview/executive/blog`, { waitUntil: "domcontentloaded" });
+  await publicPage.locator('[data-theme-id="executive"]').waitFor();
+  for (const route of ["/", "/project", "/blog"]) {
     await publicPage.goto(origin + route, { waitUntil: "domcontentloaded" });
-    await publicPage.locator('[data-theme-id="executive"]').waitFor();
+    await publicPage.locator('[data-theme-id="cinematic"]').waitFor();
+  }
+  const missingTheme = await publicPage.goto(`${origin}/preview/minimal`, { waitUntil: "domcontentloaded" });
+  if (missingTheme.status() !== 404) {
+    throw new Error(`Unknown preview theme returned ${missingTheme.status()}`);
   }
 
   const separateContext = await browser.newContext();
@@ -98,6 +103,10 @@ async (sourcePage) => {
   if (await separatePage.locator('[data-theme-id="executive"]').count()) {
     throw new Error("Preview state leaked into another browser session");
   }
+  await separatePage.goto(`${origin}/preview/executive`, { waitUntil: "domcontentloaded" });
+  if (!separatePage.url().includes("/admin/login")) {
+    throw new Error("Anonymous preview route was not protected");
+  }
 
   const unauthorizedPost = await separatePage.request.post(
     `${origin}/admin/theme/preview`,
@@ -106,11 +115,6 @@ async (sourcePage) => {
   if (unauthorizedPost.status() !== 401) {
     throw new Error(`Unauthorized preview mutation returned ${unauthorizedPost.status()}`);
   }
-
-  await publicPage.goto(`${origin}/admin/theme`, { waitUntil: "domcontentloaded" });
-  await publicPage.getByRole("button", { name: "End preview" }).click();
-  await publicPage.waitForURL(origin + "/");
-  await publicPage.locator('[data-theme-id="cinematic"]').waitFor();
 
   await separateContext.close();
   await publicContext.close();

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import AdminNav from "@/app/admin/admin-nav";
+import AdminShell from "@/app/admin/admin-shell";
+import Icon from "@/app/admin/icons";
 import { documentFormSchema } from "@/lib/admin/form-schema.mjs";
 import { getAdminRequestState } from "@/lib/admin/server.mjs";
 import { createContentStore } from "@/lib/content-store/index.mjs";
@@ -9,6 +10,21 @@ import SchemaForm from "../schema-form";
 import { describeStore } from "../store-description.mjs";
 
 export const dynamic = "force-dynamic";
+
+const GROUP_TITLES = Object.freeze({
+  content: "Portfolio content",
+  settings: "Site settings",
+  copy: "Theme copy",
+});
+
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  try {
+    return { title: `Edit ${getDocumentDefinition(id).label}` };
+  } catch {
+    return { title: "Document not found" };
+  }
+}
 
 export default async function ContentDocumentPage({ params }) {
   const admin = await getAdminRequestState();
@@ -33,20 +49,31 @@ export default async function ContentDocumentPage({ params }) {
   }
 
   return (
-    <main className="admin-panel admin-content" id="main-content">
-      <header className="admin-heading">
-        <div>
-          <p className="admin-eyebrow">
-            <Link href="/admin/content">Portfolio content</Link> / {definition.path}
-          </p>
-          <h1>{definition.label}</h1>
-        </div>
-        <AdminNav current="content" />
+    <AdminShell current="content">
+      <nav className="admin-breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li>
+            <Link href="/admin/content">Content</Link>
+          </li>
+          <li>
+            <Link href={`/admin/content#group-${definition.group}`}>
+              {GROUP_TITLES[definition.group] ?? definition.group}
+            </Link>
+          </li>
+          <li aria-current="page">{definition.label}</li>
+        </ol>
+      </nav>
+      <header className="admin-page-head admin-editor-head">
+        <h1>{definition.label}</h1>
+        <p>
+          <code className="admin-doc-path">{definition.path}</code>
+        </p>
+        <p>{describeStore(store)}</p>
       </header>
-      <p className="admin-hint">{describeStore(store)}</p>
       {failure ? (
-        <p className="admin-error" role="alert">
-          {failure}
+        <p className="admin-callout" data-tone="error" role="alert">
+          <Icon name="alert" />
+          <span>{failure}</span>
         </p>
       ) : (
         <SchemaForm
@@ -59,6 +86,6 @@ export default async function ContentDocumentPage({ params }) {
           liveAfterWrite={store.capabilities.liveAfterWrite}
         />
       )}
-    </main>
+    </AdminShell>
   );
 }

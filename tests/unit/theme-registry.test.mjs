@@ -13,7 +13,7 @@ test("registry exposes only the approved Phase 3 themes with complete lazy slots
 
   assert.deepEqual(
     themes.map((theme) => theme.id),
-    ["coding", "cinematic", "executive"],
+    ["coding", "cinematic", "executive", "spatial"],
   );
   assert.equal(themes.some((theme) => theme.id === "creative"), false);
   assert.equal(themes.some((theme) => theme.id === "minimal"), false);
@@ -31,6 +31,8 @@ test("active theme resolution uses canonical settings and rejects unknown IDs", 
     "cinematic",
   );
   assert.equal(getThemeDefinition("coding").label, "Coding");
+  assert.equal(getThemeDefinition("spatial").label, "Spatial");
+  assert.equal(getThemeDefinition("spatial").status, "available");
   assert.throws(
     () => resolveActiveTheme({ theme: { activeTheme: "minimal" } }),
     /Unknown portfolio theme: minimal/,

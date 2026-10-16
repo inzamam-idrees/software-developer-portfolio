@@ -34,3 +34,18 @@ Instanced beam frames and simpler rings reduce this to 8 calls / 2088 triangles.
 A detected software renderer uses DPR .75, 30 particles and no antialiasing; hardware
 retains the approved DPR caps and 100/30 particle budgets. No animation/GPU debug
 hooks ship in the UI. Measured frame intervals and limitations are in `validation.md`.
+
+
+## Spatial theme (Phase 8)
+
+No packages were added. Spatial reuses the existing `three` and `@react-three/fiber`
+(the vendor chunks are shared with Cinematic) and does not load GSAP: the experience
+camera follows section progress computed from the DOM in the render loop. Drei was not
+added; one fixed canvas renders each station into its layout slot with scissor and
+viewport, which is what Drei's `View` would provide. `axe-core`, used by
+`tests/browser/spatial-accessibility.js`, is already installed through
+`eslint-plugin-jsx-a11y`. The Archivo font comes from `next/font/google` with
+`preload: false`, so other themes do not download it.
+
+Scene budget (measured with draw-call instrumentation in headless Chromium): at most 6
+draw calls and 1,736 triangles per frame for any station; Spatial scene code 4.0 kB gz.

@@ -31,6 +31,7 @@ test("bundled copy documents validate and load under settings.copy", () => {
     "coding",
     "executive",
     "shared",
+    "spatial",
   ]);
 });
 
@@ -153,4 +154,19 @@ test("plain copy placeholder rejection does not depend on earlier validations", 
   const later = structuredClone(canonical.settings.copy.shared);
   later.navigation.skipToContent = "{x}";
   assert.equal(sharedCopySchema.safeParse(later).success, false);
+});
+
+test("spatial copy validates and rejects extra keys, padding, and unknown placeholders", () => {
+  const spatial = structuredClone(canonical.settings.copy.spatial);
+  assert.equal(copySchemaByTheme.spatial.safeParse(spatial).success, true);
+  assert.equal(
+    copySchemaByTheme.spatial.safeParse({ ...spatial, unexpected: "x" }).success,
+    false,
+  );
+  const padded = structuredClone(spatial);
+  padded.home.skills.heading = " Padded ";
+  assert.equal(copySchemaByTheme.spatial.safeParse(padded).success, false);
+  const placeholder = structuredClone(spatial);
+  placeholder.home.skills.usedIn = "{title}";
+  assert.equal(copySchemaByTheme.spatial.safeParse(placeholder).success, false);
 });

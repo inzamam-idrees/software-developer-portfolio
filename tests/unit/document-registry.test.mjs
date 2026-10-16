@@ -32,6 +32,7 @@ const expectedIds = [
   "copy-coding",
   "copy-cinematic",
   "copy-executive",
+  "copy-spatial",
 ];
 
 async function bundledDocuments() {
@@ -64,6 +65,8 @@ test("unknown document ids are rejected, including path-like ids", () => {
     );
   }
   assert.equal(getDocumentDefinition("copy-shared").name, "copy.shared");
+  assert.equal(getDocumentDefinition("copy-spatial").name, "copy.spatial");
+  assert.equal(documentRegistry.length, 21);
 });
 
 test("every registry path exists in the bundled data", async () => {

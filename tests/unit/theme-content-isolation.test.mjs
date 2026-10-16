@@ -7,11 +7,13 @@ import { buildCurrentPortfolioView } from "../../lib/portfolio/current-view.mjs"
 import { createCodingView } from "../../themes/coding/view.mjs";
 import { createCinematicView } from "../../themes/cinematic/view.mjs";
 import { createExecutiveView } from "../../themes/executive/view.mjs";
+import { createSpatialView } from "../../themes/spatial/view.mjs";
 
 const themeViews = [
   ["coding", createCodingView],
   ["cinematic", createCinematicView],
   ["executive", createExecutiveView],
+  ["spatial", createSpatialView],
 ];
 
 test("one canonical fixture projects into every registered theme without mutation", async () => {

@@ -324,6 +324,18 @@ When absent, canonical links, Person URL and sitemap references are omitted. The
 social image needs no external assets. Contact delivery uses the existing
 `EMAIL_ADDRESS` and `GMAIL_PASSKEY`; never commit credentials. Test delivery is mocked.
 
+## Spatial theme
+
+Spatial presents the same canonical content as an explorable system model: the skills
+graph, the featured projects and the career history are built from the data, never
+written into the theme. Every section is server-rendered and complete without
+JavaScript or WebGL. After the page has loaded, one lazy React Three Fiber canvas
+draws the hero model, the skills graph, a project ring and an experience spine into
+reserved panels. It uses a reduced static mode for reduced motion, a paused motion
+preference (shared with Cinematic) or software rendering, and no 3D at all without
+WebGL2 or with `features.threeD` off. Spatial adds no dependencies and loads no GSAP.
+Details: `docs/multi-theme/phase-8-spatial-result.md`.
+
 Run `npm run test:unit`, `npm run lint`, and `npm run build` for local checks.
 Browser cases in `tests/browser` run with the installed Playwright CLI, e.g.
 `playwright-cli -s=portfolio run-code --filename=tests/browser/navigation.js`.

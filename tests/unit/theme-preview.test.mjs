@@ -68,6 +68,25 @@ test("invalid and unavailable preview identifiers fail safely", () => {
 test("only available registry themes are offered for preview", () => {
   assert.deepEqual(
     listPreviewableThemes().map((theme) => theme.id),
-    ["coding", "cinematic", "executive"],
+    ["coding", "cinematic", "executive", "spatial"],
   );
+});
+
+test("an authorized Spatial preview stays session-scoped", () => {
+  const preview = resolveThemeSelection({
+    settings: activeSettings,
+    previewThemeId: "spatial",
+    authorized: true,
+  });
+  assert.equal(preview.theme.id, "spatial");
+  assert.equal(preview.mode, "preview");
+  assert.equal(activeSettings.theme.activeTheme, "cinematic");
+
+  const visitor = resolveThemeSelection({
+    settings: activeSettings,
+    previewThemeId: "spatial",
+    authorized: false,
+  });
+  assert.equal(visitor.theme.id, "cinematic");
+  assert.equal(visitor.mode, "public");
 });

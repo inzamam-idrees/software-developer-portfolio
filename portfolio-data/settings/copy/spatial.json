@@ -1,0 +1,93 @@
+{
+  "navigation": {
+    "wordmarkRole": "Engineer"
+  },
+  "footer": {
+    "backToTop": "Back to top",
+    "source": "Site source"
+  },
+  "motion": {
+    "pause": "Pause motion",
+    "enable": "Enable motion",
+    "reduced": "Reduced motion",
+    "systemNote": "Motion is off because your system asks for reduced motion."
+  },
+  "home": {
+    "hero": {
+      "contactAction": "Start a conversation",
+      "resumeAction": "View resume",
+      "modelDescription": "A model of the skills, projects, and roles listed on this page, connected by the technologies they share."
+    },
+    "about": {
+      "heading": "About",
+      "portraitAlt": "Portrait of {name}"
+    },
+    "experience": {
+      "heading": "Experience",
+      "present": "Present",
+      "technologiesLabel": "Technologies used as {role}"
+    },
+    "skills": {
+      "heading": "Skills",
+      "intro": "Choose a technology to see the projects and roles where it was used.",
+      "selectPrompt": "Nothing selected yet.",
+      "noMatches": "No listed project or role uses this yet.",
+      "clearSelection": "Clear selection",
+      "unmatchedGroup": "Also used in projects",
+      "projectsLabel": "Projects",
+      "rolesLabel": "Roles",
+      "usedIn": "Where {name} was used"
+    },
+    "projects": {
+      "heading": "Projects",
+      "intro": "Selected systems, with the problem each one solved.",
+      "viewProject": "Visit project",
+      "viewSource": "View source",
+      "exploreAll": "See all {count} projects"
+    },
+    "education": {
+      "heading": "Education",
+      "awardsHeading": "Awards"
+    },
+    "writing": {
+      "heading": "Writing",
+      "empty": "No articles published yet.",
+      "unavailable": "Articles can't be loaded right now. Try again later.",
+      "profileAction": "Read more on dev.to",
+      "loading": "Loading articles.",
+      "loadingLabel": "Writing"
+    },
+    "resume": {
+      "heading": "Resume",
+      "body": "The full history in one document."
+    },
+    "contact": {
+      "basedIn": "Based in",
+      "emailLabel": "Email",
+      "socialLabel": "Elsewhere"
+    }
+  },
+  "project": {
+    "problem": "Problem",
+    "solution": "Approach",
+    "outcome": "Outcome",
+    "features": "Features",
+    "responsibilities": "Responsibilities",
+    "visit": "Visit project",
+    "source": "View source"
+  },
+  "projects": {
+    "heading": "All projects",
+    "contactAction": "Discuss a project",
+    "count": "{count} projects"
+  },
+  "blog": {
+    "heading": "Writing",
+    "intro": "Articles on engineering practice.",
+    "empty": "No articles published yet.",
+    "unavailable": "Articles can't be loaded right now. Try again later.",
+    "profileAction": "Read more on dev.to",
+    "fallbackDate": "Undated",
+    "readingTime": "{minutes} min read"
+  }
+}

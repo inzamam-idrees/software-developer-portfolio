@@ -23,6 +23,7 @@ export default async function CodingHome({ portfolio }) {
         personalData={presentation.personalData}
         skillsData={presentation.skillsData}
         copy={home.hero}
+        socialLabels={presentation.copy.socialLabels}
       />
       <AboutSection personalData={presentation.personalData} copy={home.about} />
       <Experience
@@ -33,7 +34,7 @@ export default async function CodingHome({ portfolio }) {
       <Projects
         projectsData={presentation.projectsData}
         copy={home.projects}
-        noDemoLabel={presentation.copy.projects.noDemo}
+        cardCopy={presentation.copy.projects}
       />
       <Education
         educations={presentation.educations}

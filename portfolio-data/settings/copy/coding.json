@@ -6,7 +6,8 @@
       "skills": "SKILLS",
       "education": "EDUCATION",
       "blogs": "BLOGS",
-      "projects": "PROJECTS"
+      "projects": "PROJECTS",
+      "contact": "CONTACT"
     }
   },
   "footer": {
@@ -25,21 +26,26 @@
     },
     "about": {
       "rail": "ABOUT ME",
-      "heading": "Who I am?"
+      "heading": "About me",
+      "readMore": "Read full bio",
+      "readLess": "Show less"
     },
     "experience": {
-      "heading": "Experiences"
+      "heading": "Experience",
+      "showMore": "Show {count} more",
+      "showLess": "Show less"
     },
     "skills": {
       "heading": "Skills"
     },
     "projects": {
-      "heading": "PROJECTS",
+      "heading": "Projects",
       "viewMore": "View More"
     },
     "education": {
-      "heading": "Educations",
-      "awardLabel": "Award"
+      "heading": "Education",
+      "degreesHeading": "Degrees",
+      "awardsHeading": "Awards"
     },
     "blog": {
       "heading": "Blogs",
@@ -50,7 +56,7 @@
     }
   },
   "contactForm": {
-    "heading": "Contact with me",
+    "heading": "Get in touch",
     "intro": "If you have any questions or concerns, please don't hesitate to contact me. I am open to opportunities that align with my skills and interests.",
     "name": "Your Name",
     "email": "Your Email",
@@ -60,7 +66,14 @@
   },
   "projects": {
     "heading": "All Projects",
-    "noDemo": "N/A"
+    "noDemo": "N/A",
+    "role": "Role",
+    "stack": "Built with",
+    "features": "Highlights",
+    "tasks": "Responsibilities",
+    "demo": "Live demo",
+    "showMore": "Show {count} more",
+    "showLess": "Show less"
   },
   "blog": {
     "routeHeading": "All Blog",

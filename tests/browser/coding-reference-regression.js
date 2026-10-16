@@ -41,12 +41,11 @@ async (sourcePage) => {
   await sourcePage.locator("#education [data-award]").first().waitFor();
   const awardCount = await sourcePage.locator("#education [data-award]").count();
   if (awardCount !== 3) throw new Error(`Coding awards expected 3, got ${awardCount}`);
-  const labelledAwards = await sourcePage
-    .locator("#education [data-award]")
-    .filter({ has: sourcePage.getByText("Award", { exact: true }) })
+  const groupedAwards = await sourcePage
+    .locator('#education [aria-labelledby="awards-title"] [data-award]')
     .count();
-  if (labelledAwards !== 3)
-    throw new Error(`Coding award cards must carry a visible Award label, got ${labelledAwards}`);
+  if (groupedAwards !== 3)
+    throw new Error(`Coding awards must sit under their own Awards heading, got ${groupedAwards}`);
   if ((await sourcePage.locator("#experience [data-highlights]").count()) !== 3)
     throw new Error("Coding experience highlights missing");
   const ragBadge = sourcePage.locator("#skills").getByText("RAG", { exact: true }).first();

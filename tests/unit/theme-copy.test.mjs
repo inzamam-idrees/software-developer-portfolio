@@ -48,7 +48,7 @@ test("theme view merges shared copy with its own theme copy only", () => {
     coding.home?.selectedWork?.heading,
     "Systems built for real operations.",
   );
-  assert.equal(coding.contactForm.heading, "Contact with me");
+  assert.equal(coding.contactForm.heading, "Get in touch");
   assert.equal(
     coding.contactForm.sent,
     "Message sent. Thank you for reaching out.",

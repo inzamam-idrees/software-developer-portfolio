@@ -36,6 +36,7 @@ export function createCodingPresentation(portfolio) {
     projectsData: view.projects.map((project) => ({
       id: project.id,
       name: project.title,
+      summary: project.shortDescription || project.longDescription,
       description: project.longDescription || project.shortDescription,
       tools: project.technologies,
       role: project.role,

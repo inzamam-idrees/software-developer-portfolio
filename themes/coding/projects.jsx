@@ -23,7 +23,7 @@ export default function CodingProjects({ portfolio }) {
         data-coding-project-grid="true"
       >
         {projectsData.map((project) => (
-          <ProjectCard key={project.id} project={project} noDemoLabel={copy.projects.noDemo} />
+          <ProjectCard key={project.id} project={project} copy={copy.projects} />
         ))}
       </div>
     </section>

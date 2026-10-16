@@ -62,5 +62,5 @@ test("Coding presentation exposes merged Coding copy", async () => {
 
   assert.equal(coding.copy.home.hero.resumeAction, "Download CV");
   assert.equal(coding.copy.navigation.skipToContent, "Skip to content");
-  assert.equal(coding.copy.contactForm.heading, "Contact with me");
+  assert.equal(coding.copy.contactForm.heading, "Get in touch");
 });

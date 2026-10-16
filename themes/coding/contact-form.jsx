@@ -47,9 +47,9 @@ export default function CodingContactForm({ copy }) {
 
   return (
     <div>
-      <p className="font-medium mb-5 text-[#16f2b3] text-xl uppercase">
+      <h2 className="font-medium mb-5 text-[#16f2b3] text-xl">
         {copy.heading}
-      </p>
+      </h2>
       <form
         className="max-w-3xl text-white rounded-lg border border-[#464c6a] p-3 lg:p-5"
         onSubmit={submit}

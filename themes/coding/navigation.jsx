@@ -10,6 +10,7 @@ const destinations = [
   ["education", "/#education"],
   ["blogs", "/blog"],
   ["projects", "/#projects"],
+  ["contact", "/#contact"],
 ];
 
 export default function CodingNavigation({ profile, copy }) {

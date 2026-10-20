@@ -1,6 +1,7 @@
 // @flow strict
 
 import Image from "next/image";
+import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import Expandable from "../expandable";
 
 // ── Helpers ──
@@ -60,7 +61,7 @@ function AboutSection({ personalData, copy }) {
             width={280}
             height={280}
             sizes="280px"
-            alt={personalData.name}
+            alt={formatCopy(copy.portraitAlt, { name: personalData.name })}
             className="h-auto w-[240px] lg:w-[280px] aspect-square object-cover rounded-lg"
           />
         </div>

@@ -50,7 +50,7 @@ export default function CodingNavigation({ profile, copy }) {
         <div className="flex flex-shrink-0 items-center">
           <Link
             href="/"
-            className="coding-wordmark text-[#16f2b3] text-3xl font-bold"
+            className="coding-wordmark text-[#16f2b3] text-3xl font-bold uppercase"
             onClick={() => setOpen(false)}
           >
             {profile.name}

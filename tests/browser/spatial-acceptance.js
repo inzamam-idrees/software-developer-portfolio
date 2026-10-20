@@ -3,7 +3,7 @@ async (sourcePage) => {
   const origin = "http://127.0.0.1:3019";
   const heavySignature = /WebGLRenderer|__r3f|GreenSock|GSAP 3\./;
   const expected = [
-    "INZAMAM IDREES",
+    "Inzamam Idrees",
     "Senior Full Stack Engineer",
     "Senior Software Engineer",
     "Laravel Angular Developer",

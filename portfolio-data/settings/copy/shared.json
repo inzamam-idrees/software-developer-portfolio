@@ -44,8 +44,8 @@
     "action": "Return home ↗"
   },
   "routes": {
-    "projectsTitle": "Projects | {siteName}",
-    "blogTitle": "Writing | {siteName}"
+    "projectsTitle": "Software Projects | {siteName}",
+    "blogTitle": "Articles | {siteName}"
   },
   "blogLoading": {
     "eyebrow": "THE NOTEBOOK",
@@ -53,5 +53,13 @@
   },
   "socialImage": {
     "headlineConnector": "with"
+  },
+  "llms": {
+    "pagesHeading": "Pages",
+    "homePage": "Profile, experience and skills",
+    "projectsHeading": "Projects",
+    "profilesHeading": "Profiles",
+    "contactHeading": "Contact",
+    "emailLabel": "Email"
   }
 }

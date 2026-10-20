@@ -8,7 +8,6 @@ import Expertise from "@/app/components/portfolio/sections/expertise";
 import Hero from "@/app/components/portfolio/sections/hero";
 import SelectedWork from "@/app/components/portfolio/sections/selected-work";
 import Writing from "@/app/components/portfolio/sections/writing";
-import PersonJsonLd from "@/themes/shared/person-json-ld";
 import { createCinematicPresentation } from "./presentation.mjs";
 
 export default function CinematicHome({ portfolio }) {
@@ -18,7 +17,6 @@ export default function CinematicHome({ portfolio }) {
 
   return (
     <ExperienceShell motionCopy={copy.motion}>
-      <PersonJsonLd portfolio={view} />
       <Hero
         profile={view.profile}
         resume={view.resume}

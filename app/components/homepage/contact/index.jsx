@@ -7,7 +7,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { IoLogoGithub, IoMdCall } from "react-icons/io";
 import { MdAlternateEmail } from "react-icons/md";
 
-function ContactSection({ personalData, form, copy }) {
+function ContactSection({ personalData, form, copy, socialLabels }) {
   return (
     <div id="contact" className="my-12 lg:my-16 relative mt-24 text-white">
       <div className="hidden lg:flex flex-col items-center absolute top-24 -right-8">
@@ -47,32 +47,62 @@ function ContactSection({ personalData, form, copy }) {
             </p>
           </div>
           <div className="coding-social-links mt-8 lg:mt-16 flex items-center gap-5 lg:gap-10">
-            <Link target="_blank" href={personalData.github}>
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href={personalData.github}
+              aria-label={socialLabels.github}
+            >
               <IoLogoGithub
+                aria-hidden="true"
                 className="bg-[#8b98a5] p-3 rounded-full hover:bg-[#16f2b3] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
                 size={48}
               />
             </Link>
-            <Link target="_blank" href={personalData.linkedIn}>
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href={personalData.linkedIn}
+              aria-label={socialLabels.linkedIn}
+            >
               <BiLogoLinkedin
+                aria-hidden="true"
                 className="bg-[#8b98a5] p-3 rounded-full hover:bg-[#16f2b3] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
                 size={48}
               />
             </Link>
-            <Link target="_blank" href={personalData.twitter}>
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href={personalData.twitter}
+              aria-label={socialLabels.x}
+            >
               <FaXTwitter
+                aria-hidden="true"
                 className="bg-[#8b98a5] p-3 rounded-full hover:bg-[#16f2b3] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
                 size={48}
               />
             </Link>
-            <Link target="_blank" href={personalData.stackOverflow}>
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href={personalData.stackOverflow}
+              aria-label={socialLabels.stackOverflow}
+            >
               <FaStackOverflow
+                aria-hidden="true"
                 className="bg-[#8b98a5] p-3 rounded-full hover:bg-[#16f2b3] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
                 size={48}
               />
             </Link>
-            <Link target="_blank" href={personalData.facebook}>
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href={personalData.facebook}
+              aria-label={socialLabels.facebook}
+            >
               <FaFacebook
+                aria-hidden="true"
                 className="bg-[#8b98a5] p-3 rounded-full hover:bg-[#16f2b3] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
                 size={48}
               />

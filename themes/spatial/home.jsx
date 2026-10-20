@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import PersonJsonLd from "@/themes/shared/person-json-ld";
 import SelectionProvider from "./client/selection";
 import SpatialStage from "./client/stage";
 import About from "./sections/about";
@@ -18,7 +17,6 @@ export default function SpatialHome({ portfolio }) {
   const { features } = view.settings;
   return (
     <SelectionProvider graph={view.graph}>
-      <PersonJsonLd portfolio={view} />
       <Hero view={view} />
       <About view={view} />
       <Experience view={view} />

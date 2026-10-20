@@ -6,8 +6,8 @@ import "./css/portfolio.scss";
 import "./css/executive.scss";
 import "./css/admin.scss";
 import "./css/coding.scss";
-import { getSiteOrigin } from "@/lib/site-origin.mjs";
 import { getCurrentPortfolioView } from "@/lib/portfolio/server.mjs";
+import { pageMetadata } from "@/lib/seo/metadata.mjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,39 +15,7 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
   const { settings } = await getCurrentPortfolioView();
-  const { seo } = settings;
-  const origin = getSiteOrigin();
-  return {
-  ...(origin ? { metadataBase: new URL(origin) } : {}),
-  title: seo.title,
-  description: seo.description,
-  keywords: seo.keywords,
-  openGraph: {
-    type: "website",
-    ...(origin
-      ? {
-          images: [
-            {
-              url: seo.openGraph.imagePath,
-              width: 1200,
-              height: 630,
-              alt: seo.openGraph.imageAlt,
-            },
-          ],
-        }
-      : {}),
-    locale: settings.site.locale.replace("-", "_"),
-    siteName: seo.openGraph.siteName,
-    title: seo.openGraph.title,
-    description: seo.openGraph.description,
-  },
-  twitter: {
-    card: seo.twitter.card,
-    ...(origin ? { images: [seo.twitter.imagePath] } : {}),
-    title: seo.twitter.title,
-    description: seo.twitter.description,
-  },
-  };
+  return pageMetadata(settings, { path: null });
 }
 
 export default async function RootLayout({ children }) {

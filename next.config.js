@@ -3,6 +3,10 @@ const path = require("path");
 module.exports = {
   // Separate output when running a parallel local preview.
   distDir: process.env.PORTFOLIO_BUILD_DIR || ".next",
+  // Inlined at build time; used for sitemap lastmod and JSON-LD dateModified.
+  env: {
+    PORTFOLIO_BUILD_TIME: new Date().toISOString(),
+  },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
   },

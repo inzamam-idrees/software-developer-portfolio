@@ -203,12 +203,17 @@ const documents = {
       description: "Web applications, thoughtful systems and readable interfaces.",
       imagePath: "/social-image",
       imageAlt: "Inzamam Idrees — Senior Software Engineer",
+      locale: "en_US",
     },
     twitter: {
       card: "summary_large_image",
       title: "Inzamam Idrees | Senior Software Engineer",
       description: "Web applications, thoughtful systems and readable interfaces.",
       imagePath: "/social-image",
+    },
+    pages: {
+      projects: { description: "Selected projects." },
+      blog: { description: "Selected articles." },
     },
   },
 };

@@ -12,7 +12,7 @@ export default function CodingFooter({ profile, site, copy }) {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm">
             {copy.credit}{" "}
-            <Link href="/#about" className="text-[#16f2b3]">
+            <Link href="/#about" className="text-[#16f2b3] underline underline-offset-2">
               {profile.name}
             </Link>
           </p>

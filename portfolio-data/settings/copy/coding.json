@@ -18,8 +18,8 @@
   "home": {
     "hero": {
       "greeting": "Hello,",
-      "introPrefix": "This is",
-      "introMiddle": ", I'm a Professional",
+      "introPrefix": "I'm",
+      "introMiddle": ", a",
       "introSuffix": ".",
       "contactAction": "Contact me",
       "resumeAction": "Get Resume"
@@ -28,7 +28,8 @@
       "rail": "ABOUT ME",
       "heading": "About me",
       "readMore": "Read full bio",
-      "readLess": "Show less"
+      "readLess": "Show less",
+      "portraitAlt": "Portrait of {name}"
     },
     "experience": {
       "heading": "Experience",
@@ -48,7 +49,7 @@
       "awardsHeading": "Awards"
     },
     "blog": {
-      "heading": "Blogs",
+      "heading": "Articles",
       "viewMore": "View More"
     },
     "contact": {
@@ -65,7 +66,7 @@
     "sending": "Sending Message..."
   },
   "projects": {
-    "heading": "All Projects",
+    "heading": "Software Projects",
     "noDemo": "N/A",
     "role": "Role",
     "stack": "Built with",
@@ -76,8 +77,8 @@
     "showLess": "Show less"
   },
   "blog": {
-    "routeHeading": "All Blog",
-    "emptyHeading": "Blogs",
+    "routeHeading": "Articles",
+    "emptyHeading": "Articles",
     "empty": "No articles to show here yet.",
     "unavailable": "Articles are temporarily unavailable.",
     "profileAction": "Visit my DEV profile ↗",

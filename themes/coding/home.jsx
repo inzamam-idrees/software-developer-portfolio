@@ -6,7 +6,6 @@ import HeroSection from "@/app/components/homepage/hero-section";
 import Projects from "@/app/components/homepage/projects";
 import Skills from "@/app/components/homepage/skills";
 import { getArticles } from "@/lib/articles.mjs";
-import PersonJsonLd from "@/themes/shared/person-json-ld";
 import { createCodingPresentation } from "./adapter.mjs";
 import CodingBlogList from "./blog-list";
 import CodingContactForm from "./contact-form";
@@ -18,7 +17,6 @@ export default async function CodingHome({ portfolio }) {
 
   return (
     <>
-      <PersonJsonLd portfolio={presentation.view} />
       <HeroSection
         personalData={presentation.personalData}
         skillsData={presentation.skillsData}
@@ -50,6 +48,7 @@ export default async function CodingHome({ portfolio }) {
       <ContactSection
         personalData={presentation.personalData}
         copy={home.contact}
+        socialLabels={presentation.copy.socialLabels}
         form={<CodingContactForm copy={presentation.copy.contactForm} />}
       />
     </>

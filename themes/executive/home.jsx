@@ -1,6 +1,5 @@
 import Link from "next/link";
 import ContactForm from "@/app/components/homepage/contact/contact-form";
-import PersonJsonLd from "@/themes/shared/person-json-ld";
 import { createExecutivePresentation } from "./presentation.mjs";
 import ExecutiveProjectCard from "./project-card";
 import ExecutiveSocialLinks from "./social-links";
@@ -11,7 +10,6 @@ export default function ExecutiveHome({ portfolio }) {
   const home = copy.home;
   return (
     <div className="executive-page executive-home">
-      <PersonJsonLd portfolio={view} />
       <section className="executive-hero" id="hero" aria-labelledby="executive-hero-title">
         <div className="executive-hero-copy">
           <p className="executive-kicker">{view.profile.designation} · {view.displayLocation}</p>

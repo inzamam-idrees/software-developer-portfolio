@@ -35,3 +35,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .next-*
+
+# generated per-theme stylesheets (scripts/build-theme-css.mjs)
+/public/theme-css/
+/lib/themes/stylesheets.generated.json

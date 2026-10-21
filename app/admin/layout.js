@@ -1,3 +1,8 @@
+import "../css/admin.scss";
+
+// Every admin page reads the session cookie; never prerender one.
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: {
     template: "%s · Portfolio admin",

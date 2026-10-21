@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Archivo } from "next/font/google";
-import "@/app/css/spatial.scss";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
+import { themeStylesheetHref } from "@/lib/themes/stylesheets.mjs";
 import MobileMenu from "./client/mobile-menu";
 import MotionProvider, { MotionControl } from "./client/motion";
 import { createSpatialView } from "./view.mjs";
@@ -31,6 +31,7 @@ export default function SpatialShell({ portfolio, children }) {
       data-theme-id="spatial"
       id="spatial-top"
     >
+      <link rel="stylesheet" href={themeStylesheetHref("spatial")} precedence="theme" />
       <MotionProvider animationsEnabled={settings.features.animations}>
       <a className="spatial-skip-link" href="#main-content">
         {copy.navigation.skipToContent}

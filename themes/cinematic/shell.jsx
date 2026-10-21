@@ -1,5 +1,6 @@
 import Footer from "@/app/components/footer";
 import Navbar from "@/app/components/navbar";
+import { themeStylesheetHref } from "@/lib/themes/stylesheets.mjs";
 import { createCinematicView } from "./view.mjs";
 
 export default function CinematicShell({ portfolio, children }) {
@@ -8,6 +9,7 @@ export default function CinematicShell({ portfolio, children }) {
 
   return (
     <div className="theme-cinematic" data-theme-id="cinematic">
+      <link rel="stylesheet" href={themeStylesheetHref("cinematic")} precedence="theme" />
       <a className="skip-link" href="#main-content">
         {view.copy.navigation.skipToContent}
       </a>

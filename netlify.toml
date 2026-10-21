@@ -6,3 +6,9 @@
 
 [functions]
   included_files = ["portfolio-data/**"]
+
+# Per-theme stylesheets have content-hashed names.
+[[headers]]
+  for = "/theme-css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

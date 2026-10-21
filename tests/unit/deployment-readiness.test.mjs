@@ -26,7 +26,11 @@ test("production builds validate canonical content before Next.js compiles", asy
     packageJson.scripts["validate:content"],
     "node scripts/validate-portfolio-data.mjs",
   );
-  assert.equal(packageJson.scripts.prebuild, "npm run validate:content");
+  assert.equal(
+    packageJson.scripts.prebuild,
+    "npm run validate:content && npm run build:theme-css",
+  );
+  assert.equal(packageJson.scripts["build:theme-css"], "node scripts/build-theme-css.mjs");
 });
 
 test("the deployment validator uses the canonical loader", async () => {

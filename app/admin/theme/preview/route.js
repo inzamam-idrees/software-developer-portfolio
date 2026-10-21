@@ -3,13 +3,15 @@ import {
   adminCookieOptions,
   getAdminConfiguration,
   getAdminRequestState,
-  issueThemePreview,
   requestHasSameOrigin,
   sameOriginUrl,
 } from "@/lib/admin/server.mjs";
+import { previewPath } from "@/lib/admin/preview-links.mjs";
 import { getThemeDefinition } from "@/lib/themes/registry.mjs";
 import { NextResponse } from "next/server";
 
+// The public routes no longer read the preview cookie. Selecting a theme here
+// sends the admin to its URL preview, and "end" clears any cookie left behind.
 export async function POST(request) {
   const admin = await getAdminRequestState();
   if (!admin.session) {
@@ -21,7 +23,7 @@ export async function POST(request) {
 
   const form = await request.formData();
   if (form.get("action") === "end") {
-    const response = NextResponse.redirect(sameOriginUrl(request, "/"), 303);
+    const response = NextResponse.redirect(sameOriginUrl(request, "/admin/theme"), 303);
     response.cookies.set(THEME_PREVIEW_COOKIE, "", {
       ...adminCookieOptions(),
       maxAge: 0,
@@ -40,15 +42,8 @@ export async function POST(request) {
     return NextResponse.json({ error: "Theme is not available" }, { status: 400 });
   }
 
-  const configuration = getAdminConfiguration();
-  if (!configuration.configured) {
+  if (!getAdminConfiguration().configured) {
     return NextResponse.json({ error: "Preview is unavailable" }, { status: 503 });
   }
-  const response = NextResponse.redirect(sameOriginUrl(request, "/"), 303);
-  response.cookies.set(
-    THEME_PREVIEW_COOKIE,
-    issueThemePreview(configuration, admin.session, theme.id),
-    { ...adminCookieOptions(), maxAge: 2 * 60 * 60 },
-  );
-  return response;
+  return NextResponse.redirect(sameOriginUrl(request, previewPath(theme.id)), 303);
 }

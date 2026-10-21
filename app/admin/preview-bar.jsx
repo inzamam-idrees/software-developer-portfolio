@@ -78,7 +78,9 @@ export default function PreviewBar({ themeId, themes, activeThemeId }) {
             <span className="admin-sr-only">Preview another theme</span>
             <select
               value={themeId}
-              onChange={(event) => router.push(previewPath(event.target.value, page))}
+              // Full load: React keeps hoisted theme stylesheets across client
+              // navigation, so the previous theme's sheet would stay applied.
+              onChange={(event) => window.location.assign(previewPath(event.target.value, page))}
             >
               {themes.map((theme) => (
                 <option key={theme.id} value={theme.id}>

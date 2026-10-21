@@ -7,11 +7,12 @@ async (sourcePage) => {
     { width: 390, height: 844 },
   ];
 
-  async function assertRoutes(page, themeId) {
+  async function assertRoutes(page, themeId, prefix = "") {
     for (const viewport of viewports) {
       await page.setViewportSize(viewport);
       for (const route of routes) {
-        await page.goto(origin + route, { waitUntil: "domcontentloaded" });
+        const path = prefix ? prefix + (route === "/" ? "" : route) : route;
+        await page.goto(origin + path, { waitUntil: "domcontentloaded" });
         await page.locator(`[data-theme-id="${themeId}"]`).waitFor();
         if ((await page.locator("h1").count()) !== 1) {
           throw new Error(`${themeId}${route} does not have exactly one h1`);
@@ -41,19 +42,14 @@ async (sourcePage) => {
 
   const previewPage = await previewContext.newPage();
   for (const themeId of ["coding", "executive"]) {
-    const selected = await previewContext.request.post(`${origin}/admin/theme/preview`, {
-      form: { themeId },
-      headers: { origin },
-      maxRedirects: 0,
-    });
-    if (selected.status() !== 303) {
-      throw new Error(`${themeId} selection returned ${selected.status()}`);
-    }
-    await assertRoutes(previewPage, themeId);
+    // Previews live at /preview/<theme>; the public routes never change.
+    await assertRoutes(previewPage, themeId, `/preview/${themeId}`);
     if (!(await previewPage.locator('meta[name="robots"][content*="noindex"]').count())) {
       throw new Error(`${themeId} preview is indexable`);
     }
   }
+  await previewPage.goto(origin, { waitUntil: "domcontentloaded" });
+  await previewPage.locator('[data-theme-id="cinematic"]').waitFor();
   await previewContext.close();
 
   return {

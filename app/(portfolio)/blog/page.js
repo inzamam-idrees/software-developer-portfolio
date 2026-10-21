@@ -7,6 +7,9 @@ import { pageMetadata } from "@/lib/seo/metadata.mjs";
 import { blogStructuredData } from "@/lib/seo/structured-data.mjs";
 import { loadSelectedThemeSlot } from "@/lib/themes/registry.mjs";
 
+// dev.to articles are fetched with the same window (lib/articles.mjs).
+export const revalidate = 3600;
+
 function blogPage(settings) {
   return {
     path: "/blog",

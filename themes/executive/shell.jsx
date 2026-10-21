@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
+import { themeStylesheetHref } from "@/lib/themes/stylesheets.mjs";
 import { createExecutivePresentation } from "./presentation.mjs";
 import ExecutiveSocialLinks from "./social-links";
 
@@ -8,6 +9,7 @@ export default function ExecutiveShell({ portfolio, children }) {
   const copy = view.copy;
   return (
     <div className="theme-executive" data-theme-id="executive">
+      <link rel="stylesheet" href={themeStylesheetHref("executive")} precedence="theme" />
       <a className="skip-link" href="#main-content">{copy.navigation.skipToContent}</a>
       <header className="executive-header">
         <div className="executive-header-inner">

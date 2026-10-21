@@ -1,3 +1,4 @@
+import "@/app/css/admin.scss";
 import PreviewBar from "@/app/admin/preview-bar";
 import { listPreviewableThemes } from "@/lib/themes/selection.mjs";
 import { loadSelectedThemeSlot } from "@/lib/themes/registry.mjs";

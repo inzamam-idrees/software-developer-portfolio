@@ -74,6 +74,28 @@ async (sourcePage) => {
     throw new Error(`Invalid preview theme returned ${rejected.status()}`);
   }
 
+  // ── The older cookie preview now hands over to the URL preview ──
+  const legacy = await publicPage.request.post(`${origin}/admin/theme/preview`, {
+    form: { themeId: "executive" },
+    headers: { origin },
+    maxRedirects: 0,
+  });
+  if (legacy.status() !== 303 || !legacy.headers().location?.endsWith("/preview/executive")) {
+    throw new Error(`Legacy preview returned ${legacy.status()} to ${legacy.headers().location}`);
+  }
+  if (/portfolio_theme_preview=[^;]/.test(legacy.headers()["set-cookie"] ?? "")) {
+    throw new Error("Legacy preview still issues a preview cookie");
+  }
+  await publicContext.addCookies([
+    { name: "portfolio_theme_preview", value: "forged.value", url: origin },
+  ]);
+  await publicPage.goto(origin, { waitUntil: "domcontentloaded" });
+  await publicPage.locator('[data-theme-id="cinematic"]').waitFor();
+  if (await publicPage.locator('[data-theme-id="executive"]').count()) {
+    throw new Error("A preview cookie changed the public theme");
+  }
+  await publicPage.goto(`${origin}/admin/theme`, { waitUntil: "domcontentloaded" });
+
   // ── Previews live on their own route and never change the public routes ──
   await publicPage.getByRole("link", { name: "Preview Executive" }).click();
   await publicPage.waitForURL(`${origin}/preview/executive`);

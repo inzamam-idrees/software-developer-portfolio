@@ -1,4 +1,5 @@
 import Link from "next/link";
+import "./css/not-found.scss";
 import { getCurrentPortfolioView } from "@/lib/portfolio/server.mjs";
 
 export default async function NotFound() {

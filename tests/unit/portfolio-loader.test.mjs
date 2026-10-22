@@ -23,6 +23,7 @@ const bundledCopy = Object.fromEntries(
 
 const documents = {
   ...bundledCopy,
+  "content/certificates.json": [],
   "content/profile.json": {
     name: "INZAMAM IDREES",
     designation: "Senior Software Engineer",

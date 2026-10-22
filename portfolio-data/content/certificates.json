@@ -1,0 +1,17 @@
+[
+  {
+    "id": "placeholder-1",
+    "title": "[TODO: certificate 1 name]",
+    "issuer": "[TODO: issuing organization]"
+  },
+  {
+    "id": "placeholder-2",
+    "title": "[TODO: certificate 2 name]",
+    "issuer": "[TODO: issuing organization]"
+  },
+  {
+    "id": "placeholder-3",
+    "title": "[TODO: certificate 3 name]",
+    "issuer": "[TODO: issuing organization]"
+  }
+]

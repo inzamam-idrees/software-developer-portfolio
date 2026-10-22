@@ -1,7 +1,15 @@
+import Link from "next/link";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
+import { projectPath } from "@/lib/portfolio/projects.mjs";
 import { projectDetailSections } from "../presentation.mjs";
 
-export default function ProjectEntry({ project, copy, headingLevel = 3, detailed = false }) {
+export default function ProjectEntry({
+  project,
+  copy,
+  headingLevel = 3,
+  detailed = false,
+  standalone = false,
+}) {
   const Heading = `h${headingLevel}`;
   const editorial = [
     [copy.project.problem, project.problem],
@@ -12,10 +20,18 @@ export default function ProjectEntry({ project, copy, headingLevel = 3, detailed
     <article className="spatial-project" id={`project-${project.id}`} data-project-id={`project:${project.id}`}>
       <div className="spatial-project-head">
         {project.category && <p className="spatial-project-category">{project.category}</p>}
-        <Heading>{project.title}</Heading>
+        <Heading>
+          {standalone ? project.title : <Link href={projectPath(project)}>{project.title}</Link>}
+        </Heading>
         <p className="spatial-project-role">{project.role}</p>
       </div>
       <p className="spatial-project-summary">{project.shortDescription}</p>
+      {standalone && project.longDescription && (
+        <div className="spatial-project-detail">
+          <p className="spatial-project-detail-title">{copy.projectDetail.overview}</p>
+          <p>{project.longDescription}</p>
+        </div>
+      )}
       {editorial.length > 0 && (
         <dl className="spatial-project-story">
           {editorial.map(([term, value]) => (

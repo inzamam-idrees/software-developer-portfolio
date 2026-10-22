@@ -48,6 +48,7 @@ test("emptyValueFor builds a value that validates once required text is filled",
   assert.equal(item.id, 1);
   const filled = {
     ...item,
+    slug: "new-project",
     title: "New project",
     shortDescription: "A short description.",
     role: "Engineer",

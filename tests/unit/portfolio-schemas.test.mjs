@@ -6,6 +6,7 @@ import {
   experienceSchema,
   profileSchema,
   projectSchema,
+  projectsSchema,
   skillsSchema,
 } from "../../lib/portfolio/schemas.mjs";
 
@@ -31,6 +32,7 @@ const validProfile = {
 
 const validProject = {
   id: 1,
+  slug: "mis-nexis",
   title: "MIS / Nexis Project",
   shortDescription: "An inventory management system.",
   longDescription: "A system for tracking stock, allocations, and repairs.",
@@ -294,4 +296,26 @@ test("profile schema requires a tagline", () => {
   const { tagline, ...withoutTagline } = validProfile;
   assert.equal(profileSchema.safeParse(withoutTagline).success, false);
   assert.equal(profileSchema.safeParse(validProfile).success, true);
+});
+
+test("project slugs must be URL-safe and unique", () => {
+  for (const slug of ["Remmi CRM", "remmi_crm", "-remmi", "remmi--crm", ""]) {
+    assert.equal(projectSchema.safeParse({ ...validProject, slug }).success, false, slug);
+  }
+  const { slug, ...withoutSlug } = validProject;
+  assert.equal(projectSchema.safeParse(withoutSlug).success, false);
+  assert.equal(
+    projectsSchema.safeParse([
+      validProject,
+      { ...validProject, id: 2, order: 2, featured: false, featuredOrder: null },
+    ]).success,
+    false,
+  );
+  assert.equal(
+    projectsSchema.safeParse([
+      validProject,
+      { ...validProject, id: 2, slug: "other", order: 2, featured: false, featuredOrder: null },
+    ]).success,
+    true,
+  );
 });

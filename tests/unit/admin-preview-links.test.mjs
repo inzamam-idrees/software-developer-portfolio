@@ -30,3 +30,13 @@ test("preview paths encode the theme id and report the current page", () => {
   assert.equal(previewPageOf("/preview/executive", "executive"), "");
   assert.equal(previewPageOf("/preview/executive/unknown", "executive"), "");
 });
+
+test("project detail pages stay inside the preview and count as the projects page", () => {
+  assert.equal(
+    previewHref("/project/remmi-crm", "spatial", origin),
+    "/preview/spatial/project/remmi-crm",
+  );
+  assert.equal(previewHref("/project/Not_A_Slug", "spatial", origin), null);
+  assert.equal(previewHref("/project/a/b", "spatial", origin), null);
+  assert.equal(previewPageOf("/preview/coding/project/remmi-crm", "coding"), "/project");
+});

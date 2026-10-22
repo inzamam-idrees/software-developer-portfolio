@@ -765,6 +765,12 @@ button.spatial-chip {
     font-size: var(--sp-step-head);
     font-variation-settings: "wdth" 112;
   }
+
+  h1 {
+    font-size: var(--sp-step-display);
+    font-variation-settings: "wdth" 118;
+    overflow-wrap: break-word;
+  }
 }
 
 .spatial-project-category,

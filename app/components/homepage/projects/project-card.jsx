@@ -50,7 +50,12 @@ function ProjectCard({ project, copy }) {
           <div className="h-2 w-2 lg:h-3 lg:w-3 rounded-full bg-green-200"></div>
         </div>
         <h3 className="text-center px-10 text-[#16f2b3] text-base lg:text-xl">
-          {project.name}
+          <Link
+            href={project.href}
+            className="underline-offset-4 hover:underline focus-visible:underline"
+          >
+            {project.name}
+          </Link>
         </h3>
       </div>
       <div className="flex flex-1 flex-col gap-5 border-t-[2px] border-indigo-900 px-4 lg:px-8 py-5 lg:py-6">

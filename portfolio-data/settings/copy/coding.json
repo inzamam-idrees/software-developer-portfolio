@@ -84,5 +84,11 @@
     "profileAction": "Visit my DEV profile ↗",
     "fallbackDate": "From the notebook",
     "readingTime": "{minutes} Min Read"
+  },
+  "project": {
+    "problem": "Problem",
+    "solution": "Solution",
+    "outcome": "Outcome",
+    "source": "Source code"
   }
 }

@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
+import { projectPath } from "@/lib/portfolio/projects.mjs";
 import { projectDetailSections, projectLinkLabel } from "./presentation.mjs";
 
 function ProjectLink({ href, children }) {
@@ -15,7 +17,7 @@ export default function ExecutiveProjectCard({ project, index, copy, detailed = 
         <div className="executive-project-heading">
           <div>
             <p className="executive-kicker">{[project.category, project.role].filter(Boolean).join(" / ")}</p>
-            <h3>{project.title}</h3>
+            <h3><Link href={projectPath(project)}>{project.title}</Link></h3>
           </div>
           {links.length > 0 && <div className="executive-project-links">{links.map(([kind, href]) => <ProjectLink href={href} key={kind}>{projectLinkLabel(kind, labels)}</ProjectLink>)}</div>}
         </div>

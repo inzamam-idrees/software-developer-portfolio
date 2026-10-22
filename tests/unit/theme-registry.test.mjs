@@ -10,6 +10,7 @@ import {
 
 test("registry exposes only the approved Phase 3 themes with complete lazy slots", () => {
   const themes = listThemes();
+  assert.deepEqual([...THEME_SLOTS], ["shell", "home", "projects", "project", "blog"]);
 
   assert.deepEqual(
     themes.map((theme) => theme.id),

@@ -69,6 +69,7 @@
     }
   },
   "project": {
+    "problem": "THE PROBLEM",
     "fallbackCategory": "Selected application",
     "build": "THE BUILD",
     "result": "THE RESULT",

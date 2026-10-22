@@ -1,3 +1,4 @@
+import { projectPath } from "../../lib/portfolio/projects.mjs";
 import { createCodingView } from "./view.mjs";
 
 const legacySkillLabels = {
@@ -35,6 +36,7 @@ export function createCodingPresentation(portfolio) {
     },
     projectsData: view.projects.map((project) => ({
       id: project.id,
+      href: projectPath(project),
       name: project.title,
       summary: project.shortDescription || project.longDescription,
       description: project.longDescription || project.shortDescription,

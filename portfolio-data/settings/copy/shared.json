@@ -37,6 +37,10 @@
   "projects": {
     "technologiesLabel": "{title} technologies"
   },
+  "projectDetail": {
+    "backToProjects": "All projects",
+    "overview": "Overview"
+  },
   "notFound": {
     "eyebrow": "404 / END OF PATH",
     "heading": "Nothing here.",
@@ -45,7 +49,8 @@
   },
   "routes": {
     "projectsTitle": "Software Projects | {siteName}",
-    "blogTitle": "Articles | {siteName}"
+    "blogTitle": "Articles | {siteName}",
+    "projectTitle": "{project} | {siteName}"
   },
   "blogLoading": {
     "eyebrow": "THE NOTEBOOK",

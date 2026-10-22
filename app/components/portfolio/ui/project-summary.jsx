@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
+import { projectPath } from "@/lib/portfolio/projects.mjs";
 import { projectDetailSections } from "@/themes/shared/project-detail.mjs";
 function publicUrl(value) {
   try {
@@ -15,9 +17,10 @@ export default function ProjectSummary({
   index,
   copy,
   featured = false,
+  detail = false,
 }) {
   const labels = copy.project;
-  const Heading = featured ? "h3" : "h2";
+  const Heading = detail ? "h1" : featured ? "h3" : "h2";
   const demo = publicUrl(project.links.demo),
     code = publicUrl(project.links.source);
   return (
@@ -33,12 +36,32 @@ export default function ProjectSummary({
       </div>
       <div className="project-grid">
         <div className="project-copy" data-reveal>
-          <Heading>{project.title}</Heading>
+          <Heading>
+            {detail ? (
+              project.title
+            ) : (
+              <Link href={projectPath(project)}>{project.title}</Link>
+            )}
+          </Heading>
           <p className="project-lead">
-            {project.problem || project.shortDescription}
+            {detail
+              ? project.shortDescription
+              : project.problem || project.shortDescription}
           </p>
+          {detail && project.longDescription && (
+            <div className="project-detail-list">
+              <p className="eyebrow muted">{copy.projectDetail.overview}</p>
+              <p>{project.longDescription}</p>
+            </div>
+          )}
           {project.solution && project.outcome && (
             <dl className="project-details">
+              {detail && project.problem && (
+                <div>
+                  <dt>{labels.problem}</dt>
+                  <dd>{project.problem}</dd>
+                </div>
+              )}
               <div>
                 <dt>{labels.build}</dt>
                 <dd>{project.solution}</dd>

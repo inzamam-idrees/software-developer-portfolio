@@ -2,12 +2,19 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { loadCanonicalPortfolio } from "../../lib/portfolio/loader.mjs";
 import { buildCurrentPortfolioView } from "../../lib/portfolio/current-view.mjs";
+import {
+  findProjectBySlug,
+  projectPageInfo,
+  projectPath,
+} from "../../lib/portfolio/projects.mjs";
 import { buildLlmsText } from "../../lib/seo/llms.mjs";
 import { pageMetadata } from "../../lib/seo/metadata.mjs";
+import { sitemapEntries } from "../../lib/seo/sitemap.mjs";
 import {
   blogStructuredData,
   homeStructuredData,
   postalAddress,
+  projectStructuredData,
   projectsStructuredData,
   serializeJsonLd,
 } from "../../lib/seo/structured-data.mjs";
@@ -133,6 +140,119 @@ test("llms.txt is built from canonical content with absolute links", async () =>
   const text = buildLlmsText(portfolio, origin);
   assert.ok(text.startsWith(`# ${portfolio.profile.name}\n`));
   assert.match(text, new RegExp(`\\(${origin}/project\\)`));
-  for (const project of portfolio.projects) assert.ok(text.includes(project.title));
+  for (const project of portfolio.projects) {
+    assert.ok(text.includes(`[${project.title}](${origin}/project/${project.slug})`));
+  }
   assert.ok(text.includes(portfolio.contact.email));
+});
+
+// ── Project detail pages ──
+test("project pages get a unique title, description and canonical URL", async () => {
+  const { settings, projects } = await view();
+  const pages = projects.map((project) => projectPageInfo(settings, project));
+
+  assert.equal(new Set(pages.map((page) => page.path)).size, projects.length);
+  assert.equal(new Set(pages.map((page) => page.title)).size, projects.length);
+  assert.equal(new Set(pages.map((page) => page.description)).size, projects.length);
+
+  const [project] = projects;
+  const page = projectPageInfo(settings, project);
+  assert.equal(page.path, `/project/${project.slug}`);
+  assert.ok(page.title.includes(project.title));
+  assert.ok(page.title.includes(settings.site.name));
+  assert.equal(page.description, project.shortDescription);
+
+  const metadata = pageMetadata(settings, page, origin);
+  assert.equal(metadata.title, page.title);
+  assert.equal(metadata.description, project.shortDescription);
+  assert.equal(metadata.alternates.canonical, `${origin}/project/${project.slug}`);
+  assert.equal(metadata.openGraph.url, `${origin}/project/${project.slug}`);
+  assert.equal(metadata.openGraph.title, page.title);
+  assert.equal(metadata.twitter.description, project.shortDescription);
+});
+
+test("project slugs resolve to their project and unknown slugs to null", async () => {
+  const { projects } = await view();
+  for (const project of projects) {
+    assert.equal(findProjectBySlug(projects, project.slug), project);
+    assert.equal(projectPath(project), `/project/${project.slug}`);
+  }
+  assert.equal(findProjectBySlug(projects, "no-such-project"), null);
+});
+
+test("project graph describes the project as a CreativeWork by the Person", async () => {
+  const portfolio = await view();
+  const project = portfolio.projects.find((item) => item.links.demo);
+  const page = projectPageInfo(portfolio.settings, project);
+  const graph = projectStructuredData(portfolio, project, page, origin);
+  const url = `${origin}/project/${project.slug}`;
+  const webPage = byType(graph, "WebPage");
+  const work = byType(graph, "CreativeWork");
+  const person = byType(graph, "Person");
+
+  assert.equal(graph["@context"], "https://schema.org");
+  assert.ok(byType(graph, "WebSite"));
+  assert.equal(webPage["@id"], `${url}#webpage`);
+  assert.equal(webPage.url, url);
+  assert.equal(webPage.name, page.title);
+  assert.equal(webPage.mainEntity["@id"], work["@id"]);
+  assert.equal(work["@id"], `${url}#project`);
+  assert.equal(work.url, url);
+  assert.equal(work.name, project.title);
+  assert.equal(work.description, project.shortDescription);
+  assert.equal(work.keywords, project.technologies.join(", "));
+  assert.equal(work.creator["@id"], person["@id"]);
+  assert.deepEqual(work.sameAs, [project.links.demo]);
+  assert.equal(work.mainEntityOfPage["@id"], webPage["@id"]);
+  assert.equal(work.isPartOf["@id"], `${origin}/project#webpage`);
+});
+
+test("project graph omits absent optional fields and absolute URLs without an origin", async () => {
+  const portfolio = await view();
+  const project = portfolio.projects.find((item) => !item.links.demo && !item.category);
+  const graph = projectStructuredData(
+    portfolio,
+    project,
+    projectPageInfo(portfolio.settings, project),
+    null,
+  );
+  const work = byType(graph, "CreativeWork");
+  assert.equal(work.url, undefined);
+  assert.equal(work.genre, undefined);
+  assert.equal(work.sameAs, undefined);
+  assert.equal(work["@id"], `/project/${project.slug}#project`);
+});
+
+test("project collection items point at their detail pages", async () => {
+  const portfolio = await view();
+  const graph = projectsStructuredData(
+    portfolio,
+    { title: "Projects", description: "List" },
+    origin,
+  );
+  const items = byType(graph, "CollectionPage").mainEntity.itemListElement;
+  const ordered = [...portfolio.projects].sort((left, right) => left.order - right.order);
+  assert.deepEqual(
+    items.map(({ item }) => item.url),
+    ordered.map((project) => `${origin}/project/${project.slug}`),
+  );
+});
+
+test("sitemap lists public routes and every project page", async () => {
+  const portfolio = await view();
+  const entries = sitemapEntries(portfolio, origin, "2026-10-20T00:00:00Z");
+  const urls = entries.map((entry) => entry.url);
+  for (const path of portfolio.settings.site.publicRoutes) {
+    assert.ok(urls.includes(new URL(path, origin).href));
+  }
+  for (const project of portfolio.projects) {
+    assert.ok(urls.includes(`${origin}/project/${project.slug}`));
+  }
+  assert.equal(
+    urls.length,
+    portfolio.settings.site.publicRoutes.length + portfolio.projects.length,
+  );
+  assert.ok(entries.every((entry) => entry.lastModified === "2026-10-20T00:00:00Z"));
+  assert.deepEqual(sitemapEntries(portfolio, null), []);
+  assert.equal(sitemapEntries(portfolio, origin)[0].lastModified, undefined);
 });

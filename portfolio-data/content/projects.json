@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "slug": "mis-nexis",
     "title": "MIS / Nexis Project",
     "shortDescription": "The MIS Inventory Management System streamlines IT asset tracking and management through detailed logs, automated tagging, and integration with Next HRM via LDAP.",
     "longDescription": "The MIS Inventory Management System streamlines IT asset tracking and management through detailed logs, automated tagging, and integration with Next HRM via LDAP. It distinguishes between stock and inventory, offering real-time insights and role-based access for efficient hardware lifecycle management. This system simplifies inventory audits, allocations, and repair tracking.",
@@ -41,6 +42,7 @@
   },
   {
     "id": 2,
+    "slug": "pos-online-ordering",
     "title": "POS Online Ordering",
     "shortDescription": "Online Ordering is a product where customers can build their own website and app for your restaurant. It is built in Angular frontend with Admin Panel.",
     "longDescription": "Online Ordering is a product that allows customers to build a website and app for their restaurant. It is built with an Angular frontend and an admin panel.",
@@ -74,6 +76,7 @@
   },
   {
     "id": 3,
+    "slug": "getworker",
     "title": "GetWorker",
     "shortDescription": "GetWorker is a website that is similar to freelancer.com in which one user can post a task and others can apply for this task and the tasker can hire one or more bidders to complete the posted task. This is API based project, the API was built in Laravel 6 and, the application was built in Angular 8 and also made a hybrid app in IONIC (using Angular).",
     "longDescription": "GetWorker is a website similar to freelancer.com, where one user can post a task, others can apply for it, and the tasker can hire one or more bidders to complete the posted task. It is an API-based project: the API was built in Laravel 6, the application in Angular 8, and a hybrid app in Ionic (using Angular).",
@@ -109,6 +112,7 @@
   },
   {
     "id": 4,
+    "slug": "remmi-crm",
     "title": "Remmi CRM",
     "shortDescription": "Remmi CRM is a product that is built for a client. It is a customer relationship and task management software built for a real estate company that helps you improve business performance.",
     "longDescription": "Remmi CRM is a product that is built for a client. It is a customer relationship and task management software built for a real estate company that helps you improve business performance. Build valuable relationships with clients and manage properties, projects/apartments, leads, leads management, contacts, staff, developers, and tasks.",
@@ -154,6 +158,7 @@
   },
   {
     "id": 5,
+    "slug": "group-captain",
     "title": "Group Captain Project",
     "shortDescription": "A platform that provides document management, project management, and a Kanban board for tracking project tasks and activities.",
     "longDescription": "A platform that provides document management, project management, and a Kanban board for tracking project tasks and activities. It also includes a comprehensive admin panel for managing users, roles, permissions, apps, organizations, talent, and website settings. Admins can manage users, assign roles, and view projects and tasks.",
@@ -192,6 +197,7 @@
   },
   {
     "id": 6,
+    "slug": "xfinity-classified-ad-system",
     "title": "XfinityClassified Ad System",
     "shortDescription": "XfinityClassified is a classified Ad Web application for code Canyon. A modulable classified app having a fully responsive bootstrap design. It is built in Angular 7 fronted & Laravel 5.7 with Admin Panel. It is developed from scratch to the end.",
     "longDescription": "XfinityClassified is a classified ads web application for CodeCanyon: a modular classified app with a fully responsive Bootstrap design. It is built with an Angular 7 frontend and Laravel 5.7 with an admin panel, developed from scratch to the end.",
@@ -236,6 +242,7 @@
   },
   {
     "id": 7,
+    "slug": "smart-destination",
     "title": "Smart Destination Project",
     "shortDescription": "A platform that can help to sell tours and activities for travelers on the island through an e-commerce web page. Travelers can see the accommodation choices on the website, however, to book them the site will direct them to the hotel’s booking page.",
     "longDescription": "A platform that helps sell tours and activities to travelers on the island through an e-commerce web page. Travelers can see accommodation choices on the website; to book them, the site directs them to the hotel's booking page.",
@@ -275,6 +282,7 @@
   },
   {
     "id": 8,
+    "slug": "research-support-web-tool",
     "title": "Research Support Web Tool (RSWT)",
     "shortDescription": "Research support web tool (RSWT) is a search engine built in Angular for researchers with web scraping techniques using PHP to extract data from different digital libraries. We use semantic search queries in RSWT. Scraping website includes ACM digital library, science direct, Eric, etc.",
     "longDescription": "Research support web tool (RSWT) is a search engine built in Angular for researchers, using PHP web scraping techniques to extract data from digital libraries such as the ACM Digital Library, ScienceDirect, and ERIC. RSWT uses semantic search queries.",
@@ -306,6 +314,7 @@
   },
   {
     "id": 9,
+    "slug": "smartcommerce-e-commerce-widgets",
     "title": "SmartCommerce – E-Commerce Widgets",
     "shortDescription": "SmartCommerce provides lightweight JavaScript widgets that enhance e-commerce experiences on brand websites, including Click2Cart, SmartButton, SmartLink, Carousel, and Product Locator.",
     "longDescription": "SmartCommerce provides lightweight JavaScript widgets that enhance e-commerce experiences on brand websites, including Click2Cart, SmartButton, SmartLink, Carousel, and Product Locator. The widgets are built with Vanilla JavaScript and CSS and customized for different brands.",

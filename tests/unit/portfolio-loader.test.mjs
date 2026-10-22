@@ -49,6 +49,7 @@ const documents = {
   "content/projects.json": [
     {
       id: 2,
+      slug: "project-2",
       title: "Second",
       shortDescription: "Second project.",
       longDescription: null,
@@ -66,6 +67,7 @@ const documents = {
     },
     {
       id: 1,
+      slug: "project-1",
       title: "First",
       shortDescription: "First project.",
       longDescription: null,

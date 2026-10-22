@@ -47,7 +47,7 @@
       "all": "All Skills",
       "marquee": "Technology toolkit",
       "additional": "More tools",
-      "proficiency": "\u2022 {level}/5"
+      "proficiency": "• {level}/5"
     },
     "projects": {
       "label": "Engineered Systems",
@@ -68,10 +68,15 @@
     "certificates": {
       "label": "Professional Development",
       "heading": "Professional Certificates",
-      "placeholder": "Placeholder entries \u2014 real certificate details have not been provided.",
-      "credential": "View credential",
+      "placeholder": "Placeholder entries — real certificate details have not been provided.",
+      "credential": "View certificate",
       "credentialId": "Credential ID",
-      "issued": "Issued"
+      "competencies": "Competencies",
+      "statuses": {
+        "in-progress": "In progress",
+        "completed": "Completed",
+        "verified": "Verified"
+      }
     },
     "writing": {
       "label": "Ideas & Insights",
@@ -85,7 +90,9 @@
       "label": "Curriculum Vitae",
       "heading": "Professional Resume",
       "intro": "Explore my experience, projects and technical background.",
-      "open": "Open Resume"
+      "open": "Open Resume",
+      "viewer": "PDF Document Viewer",
+      "previewFallback": "If the preview is unavailable, use Open Resume to view the document on Google Drive."
     },
     "contact": {
       "label": "Direct Outreach",

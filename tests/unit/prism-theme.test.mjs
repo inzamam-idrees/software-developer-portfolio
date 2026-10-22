@@ -26,6 +26,7 @@ test("certificates are editable strict canonical records and allow an empty list
 
 test("only Prism receives certificate placeholders and its copy is strict", async () => {
   const canonical = await loadCanonicalPortfolio({ env: {} });
+  canonical.content.certificates = [1, 2, 3].map((number) => ({ id: `placeholder-${number}`, title: `[TODO: certificate ${number}]`, issuer: "[TODO: issuer]" }));
   const portfolio = buildCurrentPortfolioView(canonical);
   assert.equal(portfolio.certificates.length, 3);
   for (const item of portfolio.certificates) {
@@ -52,7 +53,10 @@ test("Prism presentation preserves canonical facts and handles missing featured 
   const portfolio = buildCurrentPortfolioView(await loadCanonicalPortfolio({ env: {} }));
   const before = JSON.stringify(portfolio);
   const view = createPrismPresentation(portfolio);
-  assert.deepEqual(view.roles, [portfolio.profile.designation]);
+  assert.deepEqual(view.roles, portfolio.profile.roles ?? [portfolio.profile.designation]);
+  const withoutRoles = structuredClone(portfolio);
+  delete withoutRoles.profile.roles;
+  assert.deepEqual(createPrismPresentation(withoutRoles).roles, [portfolio.profile.designation]);
   assert.equal(view.portraitBadges[0], portfolio.profile.experienceLabel);
   assert.equal(new Set(view.skillGroups.flatMap((g) => g.technologies)).size, portfolio.skills.all.length);
   assert.equal(JSON.stringify(portfolio), before);

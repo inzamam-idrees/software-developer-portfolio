@@ -1,17 +1,38 @@
 [
   {
-    "id": "placeholder-1",
-    "title": "[TODO: certificate 1 name]",
-    "issuer": "[TODO: issuing organization]"
+    "id": "1",
+    "title": "SPA - Angular Web Application",
+    "issuer": "Coursera",
+    "description": "Single page web application development using Angular framework.",
+    "competencies": ["Angular", "TypeScript", "RxJS", "NgRx"],
+    "status": "completed",
+    "issuedDate": "2023-05-15",
+    "credentialUrl": "https://www.coursera.org/account/accomplishments/certificate/XYZ123",
+    "credentialId": "XYZ123",
+    "image": null
   },
   {
-    "id": "placeholder-2",
-    "title": "[TODO: certificate 2 name]",
-    "issuer": "[TODO: issuing organization]"
+    "id": "2",
+    "title": "Python for Data Science",
+    "issuer": "IBM",
+    "description": null,
+    "competencies": [],
+    "status": "verified",
+    "issuedDate": null,
+    "credentialUrl": null,
+    "credentialId": null,
+    "image": null
   },
   {
-    "id": "placeholder-3",
-    "title": "[TODO: certificate 3 name]",
-    "issuer": "[TODO: issuing organization]"
+    "id": "3",
+    "title": "AI Engineer",
+    "issuer": "Google",
+    "description": null,
+    "competencies": [],
+    "status": "in-progress",
+    "issuedDate": null,
+    "credentialUrl": null,
+    "credentialId": null,
+    "image": null
   }
 ]

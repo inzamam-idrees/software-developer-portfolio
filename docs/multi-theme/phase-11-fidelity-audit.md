@@ -55,7 +55,7 @@ D = desktop (1280px), M = mobile (390px), both = both widths.
 | 37 | Carousel transition | Instant changes | 500ms exit then 500ms entrance with matching direction/easing |
 | 38 | Project modal, both | 1050px maximum, no scale/fade, flat list | 672px maximum, 85vh limit, scale/fade and inset feature rows; native accessible dialog retained |
 | 39 | Certificates, both | Oversized card inset/title/icon spacing | 28px inset, 20px/18px title, compact issuer row; placeholder notice retained |
-| 40 | Resume, both | Oversized title and different control rhythm | 18px title and reference-aligned outer card/control spacing; approved PDF/date omissions retained |
+| 40 | Resume, both | Oversized title and different control rhythm | 18px title and reference-aligned outer card/control spacing; date omission retained; PDF viewer subsequently added below |
 | 41 | Contact grid, D | Approximate columns; 32px form inset | Exact 5/7 spans, 48px gap, 40px form inset |
 | 42 | Contact channels | Bare icons, provider-name-only socials, no social copy buttons | Framed 44px icons, canonical address text, copy/check state for every actionable channel |
 | 43 | Contact form | Missing hint, delivery subtitle, placeholders, required marks and send icon | Copy-backed hints/placeholders, canonical delivery address, required marks, send icon and 4-row message field |
@@ -73,8 +73,8 @@ D = desktop (1280px), M = mobile (390px), both = both widths.
 ## Intentional differences retained
 
 - New palettes, independent light contrast, real identity/portrait/content and certificate placeholders.
-- No unsupported availability, counters, learning progress, credential verification/competency claims, community challenge metrics, architecture statistics, WhatsApp, embedded PDF, update date or reference-specific framework credits.
-- Single canonical role remains static. Career evidence and awards remain available; awards are not relabeled as certificates.
+- No unsupported availability, counters, learning progress, credential verification/competency claims, community challenge metrics, architecture statistics, WhatsApp, update date or reference-specific framework credits.
+- Career evidence and awards remain available; awards are not relabeled as certificates.
 - Actual article cards replace the omitted community challenge; the responsive card grid follows the reference vocabulary without fictional data.
 - Accessible motion pause, visible focus, usable target sizes, stable screen-reader text, native cursor, no-JS content, reduced motion, truthful contact delivery and accessible modal/drawer semantics.
 - Next public/detail/preview routes remain intact. The reference's Vite routing and demo-only 404 are not imported.
@@ -97,3 +97,41 @@ Changes are concentrated in `app/css/prism.scss`, `themes/prism/`, Prism's copy/
 - `git diff --check`: passed. Public theme settings, package manifest and lockfile unchanged. No commit made.
 
 Browser coverage is Chromium; manual Safari/Firefox and assistive-technology testing were not performed. Accessibility automation is a targeted check, not a complete accessibility certification.
+
+## Hero follow-up — name scramble and role rotation
+
+Requested after the local Prism commits; this follow-up is uncommitted.
+
+| # | Area | Difference | Correction |
+|---|---|---|---|
+| 54 | Name scramble | Different glyph alphabet; resolution advanced before drawing; no stable width reservation | Exact reference alphabet `ABCDEFGHJKLMNPQRSTUVWXYZ0123456789_#@%&*<>/`, 28ms ticks, initial zero resolved characters, half a character resolved per tick, mount/hover triggers, hidden real-text sizer |
+| 55 | Role line | Always static; no rotation/caret | Optional canonical `profile.roles`, native pure state machine, reference timing, stable sizer/height, palette caret/underline and requested dot; single-role fallback remains static |
+
+Reference analysis: `src/hooks/useScramble.js` and `src/sections/HeroSection.jsx` in the read-only reference checkout at `37461b2`. Scramble runs on mount and hover, never on a recurring interval; duration `(2N + 1) × 28ms`. Typewriter initially waits 100ms; types at 90ms, holds 1800ms, deletes at 45ms, waits 400ms before the next role, and loops. Its implementation takes an extra 90ms tick after the full text before entering hold and an extra 45ms tick at empty before advancing; the state machine preserves both. Caret is 2px by 32px desktop/24px mobile, with a 2s cubic-bezier(.4,0,.6,1) opacity pulse. Underline is 2px with 2px bottom padding; row minimum height is 56px desktop/48px mobile.
+
+Live timed samples (`/tmp/prism-reference-hero.log`) confirmed changing text width, approximately 90ms typing/45ms deletion and the 2s caret. Neither source nor live computed styles contain a moving underline dot. The screenshot's dot appears to be the pointer. The requested decorative dot is therefore an intentional addition: 6px, accent token, 2s alternate ease-in-out travel along the underline. Prism reserves the longest role plus primary title, including underline padding/border and caret space (fixing a reproduced 4px mobile empty-text shift), keeping height stable rather than reproducing the reference's changing line width/reflow.
+
+All supplied additional roles were bracketed placeholders. Only the existing primary designation is seeded. Add up to six unique, non-empty, unpadded titles of at most 80 characters at `/admin/content/profile` or `portfolio-data/content/profile.json`. During verification the profile was externally updated to also include `Senior Software Engineer` and `AI Engineer`; those edits were preserved. Concurrent certificate-content edits were also preserved; the existing placeholder isolation test now creates its own fixture rather than constraining editable canonical records to TODO values. Other themes keep their existing rendering. No professional roles were inferred from the tagline.
+
+Animated layers are aria-hidden; real name and role list are stable accessible text. No-JS, reduced motion and global pause show the primary designation and real name. Native timers clean up on unmount/preference changes; typing suspends when hidden/off-screen, and scrambling resolves when hidden/off-screen.
+
+Follow-up verification (actually run): `validate:content` passed; `test:unit` **226 passed, 0 failed**; lint passed with no warnings/errors (existing Next command deprecation); isolated `npm run build` passed. Extended `prism-fidelity.js` passed at 1280×720 and 390×844, including scramble/resolve, changing roles with timed samples, blinking caret, stable hero height, pause/reduced-motion/no-JS primary-title fallbacks and the prior fidelity/keyboard checks. Axe scans at 390/1280 in light/dark returned **0 violations**. Final static hero screenshots were captured at both widths.
+
+Animation fixtures: the extended fidelity script expects `roles: ["AB", "CD"]` only in the isolated `/tmp/prism-review-data/content/profile.json` served on port 3025. Seed that temporary copy before running, and restore it from canonical `profile.json` afterward. This was done for verification; canonical data was never changed to synthetic titles. The preview copy was then synchronized with the updated canonical role list. Reference timed samples and local samples are in `/tmp/prism-reference-hero.log` and `/tmp/prism-hero-browser.log`; the checked-in pure-state tests assert each exact delay independently of browser scheduling. Final local mutation samples measured 89.9/88.4ms typing, 44.0/46.1ms deletion, 1892.4ms full-text display (90ms extra tick + 1800ms hold), and 445.3/448.3ms empty-to-next-character intervals (45ms extra tick + 400ms pause), at 1280/390 respectively. Browser timing assertions passed with scheduling tolerance. The live reference uses its own roles and natural-width reflow; Prism uses confirmed canonical roles and stable geometry. No cross-browser or screen-reader manual verification was performed. No commit or push made.
+
+## Certificate card follow-up
+
+| # | Area | Difference | Correction |
+|---|---|---|---|
+| 56 | Certificate card structure | Only an issuer row and title; no reference-style metadata hierarchy | 40px icon, issuer/year grouping, optional top-right status, 20px/18px title, 14px description, 11px competency label and 12px chips; 28px insets, 264px minimum height, 24px grid gaps |
+| 57 | Certificate action | Existing records lacked credential URLs, so no action was displayed | “View certificate” anchor uses canonical `credentialUrl`, opens in a new tab with safe rel attributes, and appears only for a supplied valid HTTP(S) URL |
+
+Optional description/competency/status fields are strict canonical data, not inferred claims. Additional certificate descriptions, dates, skills, verification status and URLs are still absent from the owner’s records and were requested. The reference person's certificate facts were not copied. Fields become available in `/admin/content/certificates`; empty/missing metadata stays omitted. Native tilt/reveal behavior, palette and accessibility remain unchanged.
+
+Checks: validation, **227 unit tests**, lint and isolated build passed; temporary fixture browser checks at 1280/390 passed for metadata, responsive grid, safe URL action and no overflow. Real content was restored afterward. Axe scans at 390/1280 in both light/dark modes reported **0 violations**. No commit/push.
+
+## Resume viewer follow-up
+
+The owner approved embedding the canonical résumé. Prism now derives Google Drive’s `/preview` URL from the existing canonical `/view` link, renders a lazy native iframe (760px desktop, 560px mobile), and preserves the original “Open Resume” action to Drive in a separate tab. A compact viewer header and visible fallback guidance use Prism copy data. No inferred update date, downloaded résumé asset, third-party dependency, custom PDF parser, or factual sidebar claims were added. Other themes remain unchanged. Native Drive preview controls and fullscreen support are retained.
+
+Verification: canonical validation, **228 unit tests**, lint and isolated production build passed. Actual Drive preview loaded résumé text in Chromium at 1280 and 390; original link/target, responsive width and no horizontal overflow passed. Axe scans at 390/1280 in light and dark returned **0 violations** (host page; Google’s cross-origin viewer is not fully covered by that scan). No commit/push.

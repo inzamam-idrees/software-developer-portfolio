@@ -38,6 +38,7 @@ export const NON_COPY_LITERALS = Object.freeze([
 
 // Per-file literals that are data lookups rather than theme wording.
 export const FILE_EXCEPTIONS = Object.freeze({
+  "themes/prism/client/scramble.jsx": ["ABCDEFGHJKLMNPQRSTUVWXYZ0123456789_#@%&*<>/"],
   // Aliases mapping canonical skill names to the original template's icon labels.
   "themes/coding/adapter.mjs": [
     "Javascript",

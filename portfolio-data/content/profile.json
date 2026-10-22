@@ -23,5 +23,10 @@
       "label": "Problem solver"
     }
   ],
-  "resumeId": "primary"
+  "resumeId": "primary",
+  "roles": [
+    "Senior Full Stack Engineer",
+    "Senior Software Engineer",
+    "AI Engineer"
+  ]
 }

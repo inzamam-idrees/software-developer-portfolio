@@ -4,6 +4,7 @@ $prism-dark: (
   muted: #c7b6ad, accent: #f3a987, rose: #f6a6b6, "gold": #e6cf91,
   border: #a17e74, rule: #4e383e, focus: #ffe0a0,
   button-start: #963346, button-end: #86401e, button-text: #ffffff,
+  status-completed: #93c5fd, status-verified: #6ee7b7, status-progress: #fcd34d,
   error: #ffc4b5, grid: #ffffff08, glow: #e4815d20,
 );
 $prism-light: (
@@ -11,6 +12,7 @@ $prism-light: (
   muted: #6e5148, accent: #92412b, rose: #943d55, "gold": #746020,
   border: #95746a, rule: #d7bfb5, focus: #754000,
   button-start: #963346, button-end: #86401e, button-text: #ffffff,
+  status-completed: #1e40af, status-verified: #166534, status-progress: #854d0e,
   error: #a12828, grid: #30201909, glow: #d18a3820,
 );
 
@@ -477,4 +479,80 @@ $prism-light: (
   .prism-copy-status:not(:empty) { position: fixed; z-index: 90; right: 24px; bottom: 24px; max-width: min(360px,calc(100vw - 48px)); padding: 14px 20px; border: 1px solid var(--pr-border); border-radius: 12px; background: var(--pr-surface); color: var(--pr-text); box-shadow: 0 8px 32px #0003; margin: 0; }
   @media (max-width: 767px) { .prism-footer-tools .prism-button { align-self: center; } }
   @media (max-width: 639px) { .prism-greeting { line-height: 20px; } }
+}
+
+.theme-prism {
+  .prism-scramble { display: inline-grid; max-width: 100%; }
+  .prism-scramble-sizer, .prism-scramble-layer { grid-area: 1/1; }
+  .prism-scramble-sizer { visibility: hidden; }
+  .prism-scramble-layer { width: 100%; overflow: clip; white-space: nowrap; }
+  .prism-role span { border: 0; padding: 0; }
+  .prism-role .prism-role-prefix { color: var(--pr-muted); font-weight: 400; }
+  .prism-role-stage { display: inline-grid; min-width: 0; max-width: 100%; }
+  .prism-role-sizer, .prism-role-line { grid-area: 1/1; }
+  .prism-role .prism-role-sizer { display: grid; visibility: hidden; padding-right: 12px; border-bottom: 2px solid transparent; padding-bottom: 2px; }
+  .prism-role-sizer > span { grid-area: 1/1; }
+  .prism-role-line { display: flex; align-items: center; min-width: 0; }
+  .prism-role .prism-role-text { position: relative; border-bottom: 2px solid var(--pr-accent); padding-bottom: 2px; overflow-wrap: anywhere; }
+  .prism-role-caret { flex: 0 0 2px; height: 32px; background: var(--pr-accent); margin-left: 10px; animation: prism-caret 2s cubic-bezier(.4,0,.6,1) infinite; }
+  .prism-role-dot { position: absolute; bottom: -4px; left: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--pr-accent); animation: prism-role-dot 2s ease-in-out infinite alternate; }
+  .prism-role[data-typing="false"] .prism-role-caret, .prism-role[data-typing="false"] .prism-role-dot { display: none; }
+  [data-motion="off"] .prism-role-caret, [data-motion="off"] .prism-role-dot { animation: none; }
+  @media(max-width: 639px) { .prism-role-caret { height: 24px; } .prism-role-stage { max-width: calc(100% - 4px); } }
+}
+@keyframes prism-caret { 50% { opacity: .5; } }
+@keyframes prism-role-dot { to { left: calc(100% - 6px); } }
+
+.theme-prism {
+  .prism-certificate { display: flex; flex-direction: column; min-height: 264px; }
+  .prism-certificate-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .prism-certificate-issuer { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .prism-certificate-issuer .prism-symbol { width: 40px; height: 40px; flex: 0 0 40px; border-radius: 12px; }
+  .prism-certificate-issuer .prism-symbol svg { width: 20px; height: 20px; }
+  .prism-certificate-issuer .prism-label { font-size: 12px; line-height: 16px; margin: 0; letter-spacing: 0; }
+  .prism-certificate-issuer time { display: block; font-size: 12px; line-height: 16px; font-weight: 600; margin-top: 4px; }
+  .prism-certificate-status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border: 1px solid var(--pr-rule); border-radius: 999px; font: 12px/16px ui-monospace,monospace; color: var(--pr-accent); flex-shrink: 0; }
+  .prism-certificate-status svg { width: 14px; height: 14px; }
+  .prism-certificate h3 { margin: 0 0 8px; font-size: 20px; line-height: 28px; }
+  .prism-certificate-description { font-size: 14px; line-height: 21px; margin: 0 0 24px; }
+  .prism-certificate-competencies { margin-top: auto; padding-top: 16px; }
+  .prism-certificate-competencies > .prism-label { font-size: 11px; line-height: 16px; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+  .prism-certificate .prism-tags { gap: 6px; }
+  .prism-certificate .prism-tags li { font: 12px/16px ui-monospace,monospace; padding: 4px 10px; border-radius: 8px; }
+  .prism-certificate .prism-certificate-link { align-self: flex-start; gap: 8px; }
+  .prism-certificate-id { font-size: 12px; margin-top: 12px; }
+  @media(max-width: 639px) {
+    .prism-certificate h3 { font-size: 18px; }
+    .prism-certificate-top { flex-wrap: wrap; gap: 12px; }
+  }
+}
+
+.theme-prism {
+  .prism-resume-panel { padding: 32px; border-radius: 24px; }
+  .prism-resume-panel > .prism-resume { padding: 0 0 24px; margin-bottom: 32px; border-bottom: 1px solid var(--pr-rule); }
+  .prism-resume-viewer { border: 1px solid var(--pr-rule); border-radius: 16px; overflow: hidden; background: var(--pr-bg); }
+  .prism-resume-viewer-bar { display: flex; align-items: center; gap: 16px; padding: 12px 16px; border-bottom: 1px solid var(--pr-rule); }
+  .prism-resume-viewer-bar > span { display: flex; gap: 8px; }
+  .prism-resume-viewer-bar i { width: 12px; height: 12px; border-radius: 50%; background: var(--pr-accent); opacity: .65; }
+  .prism-resume-viewer-bar i:nth-child(2) { opacity: .4; }
+  .prism-resume-viewer-bar i:nth-child(3) { opacity: .85; }
+  .prism-resume-viewer-bar p { font: 12px/16px ui-monospace,monospace; margin: 0; }
+  .prism-resume-viewer iframe { display: block; width: 100%; height: 760px; border: 0; background: #fff; }
+  .prism-resume-fallback { font-size: 13px; line-height: 20px; margin: 16px 0 0; }
+  @media(max-width: 639px) {
+    .prism-resume-panel { padding: 20px; }
+    .prism-resume-panel > .prism-resume { margin-bottom: 24px; }
+    .prism-resume-viewer iframe { height: 560px; }
+  }
+}
+
+.theme-prism {
+  .prism-certificate-status {
+    color: var(--pr-status-color, var(--pr-accent));
+    border-color: color-mix(in srgb, var(--pr-status-color, var(--pr-accent)) 50%, transparent);
+    background: color-mix(in srgb, var(--pr-status-color, var(--pr-accent)) 8%, transparent);
+    &[data-status="completed"] { --pr-status-color: var(--pr-status-completed); }
+    &[data-status="verified"] { --pr-status-color: var(--pr-status-verified); }
+    &[data-status="in-progress"] { --pr-status-color: var(--pr-status-progress); }
+  }
 }

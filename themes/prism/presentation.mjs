@@ -24,7 +24,7 @@ export function createPrismPresentation(portfolio) {
   return {
     ...view, skillGroups, navigation,
     monogram: view.profile.name.split(/\s+/).map((word) => word[0]).join(""),
-    roles: [view.profile.designation],
+    roles: view.profile.roles ?? [view.profile.designation],
     portraitBadges: [view.profile.experienceLabel, view.profile.focusLabel],
     socialLinks: ["github", "linkedIn", "dev", "stackOverflow"]
       .filter((key) => view.social[key])

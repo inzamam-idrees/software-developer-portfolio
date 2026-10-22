@@ -1,7 +1,7 @@
 # Phase 11 — Prism theme and canonical certificates
 
 Date: 2026-10-22
-Status: **Implemented locally; not committed or pushed.** Public active theme remains `coding`.
+Status: **Implemented with owner-authorized local commits; not pushed.** Public active theme remains `coding`.
 Plan: `docs/superpowers/plans/2026-10-22-prism-theme.md`.
 
 ## Design and implementation
@@ -14,9 +14,9 @@ Reference reviewed at commit `37461b2a440a6a6d46803f9eb7b535de8a429c98`:
 
 No reference code, portrait, resume, font file or branding was copied. No package or lockfile changes. Google font **Space Grotesk** uses `next/font/google`, `display: swap`, `preload: false`, scoped to Prism, matching the repository's theme-font approach. The existing root Inter remains the body font. No new dependency, GSAP, Three/Fiber, Lenis or Framer Motion is used by Prism.
 
-The hero uses the existing portrait, resume link, experience label, focus label, introduction and designation. There is exactly one canonical role value (`profile.designation`), so the role remains static as approved. No extra role claims are inferred from the tagline.
+The hero uses the existing portrait, resume link, experience label, focus label, introduction and designation. The optional canonical `profile.roles` array drives Prism-only rotation when it contains multiple titles. Initially only the primary designation was seeded; subsequent profile edits added two titles, which were preserved. Additional roles can be entered in `/admin/content/profile`; no role claims are inferred from the tagline. Native name scrambling and role timing are documented in the fidelity audit’s hero follow-up.
 
-Unsupported credentials, learning progress, audience/challenge metrics, counters, WhatsApp, resume update date and PDF embedding remain omitted. Awards remain a separate, correctly labeled section. Actual canonical articles replace the reference's community challenge. Experience and education remain complete.
+Unsupported credentials, learning progress, audience/challenge metrics, counters, WhatsApp, resume update date remain omitted. Awards remain a separate, correctly labeled section. Actual canonical articles replace the reference's community challenge. Experience and education remain complete.
 
 ## Architecture and changed files
 
@@ -80,9 +80,9 @@ Gradient checks sample 21 points per segment. Automated browser auditing additio
 - Client navigation stays within private preview routes; public activation was never exercised or changed.
 - Contact retains the existing real validation/API flow; direct email and phone links stay readable without JavaScript. No reference simulated-success behavior was ported.
 
-## Certificates: placeholder-only until replaced
+## Certificates: canonical owner-editable records
 
-The three bundled records are **explicit placeholders**, not credentials. The section displays a placeholder notice. Other themes neither receive certificate records through their views nor render these placeholders.
+The initial records were explicit placeholders; the owner has since supplied certificate records. A placeholder notice appears only while TODO titles remain. Other themes neither receive certificate records through their views nor render these placeholders.
 
 Replace them at `/admin/content/certificates` (or edit `portfolio-data/content/certificates.json`):
 1. Keep or replace each stable, unique lowercase/hyphenated `id`.
@@ -94,7 +94,7 @@ Replace them at `/admin/content/certificates` (or edit `portfolio-data/content/c
 
 Certificate images use an unoptimized Next Image so valid external image URLs do not require new global host configuration. Owners remain responsible for asset rights and external availability.
 
-## Verification run in this session
+## Initial implementation verification (historical)
 
 - `npm run validate:content`: pass.
 - `npm run test:unit`: **223 tests, 223 pass, zero fail** after review fixes. Includes `no-hardcoded-copy`, strict certificates/copy, theme isolation and palette checks.
@@ -110,14 +110,36 @@ Browser runs use a temporary `/tmp/prism-review-data` copy, test-only admin cred
 
 ## Risks and remaining work
 
-- Real certificates have not been supplied; replace the three TODO records before choosing to show real credentials publicly.
+- Certificate facts and URL availability are supplied by the owner; unknown metadata remains empty.
 - Live contact delivery and a deployed hosting environment were not tested; local browser checks do not send messages.
 - Manual Safari/Firefox, screen reader, real touch-device and live-deployment verification remain unverified. Automated contrast/axe checks supplement, rather than replace, these checks.
 - External article and resume availability depends on the existing providers. The article empty/unavailable fallback remains available.
-- Reference fidelity is close in layout and interaction vocabulary, but not pixel-identical: your content, approved omissions, added career/education sections, static single role, accessible motion controls and corrected light contrast affect the presentation.
+- Reference fidelity is close in layout and interaction vocabulary, but not pixel-identical: your content, approved omissions, added career/education sections, confirmed role data, accessible motion controls and corrected light contrast affect the presentation.
 - No implementation phases are intentionally deferred. No new dependencies, public activation, commits or pushes were performed.
 
 
 ## Reference-fidelity follow-up
 
 The section-by-section 1280px/390px comparison, full difference inventory, corrections, intentional exceptions and fresh verification results are recorded in [phase-11-fidelity-audit.md](phase-11-fidelity-audit.md). This supersedes the initial presentation measurements above.
+
+## Hero animation follow-up
+
+The hero follow-up adds optional validated profile roles, native pure-state typing, corrected name glyph timing, stable sizing, and accessible static fallbacks. Full checks passed: canonical validation, 226 unit tests, lint and isolated production build; hero browser checks passed at 1280/390 and all four dark/light axe scans reported zero violations. See the fidelity audit’s hero follow-up for exact reference values, timed samples, fixture setup and the intentional moving-dot difference. The initial single designation seed was subsequently updated externally with two additional titles; those profile edits were preserved. Further confirmed titles can be added in the profile editor.
+
+## Certificate card follow-up
+
+Prism’s certificate cards now follow the reference hierarchy: 40px icon/issuer/year header, optional status pill, title/description, competency chips, and a separate “View certificate” action. Desktop retains two columns with a 24px gap; mobile uses one column. Existing palettes, motion controls and canonical facts remain intact.
+
+Optional strict certificate fields `description`, `competencies` (up to 20 unique non-empty strings), and `status` (`in-progress`, `completed`, `verified`) are editable in `/admin/content/certificates`. Existing `issuedDate`, `credentialId`, `image`, and HTTP(S) `credentialUrl` remain supported. Dates display their known year in the header. Status is never inferred from an issuer or URL. A “View certificate” link opens the exact supplied credential URL in a new tab with `noopener noreferrer`; absent URLs create no fake action. The owner’s current records supply title/issuer only; URLs and additional factual metadata have been requested, not invented.
+
+Verification: canonical validation, 227 unit tests, lint and isolated build passed. Temporary fixture browser checks passed at 1280/390 for grid, description, chips, status, safe link attributes, missing-link behavior and overflow; the fixture was restored afterward. Final axe result recorded in the fidelity audit. No commit or push.
+
+Certificate JSON editing: each existing record now explicitly lists `description`, `competencies`, `status`, `issuedDate`, `credentialUrl`, `credentialId`, and `image`. Unknown scalar metadata uses `null`, and competencies use `[]`; these values render no fabricated details. Replace them with confirmed data. Status accepts `in-progress`, `completed`, or `verified`; dates use `YYYY-MM-DD`; credential links must use HTTP(S). Explicit null metadata is tested while invalid URLs/blank populated text remain rejected. Validation, 227 unit tests, lint and isolated build passed after this change. The current temporary development preview mirrors canonical certificate file changes; no commit/push.
+
+## Embedded resume follow-up
+
+Prism now embeds the current canonical Google Drive résumé using its Drive preview URL, while “Open Resume” keeps the existing Drive view link. The native lazy iframe has a copy-backed accessible title, responsive dimensions, viewer header and fallback guidance; it works without client-side viewer code or a new dependency. Unit URL-conversion tests, actual Drive content loading at 1280/390, content validation, 228 unit tests, lint and isolated build passed. No public-theme activation, commit or push.
+
+## Final cleanup and local commit verification
+
+Removed unused certificate date-label copy and empty layout wrappers; the typewriter now uses its named timing constants rather than duplicate numeric delays. Retained the focused components and regression tests because they are used by the theme and verification. Updated stale placeholder/commit documentation. Owner profile/certificate edits are preserved. No generated output, temporary fixtures, screenshots, environment files or dependencies are included in the commits. Public theme remains Coding. Final verification: `validate:content` passed; **228 unit tests passed, 0 failed**; lint passed; isolated production build passed. Actual Drive viewer checks passed at 1280/390. Axe scans passed at 390/1280 in light/dark with zero host-page violations. `git diff --check` passed. Removed the inactive `.next-prism-build` verification output after the successful build; kept the active preview output. Local commit authorized by the owner; no push.

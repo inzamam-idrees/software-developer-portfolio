@@ -14,7 +14,7 @@ test("Prism text, gradient stops, controls and focus pass AA in both palettes", 
     const body = source.match(new RegExp(`\\$prism-${mode}: \\(([\\s\\S]*?)\\);`))[1];
     const tokens = Object.fromEntries([...body.matchAll(/([\w-]+)"?:\s*(#[a-f\d]{6})\b/gi)].map(([, key, value]) => [key, rgb(value)]));
     for (const surface of ["bg", "surface", "elevated"]) {
-      for (const foreground of ["text", "muted", "accent", "rose", "gold", "error"]) {
+      for (const foreground of ["text", "muted", "accent", "rose", "gold", "error", "status-completed", "status-verified", "status-progress"]) {
         assert.ok(ratio(tokens[foreground], tokens[surface]) >= 4.5, `${mode} ${foreground}/${surface}: ${ratio(tokens[foreground], tokens[surface])}`);
       }
       for (const foreground of ["focus", "border"]) assert.ok(ratio(tokens[foreground], tokens[surface]) >= 3, `${mode} ${foreground}/${surface}`);

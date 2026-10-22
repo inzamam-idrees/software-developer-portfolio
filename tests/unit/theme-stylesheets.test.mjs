@@ -11,6 +11,7 @@ const ownedPrefixes = {
   cinematic: ".hero-grid",
   executive: ".executive-",
   spatial: ".spatial-",
+  prism: ".prism-",
   admin: ".admin-",
 };
 

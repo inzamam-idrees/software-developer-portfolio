@@ -60,7 +60,7 @@ test("filesystem store rejects unknown documents and reads every registry docume
   const store = createFilesystemStore({ root });
   await assert.rejects(() => store.read("../secrets"), rejectsWith("UNKNOWN_DOCUMENT"));
   const all = await store.readAll();
-  assert.equal(Object.keys(all).length, 22);
+  assert.equal(Object.keys(all).length, 23);
   assert.equal(all["copy-shared"].navigation.skipToContent, "Skip to content");
 });
 

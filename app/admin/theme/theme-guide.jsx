@@ -5,6 +5,7 @@ const PURPOSES = Object.freeze({
   cinematic: "Premium editorial layout with coordinated motion and optional 3D.",
   executive: "Recruiter-first and highly readable, focused on career evidence.",
   spatial: "An interactive system model: skills graph, project ring and experience spine.",
+  prism: "Portrait-led glass panels, warm gradients and an interactive project showcase.",
 });
 
 export function themePurpose(themeId) {
@@ -101,11 +102,26 @@ function SpatialSketch() {
   );
 }
 
+function PrismSketch() {
+  return <>
+    <rect width="160" height="100" fill="#130e10" />
+    <rect x="10" y="8" width="140" height="11" rx="6" fill="#2c2023" />
+    <rect x="14" y="33" width="76" height="9" rx="2" fill="#f6a6b6" />
+    <rect x="14" y="49" width="60" height="3" rx="1" fill="#c7b6ad" />
+    <rect x="14" y="58" width="70" height="3" rx="1" fill="#c7b6ad" />
+    <rect x="14" y="73" width="36" height="12" rx="4" fill="#963346" />
+    <rect x="104" y="27" width="42" height="60" rx="12" fill="#4e383e" stroke="#f3a987" />
+    <circle cx="125" cy="45" r="9" fill="#e6cf91" />
+    <path d="M110 77Q110 55 125 55Q140 55 140 77" fill="#a17e74" />
+  </>;
+}
+
 const SKETCHES = Object.freeze({
   coding: CodingSketch,
   cinematic: CinematicSketch,
   executive: ExecutiveSketch,
   spatial: SpatialSketch,
+  prism: PrismSketch,
 });
 
 export function ThemeThumbnail({ themeId }) {

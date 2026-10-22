@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { validateContact } from "@/lib/contact.mjs";
 const empty = { name: "", email: "", message: "" };
-export default function ContactForm({ copy }) {
+export default function ContactForm({ copy, rows = 5, submitIcon, placeholders = {} }) {
   const [ready, setReady] = useState(false);
   useEffect(() => setReady(true), []);
   const [input, setInput] = useState(empty),
@@ -62,6 +62,7 @@ export default function ContactForm({ copy }) {
               autoComplete={autocomplete}
               maxLength={100}
               required
+              placeholder={placeholders[field]}
               value={input[field]}
               aria-invalid={Boolean(errors[field])}
               aria-describedby={errors[field] ? field + "-error" : undefined}
@@ -81,7 +82,8 @@ export default function ContactForm({ copy }) {
           id="contact-message"
           name="message"
           maxLength={500}
-          rows={5}
+          rows={rows}
+          placeholder={placeholders.message}
           required
           value={input.message}
           aria-invalid={Boolean(errors.message)}
@@ -101,7 +103,7 @@ export default function ContactForm({ copy }) {
           disabled={busy || !ready}
         >
           {busy ? copy.sending : copy.send}{" "}
-          <span aria-hidden="true">↗</span>
+          {submitIcon ?? <span aria-hidden="true">↗</span>}
         </button>
         <p className="eyebrow muted">{copy.note}</p>
       </div>

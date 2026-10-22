@@ -10,7 +10,7 @@ import {
 } from "../../lib/portfolio/loader.mjs";
 
 const bundledCopy = Object.fromEntries(
-  ["shared", "coding", "cinematic", "executive", "spatial"].map((name) => [
+  ["shared", "coding", "cinematic", "executive", "spatial", "prism"].map((name) => [
     `settings/copy/${name}.json`,
     JSON.parse(
       readFileSync(

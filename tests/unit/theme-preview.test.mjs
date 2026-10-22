@@ -68,7 +68,7 @@ test("invalid and unavailable preview identifiers fail safely", () => {
 test("only available registry themes are offered for preview", () => {
   assert.deepEqual(
     listPreviewableThemes().map((theme) => theme.id),
-    ["coding", "cinematic", "executive", "spatial"],
+    ["coding", "cinematic", "executive", "spatial", "prism"],
   );
 });
 

@@ -9,11 +9,14 @@ import { createCinematicView } from "../../themes/cinematic/view.mjs";
 import { createExecutiveView } from "../../themes/executive/view.mjs";
 import { createSpatialView } from "../../themes/spatial/view.mjs";
 
+import { createPrismView } from "../../themes/prism/view.mjs";
+
 const themeViews = [
   ["coding", createCodingView],
   ["cinematic", createCinematicView],
   ["executive", createExecutiveView],
   ["spatial", createSpatialView],
+  ["prism", createPrismView],
 ];
 
 test("one canonical fixture projects into every registered theme without mutation", async () => {

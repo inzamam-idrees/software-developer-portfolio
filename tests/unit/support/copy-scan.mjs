@@ -26,6 +26,7 @@ export const DECORATIVE_TOKENS = Object.freeze([
 // Literals that are protocol or keyboard identifiers rather than visible copy.
 export const NON_COPY_LITERALS = Object.freeze([
   "Escape",
+  "Tab",
   "Content-Type",
   "GET",
   "POST",

@@ -13,7 +13,7 @@ test("canonical theme settings accept only registered Phase 3 theme IDs", () => 
   );
 });
 
-test("bundled canonical portfolio resolves the temporary Cinematic default", async () => {
+test("bundled canonical portfolio preserves the public Coding theme", async () => {
   const portfolio = await loadCanonicalPortfolio({ env: {} });
-  assert.equal(portfolio.settings.theme.activeTheme, "cinematic");
+  assert.equal(portfolio.settings.theme.activeTheme, "coding");
 });

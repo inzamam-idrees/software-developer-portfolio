@@ -30,6 +30,7 @@ test("bundled copy documents validate and load under settings.copy", () => {
     "cinematic",
     "coding",
     "executive",
+    "prism",
     "shared",
     "spatial",
   ]);

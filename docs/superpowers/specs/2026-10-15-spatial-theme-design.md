@@ -249,7 +249,7 @@ category is chosen; touch tap selects; no scroll-coupled camera.
 
 Unit (`node --test`, temporary data copies only):
 
-- Registry: Spatial resolves, order matches `THEME_IDS`, four slots load.
+- Registry: Spatial resolves, order matches `THEME_IDS`, five slots load (`shell`, `home`, `projects`, `project`, `blog`; current contract updated after the original Spatial phase).
 - Copy: `spatialCopySchema` accepts the shipped document; rejects unknown keys, empty
   strings, unknown placeholders; `no-hardcoded-copy` covers `themes/spatial`.
 - Documents: registry lists 21 documents, `copy-spatial` addressable in admin.

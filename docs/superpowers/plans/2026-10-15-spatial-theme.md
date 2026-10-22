@@ -1,5 +1,7 @@
 # Spatial Theme Implementation Plan
 
+Current-contract note (Phase 11): this historical plan predates individual project pages. All themes now require five lazy slots: shell, home, projects, project, blog.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Add a fourth portfolio theme, `spatial`, whose 3D system model (skills graph, project ring, experience spine) is derived from canonical data and degrades to a complete server-rendered page.

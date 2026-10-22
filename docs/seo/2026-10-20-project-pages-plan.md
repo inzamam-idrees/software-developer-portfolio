@@ -7,7 +7,9 @@ Status: **approved 2026-10-20 (D1 = A, D2 = A, D3 = A) and implemented, not comm
 One indexable page per project in `portfolio-data/content/projects.json` (9 today), so
 long-tail queries (Remmi CRM, POS Online Ordering, …) have a landing page.
 
-## Current state (inspected 2026-10-20)
+## Historical starting state (inspected 2026-10-20)
+
+Current contract after this work: `shell, home, projects, project, blog` (five lazy slots).
 
 - Projects have a numeric `id` (1–9) and no slug. `problem` / `solution` / `outcome`
   are optional but must be supplied together; only 3 of 9 projects have them

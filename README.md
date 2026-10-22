@@ -156,7 +156,7 @@ professional-content copies inside a theme.
 Private theme preview is documented in
 [`docs/multi-theme/phase-5-preview-activation-hosting.md`](docs/multi-theme/phase-5-preview-activation-hosting.md).
 It requires `PORTFOLIO_ADMIN_PASSWORD_HASH` and
-`PORTFOLIO_ADMIN_SESSION_SECRET`. Preview is cookie-scoped and does not modify the
+`PORTFOLIO_ADMIN_SESSION_SECRET`. Preview uses authenticated `/preview/<theme>` routes and does not modify the
 public active setting.
 
 ### Admin content editing
@@ -343,3 +343,13 @@ If another Next process uses the checkout, isolate generated files:
 `PORTFOLIO_BUILD_DIR=.next-portfolio-dev npm run dev -- --port 3001`.
 Use the same `PORTFOLIO_BUILD_DIR` for a production build and its start command.
 Validation evidence and dependency choices are recorded under `docs/portfolio`.
+
+
+## Available themes
+
+Coding, Cinematic, Executive, Spatial, and **Prism** all render one validated canonical portfolio through five lazy slots: shell, home, projects, individual project, and blog.
+
+Prism recreates the reference's portrait-led glass layout with warm rose/terracotta/gold palettes, pill navigation, skills filters and marquee, project carousel and accessible quick preview, and native motion. It adds no dependencies or 3D runtime. Private previews are `/preview/prism`, `/preview/prism/project`, `/preview/prism/project/<slug>`, and `/preview/prism/blog` after admin sign-in. Adding Prism does not activate it.
+
+Palette tokens: `app/css/prism.scss`. Theme wording: `portfolio-data/settings/copy/prism.json`.
+The new `certificates` document is editable under `/admin/content/certificates`; its three entries are clearly marked placeholders until replaced with real data. Set it to `[]` to hide Prism's certificate section. Other themes do not render certificates. See `docs/multi-theme/phase-11-result.md` for replacement instructions, design decisions and verification.

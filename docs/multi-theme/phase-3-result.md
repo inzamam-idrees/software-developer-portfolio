@@ -5,7 +5,8 @@ Status: Complete; no Phase 4 implementation started
 
 ## Delivered
 
-- Registered exactly Coding, Cinematic, and Executive with lazy shell/home/projects/blog slots.
+- Registered exactly Coding, Cinematic, and Executive with lazy shell/home/projects/blog slots (the historical Phase 3 contract).
+  Current contract: five slots — shell/home/projects/project/blog — including individual project pages.
 - Added a strict canonical `activeTheme` setting and one active-theme resolver.
 - Migrated Coding from the unchanged `master` reference through canonical adapters.
 - Moved Cinematic behind the registry without changing its presentation composition.

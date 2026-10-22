@@ -1,5 +1,7 @@
 # Multi-theme portfolio architecture
 
+Current contract (updated Phase 11): five lazy slots — `shell`, `home`, `projects`, `project`, `blog`. Individual project pages were added after the original Phase 3. Registered themes are Coding, Cinematic, Executive, Spatial and Prism.
+
 Phase 3 introduces a presentation-only theme boundary around the validated canonical
 portfolio model. The active development default remains Cinematic; that is a migration
 state, not a final public design decision.
@@ -23,6 +25,7 @@ PORTFOLIO_DATA_DIR (or bundled portfolio-data/)
         ├── shell slot
         ├── home slot
         ├── projects slot
+        ├── project slot
         └── blog slot
                     │
                     ▼
@@ -41,9 +44,9 @@ about data.
 - a stable lowercase `id`;
 - a user-facing `label`;
 - an `available` or `architecture-ready` status; and
-- lazy import functions for the exact `shell`, `home`, `projects`, and `blog` slots.
+- lazy import functions for the exact `shell`, `home`, `projects`, `project`, and `blog` slots.
 
-The registry contains exactly `coding`, `cinematic`, and `executive`. Creative and
+The registry currently contains `coding`, `cinematic`, `executive`, `spatial`, and `prism`. Creative and
 Minimal are intentionally absent. `createThemeDefinition` rejects invalid IDs,
 statuses, missing slots, and extra slots. The contract remains JavaScript-native and
 does not add TypeScript or another framework.
@@ -119,7 +122,7 @@ boundary rather than assuming that a source-level dynamic import is sufficient.
 ## Adding a future theme
 
 1. Create `themes/<id>/view.mjs` as a thin `createThemeView` wrapper.
-2. Add presentation-only `shell.jsx`, `home.jsx`, `projects.jsx`, and `blog.jsx` slots.
+2. Add presentation-only `shell.jsx`, `home.jsx`, `projects.jsx`, `project.jsx`, and `blog.jsx` slots.
 3. Add the ID to `lib/themes/ids.mjs`, the Zod theme enum, and the registry definition.
 4. Consume only the supplied canonical portfolio object. Add no theme-local JSON,
    direct `portfolio-data` reads, or legacy `utils/data` imports.

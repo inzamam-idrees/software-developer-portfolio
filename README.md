@@ -353,3 +353,11 @@ Prism recreates the reference's portrait-led glass layout with warm rose/terraco
 
 Palette tokens: `app/css/prism.scss`. Theme wording: `portfolio-data/settings/copy/prism.json`.
 The new `certificates` document is editable under `/admin/content/certificates`; it supports descriptions, competency tags, status badges, issue dates, images and credential URLs. Unknown optional values can remain null. Set it to `[]` to hide Prism's certificate section. Other themes do not render certificates. See `docs/multi-theme/phase-11-result.md` for replacement instructions, design decisions and verification.
+
+### Reset your local administrator password privately
+
+Run `npm run admin:password` in your own terminal. Enter a new password of at least 12 characters and confirm it. Input is hidden; do not pass the password as a command argument or put it in chat. Ctrl+C cancels without changing credentials.
+
+The command writes only a scrypt hash and a new random session secret to ignored `.env.local` with owner-only file permissions. Existing unrelated settings remain intact. Restart the normal local server (`npm run dev`), then sign in at `/admin/login`; rotating the secret invalidates previous sessions. This is local recovery for someone who already has access to the project files; it does not add a public password-reset endpoint or change deployment secrets.
+
+The stored password cannot be viewed or recovered because only a hash is kept. Keep your chosen password in your private password manager; if forgotten, run the reset command again. Tests use temporary directories and never reset real project credentials.

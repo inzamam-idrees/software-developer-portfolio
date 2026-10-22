@@ -155,3 +155,9 @@ are required. Fix the production container/data packaging or choose another supp
 host, align the runtime with Node 20.9+, define backup/restore and rate limiting, then
 implement the revisioned atomic theme writer with focused failure-path tests. Keep
 content editing and media operations as later, separately approved work.
+
+## Local password recovery follow-up
+
+`npm run admin:password` provides an interactive local-only reset with hidden new-password and confirmation prompts. It reuses the scrypt helper, escapes dotenv dollar signs for Next, atomically updates only the admin hash/session-secret settings in ignored `.env.local`, and writes the file with mode 0600. It rotates the signing secret so previous sessions fail after the normal local server restarts. Short/mismatched passwords or cancellation make no credential changes. No web route, plaintext password persistence, password arguments or piped-password input were added. Hosted secrets remain managed separately in hosting settings.
+
+Verification: targeted tests pass for configuration preservation, hash verification, Next dotenv loading, file permissions, secret rotation/session revocation and invalid-input non-writes. A real TTY smoke test ran against a temporary project copy; password input was not echoed, and both prompts completed successfully. Real project credentials were not reset. Full verification passed: canonical content validation, 230 unit tests, lint and isolated production build. TTY cancellation also returned without invoking the credential writer. No commit or push authorized.

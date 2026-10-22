@@ -34,6 +34,7 @@ npm only (`package-lock.json`).
 ```bash
 npm install
 npm run dev                  # theme CSS watch + next dev on :3000 (scripts/dev.mjs)
+npm run admin:password       # private local reset: hidden input, hash + rotated secret in ignored .env.local
 npm run build:theme-css      # compile per-theme sheets to public/theme-css (runs in prebuild and pretest:unit)
 npm run validate:content     # Zod-validate portfolio-data/ (also runs automatically as prebuild)
 npm run build                # prebuild validation + theme CSS + next build

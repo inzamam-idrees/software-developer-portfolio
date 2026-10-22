@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/dev.mjs",
+    "admin:password": "node scripts/reset-admin-password.mjs",
     "prebuild": "npm run validate:content && npm run build:theme-css",
     "build:theme-css": "node scripts/build-theme-css.mjs",
     "build": "next build",

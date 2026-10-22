@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { usePrismMotion } from "./controls";
 import Icon from "../icon";
 
-export default function Dialog({ open, onClose, label, closeLabel, className = "", children }) {
+export default function Dialog({ open, onClose, label, closeLabel, className = "", heading, children }) {
   const ref = useRef(null);
   const animation = useRef(null);
   const closing = useRef(false);
@@ -58,8 +58,13 @@ export default function Dialog({ open, onClose, label, closeLabel, className = "
     onCancel={(event) => { event.preventDefault(); dismiss(); }}
     onClick={(event) => { if (event.target === ref.current) dismiss(); }}>
     <div className="prism-dialog-content">
-      <button type="button" className="prism-icon-button prism-dialog-close" onClick={dismiss} aria-label={closeLabel} autoFocus><Icon name="close" /></button>
-      {children}
+      {heading ? <>
+        <header className="prism-dialog-header"><h2>{heading}</h2><button type="button" className="prism-icon-button prism-dialog-close" onClick={dismiss} aria-label={closeLabel} autoFocus><Icon name="close" /></button></header>
+        <div className="prism-dialog-scroll">{children}</div>
+      </> : <>
+        <button type="button" className="prism-icon-button prism-dialog-close" onClick={dismiss} aria-label={closeLabel} autoFocus><Icon name="close" /></button>
+        {children}
+      </>}
     </div>
   </dialog>;
 }

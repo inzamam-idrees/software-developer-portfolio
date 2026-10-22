@@ -556,3 +556,22 @@ $prism-light: (
     &[data-status="in-progress"] { --pr-status-color: var(--pr-status-progress); }
   }
 }
+
+.theme-prism {
+  .prism-project-dialog { width: min(760px, calc(100vw - 32px)); overflow: hidden; }
+  .prism-project-dialog .prism-dialog-content { display: flex; flex-direction: column; padding: 0; max-height: calc(85svh - 2px); }
+  .prism-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 24px; border-bottom: 1px solid var(--pr-rule); background: var(--pr-elevated); flex-shrink: 0; }
+  .prism-dialog-header h2 { font-size: 16px; line-height: 24px; margin: 0; letter-spacing: 0; }
+  .prism-dialog-header .prism-dialog-close { position: static; width: 40px; height: 40px; min-width: 40px; }
+  .prism-dialog-scroll { overflow-y: auto; overscroll-behavior-y: contain; scrollbar-width: thin; scrollbar-color: var(--pr-border) transparent; scrollbar-gutter: stable; padding: 28px; min-height: 0; }
+  .prism-dialog-scroll::-webkit-scrollbar { width: 6px; }
+  .prism-dialog-scroll::-webkit-scrollbar-track { background: transparent; }
+  .prism-dialog-scroll::-webkit-scrollbar-thumb { background: var(--pr-border); border-radius: 999px; }
+  .prism-project-dialog .prism-project-layout > div > .prism-actions { padding-top: 20px; border-top: 1px solid var(--pr-rule); margin-top: 28px; }
+  @media(max-width: 639px) {
+    .prism-project-dialog { width: calc(100vw - 24px); border-radius: 20px; }
+    .prism-dialog-header { padding: 12px 20px; }
+    .prism-dialog-scroll { padding: 20px; }
+    .prism-project-dialog .prism-actions > :is(a,button) { flex: 1 1 auto; }
+  }
+}

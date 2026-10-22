@@ -21,7 +21,7 @@ export default function ProjectContent({ project, copy, detailed = false, modal 
         {project.links.source && <a className="prism-button" href={project.links.source} target="_blank" rel="noreferrer"><Icon name="github" />{labels.source}</a>}
         {project.links.demo && <a className="prism-button prism-primary" href={project.links.demo} target="_blank" rel="noreferrer">{labels.visit}<Icon name="arrow" /></a>}
         {onPreview && <button type="button" className="prism-button prism-primary" onClick={onPreview} data-prism-magnetic><Icon name="layers" />{labels.preview}</button>}
-        {!detailed && (modal || !onPreview) && <Link className="prism-button" href={`/project/${project.slug}`}>{labels.details}<Icon name="arrow" /></Link>}
+        {!detailed && (modal || !onPreview) && <Link className={modal ? "prism-button prism-primary" : "prism-button"} href={`/project/${project.slug}`}>{labels.details}<Icon name="arrow" /></Link>}
       </div>
     </div>
     {detailed && <aside className="prism-card prism-project-aside"><p className="prism-label">{labels.role}</p><p>{project.role}</p><p className="prism-label">{labels.stack}</p><ul className="prism-check-list">{project.technologies.map((name) => <li key={name}><Icon name="check" />{name}</li>)}</ul></aside>}

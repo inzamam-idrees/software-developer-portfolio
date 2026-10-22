@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import Dialog from "./dialog";
 import { usePrismMotion } from "./controls";
@@ -53,8 +52,8 @@ export default function ProjectShowcase({ projects, copy, archive = false, headi
       </article>)}
     </div>
     {!archive && <div className="prism-carousel-dots" role="group" aria-label={copy.home.projects.heading}>{ready && projects.map((project, position) => <button type="button" key={project.id} aria-disabled={busy} onClick={() => choose(position)} aria-pressed={position === index} aria-label={project.title}><span /></button>)}</div>}
-    <Dialog open={Boolean(selected)} onClose={() => setSelected(null)} label={selected?.title ?? copy.project.preview} closeLabel={copy.project.close}>
-      {selected && <><ProjectContent project={selected} copy={copy} modal /><Link className="prism-button prism-primary" href={`/project/${selected.slug}`}>{copy.project.details}<Icon name="arrow" /></Link></>}
+    <Dialog open={Boolean(selected)} onClose={() => setSelected(null)} label={selected?.title ?? copy.project.preview} closeLabel={copy.project.close} heading={copy.project.preview} className="prism-project-dialog">
+      {selected && <ProjectContent project={selected} copy={copy} modal />}
     </Dialog>
   </div>;
 }

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import { useSelection } from "./selection";
 import SkillLevel from "../../shared/skill-level";
@@ -32,7 +32,7 @@ export default function SkillsExplorer({
 }) {
   const { selectedId, related, select } = useSelection();
   const [interactive, setInteractive] = useState(false);
-  const statusId = useId();
+  const statusId = "spatial-skills-evidence";
   useEffect(() => setInteractive(true), []);
 
   const labels = new Map([
@@ -93,7 +93,7 @@ export default function SkillsExplorer({
           </section>
         )}
       </div>
-      {interactive && (
+      { (
         <aside className="spatial-explorer-result">
           <div id={statusId} role="status" aria-live="polite">
             {selectedId ? (
@@ -115,7 +115,7 @@ export default function SkillsExplorer({
                 )}
               </div>
             ) : (
-              <p>{copy.selectPrompt}</p>
+              <div><h3>{copy.selectPrompt}</h3><p>{copy.intro}</p><h4>{copy.projectsLabel}</h4><ul>{projects.slice(0, 3).map((project) => <li key={project.id}><a className="spatial-text-link" href={`#project-${project.id}`}>{project.title}</a></li>)}</ul><h4>{copy.rolesLabel}</h4><ul>{experience.map((role) => <li key={role.id}>{role.role}</li>)}</ul></div>
             )}
           </div>
           {selectedId && (

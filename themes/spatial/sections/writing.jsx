@@ -31,11 +31,13 @@ export default async function Writing({ view }) {
   );
 }
 
-export function WritingFallback({ copy }) {
+export function WritingFallback({ copy, profileUrl }) {
   return (
-    <section className="spatial-section" aria-label={copy.loadingLabel}>
+    <section className="spatial-section" id="writing" aria-labelledby="spatial-writing-title">
       <div className="spatial-frame">
+        <h2 id="spatial-writing-title" className="spatial-section-title">{copy.heading}</h2>
         <p>{copy.loading}</p>
+        <p className="spatial-actions"><a className="spatial-text-link" href={profileUrl} target="_blank" rel="noreferrer">{copy.profileAction}</a></p>
       </div>
     </section>
   );

@@ -16,7 +16,13 @@
     "hero": {
       "contactAction": "Start a conversation",
       "resumeAction": "View resume",
-      "modelDescription": "A model of the skills, projects, and roles listed on this page, connected by the technologies they share."
+      "modelDescription": "Skills connected to real projects and experience.",
+      "stats": {
+        "experience": "Years of experience",
+        "roles": "Professional roles",
+        "projects": "Projects"
+      },
+      "stackLabel": "Built with"
     },
     "about": {
       "heading": "About",
@@ -30,7 +36,7 @@
     "skills": {
       "heading": "Skills",
       "intro": "Choose a technology to see the projects and roles where it was used.",
-      "selectPrompt": "Nothing selected yet.",
+      "selectPrompt": "Engineering in practice",
       "noMatches": "No listed project or role uses this yet.",
       "clearSelection": "Clear selection",
       "unmatchedGroup": "Also used in projects",
@@ -39,11 +45,16 @@
       "usedIn": "Where {name} was used"
     },
     "projects": {
-      "heading": "Projects",
-      "intro": "Selected systems, with the problem each one solved.",
+      "heading": "Selected projects.",
+      "intro": "A closer look at the systems, interfaces and problems behind the work.",
       "viewProject": "Visit project",
       "viewSource": "View source",
-      "exploreAll": "See all {count} projects"
+      "exploreAll": "See all {count} projects",
+      "eyebrow": "The work",
+      "viewDetail": "View project",
+      "missingProblem": "[TODO: project problem]",
+      "missingApproach": "[TODO: project approach]",
+      "missingOutcome": "[TODO: project outcome]"
     },
     "education": {
       "heading": "Education",
@@ -54,7 +65,7 @@
       "empty": "No articles published yet.",
       "unavailable": "Articles can't be loaded right now. Try again later.",
       "profileAction": "Read more on dev.to",
-      "loading": "Loading articles.",
+      "loading": "Explore articles on engineering practice.",
       "loadingLabel": "Writing"
     },
     "resume": {
@@ -64,7 +75,10 @@
     "contact": {
       "basedIn": "Based in",
       "emailLabel": "Email",
-      "socialLabel": "Elsewhere"
+      "socialLabel": "Elsewhere",
+      "copyEmail": "Copy email",
+      "copied": "Email copied.",
+      "copyFailed": "Copy unavailable. Use the email link above."
     }
   },
   "project": {

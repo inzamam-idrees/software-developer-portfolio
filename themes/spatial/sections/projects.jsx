@@ -1,33 +1,23 @@
 import Link from "next/link";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import ProjectFocus from "../client/project-focus";
+import AccentText from "./accent-text";
 import ProjectEntry from "./project-entry";
 
 export default function Projects({ view }) {
   const { copy } = view;
   const home = copy.home.projects;
   return (
-    <section className="spatial-section" id="projects" aria-labelledby="spatial-projects-title">
+    <section className="spatial-section spatial-projects-section" id="projects" aria-labelledby="spatial-projects-title">
       <div className="spatial-frame">
-        <div className="spatial-section-head">
-          <h2 id="spatial-projects-title" className="spatial-section-title">
-            {home.heading}
-          </h2>
+        <div className="spatial-section-head spatial-projects-heading">
+          <div><p className="spatial-eyebrow">{home.eyebrow}</p><h2 id="spatial-projects-title" className="spatial-section-title"><AccentText>{home.heading}</AccentText></h2></div>
           <p>{home.intro}</p>
         </div>
-        <div className="spatial-side-layout">
-          <ProjectFocus className="spatial-project-list">
-            {view.featuredProjects.map((project) => (
-              <ProjectEntry key={project.id} project={project} copy={copy} />
-            ))}
-          </ProjectFocus>
-          <div className="spatial-side-column" aria-hidden="true">
-            <div className="spatial-slot spatial-slot-side" data-spatial-slot="projects" />
-          </div>
-        </div>
-        <Link className="spatial-button" href="/project">
-          {formatCopy(home.exploreAll, { count: view.projects.length })}
-        </Link>
+        <ProjectFocus className="spatial-project-list">
+          {view.featuredProjects.map((project, index) => <ProjectEntry key={project.id} project={project} copy={copy} featureIndex={index} />)}
+        </ProjectFocus>
+        <div className="spatial-projects-end"><Link className="spatial-button is-secondary" href="/project">{formatCopy(home.exploreAll, { count: view.projects.length })}<span aria-hidden="true">↗</span></Link></div>
       </div>
     </section>
   );

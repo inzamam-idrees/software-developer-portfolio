@@ -1,3 +1,4 @@
+import ModelPlan from "./model-plan";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 
 export default function Experience({ view }) {
@@ -11,7 +12,7 @@ export default function Experience({ view }) {
         <div className="spatial-side-layout">
           <ol className="spatial-timeline">
             {view.experience.map((role) => (
-              <li key={role.id} className="spatial-role" data-role-id={`role:${role.id}`}>
+              <li key={role.id} className="spatial-role" id={`career-${role.id}`} data-role-id={`role:${role.id}`}>
                 <div className="spatial-role-meta">
                   <p className="spatial-role-period">{role.period}</p>
                   <p>{role.location}</p>
@@ -41,8 +42,9 @@ export default function Experience({ view }) {
               </li>
             ))}
           </ol>
-          <div className="spatial-side-column" aria-hidden="true">
-            <div className="spatial-slot spatial-slot-side" data-spatial-slot="experience" />
+          <div className="spatial-side-column">
+            <div className="spatial-slot spatial-slot-side" data-spatial-slot="experience" aria-hidden="true"><ModelPlan graph={view.graph} label={view.copy.home.hero.modelDescription} /></div>
+            <nav aria-label={copy.heading}><ul className="spatial-blueprint-index">{view.experience.map((item) => <li key={item.id}><a href={`#career-${item.id}`}>{item.company}<span>{item.role}</span></a></li>)}</ul></nav>
           </div>
         </div>
       </div>

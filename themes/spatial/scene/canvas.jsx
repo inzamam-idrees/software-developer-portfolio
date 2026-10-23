@@ -42,6 +42,8 @@ function SlotRenderer({ registry, animate }) {
     const { gl, size } = state;
     gl.autoClear = false;
     gl.setScissorTest(false);
+    // The fixed canvas overlays HTML: clear to transparent even between slots.
+    gl.setClearColor(0x000000, 0);
     gl.clear(true, true, true);
     gl.setScissorTest(true);
     let visible = false;

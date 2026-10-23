@@ -20,6 +20,7 @@ export default function ModelPlan({ graph, label }) {
           );
         })}
       </g>
+      <g className="spatial-plan-labels">{graph.nodes.filter((node) => node.kind === "category").map((node) => { const [x, y] = points.get(node.id); return <text key={node.id} x={x} y={y - 0.5} textAnchor="middle">{node.label}</text>; })}</g>
       {graph.nodes.map((node) => {
         const [x, y] = points.get(node.id);
         if (node.kind === "category") {

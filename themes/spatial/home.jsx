@@ -28,7 +28,7 @@ export default function SpatialHome({ portfolio }) {
         <Certificates items={view.certificates} copy={view.copy.contentSections.certificates} theme="spatial" />
       </div>
       {features.articles && (
-        <Suspense fallback={<WritingFallback copy={view.copy.home.writing} />}>
+        <Suspense fallback={<WritingFallback copy={view.copy.home.writing} profileUrl={view.social.dev} />}>
           <Writing view={view} />
         </Suspense>
       )}

@@ -73,7 +73,7 @@ export default function SpatialStage({ graph, featured, roles, features }) {
 
   useEffect(() => {
     if (tier === null) return undefined;
-    if (tier === "none") {
+    if (tier === "none" || tier === "reduced") {
       setStatus("fallback");
       return undefined;
     }
@@ -129,7 +129,7 @@ export default function SpatialStage({ graph, featured, roles, features }) {
       data-focused-project={selection.focusedProjectId ?? ""}
       data-active-role={activeRole ?? ""}
     >
-      {requested && tier !== "none" && tier !== null && (
+      {requested && tier === "full" && (
         <SceneBoundary onUnavailable={onUnavailable}>
           <SpatialCanvas
             graph={graph}

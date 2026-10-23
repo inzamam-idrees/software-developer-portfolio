@@ -1,3 +1,4 @@
+import CopyEmail from "../client/copy-email";
 import ContactForm from "@/app/components/homepage/contact/contact-form";
 
 export default function Contact({ view }) {
@@ -19,6 +20,7 @@ export default function Contact({ view }) {
               <dt>{home.emailLabel}</dt>
               <dd>
                 <a href={`mailto:${contact.email}`}>{contact.email}</a>
+                <CopyEmail email={contact.email} copy={home} />
               </dd>
             </div>
             <div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import { projectPath } from "@/lib/portfolio/projects.mjs";
+import ProjectVisual from "./project-visual";
 import { projectDetailSections } from "../presentation.mjs";
 
 export default function ProjectEntry({
@@ -9,15 +10,18 @@ export default function ProjectEntry({
   headingLevel = 3,
   detailed = false,
   standalone = false,
+  featureIndex = null,
 }) {
   const Heading = `h${headingLevel}`;
   const editorial = [
-    [copy.project.problem, project.problem],
-    [copy.project.solution, project.solution],
-    [copy.project.outcome, project.outcome],
+    [copy.project.problem, project.problem || (featureIndex !== null ? copy.home.projects.missingProblem : null)],
+    [copy.project.solution, project.solution || (featureIndex !== null ? copy.home.projects.missingApproach : null)],
+    [copy.project.outcome, project.outcome || (featureIndex !== null ? copy.home.projects.missingOutcome : null)],
   ].filter(([, value]) => value);
   return (
-    <article className="spatial-project" id={`project-${project.id}`} data-project-id={`project:${project.id}`}>
+    <article className={`spatial-project ${featureIndex !== null ? "spatial-project-feature" : ""}`} data-feature-index={featureIndex} id={`project-${project.id}`} data-project-id={`project:${project.id}`}>
+      {featureIndex !== null && <div className="spatial-project-visual"><ProjectVisual project={project} /><span className="spatial-project-number" aria-hidden="true">{String(featureIndex + 1).padStart(2, "0")}</span></div>}
+      <div className="spatial-project-main">
       <div className="spatial-project-head">
         {project.category && <p className="spatial-project-category">{project.category}</p>}
         <Heading>
@@ -32,6 +36,8 @@ export default function ProjectEntry({
           <p>{project.longDescription}</p>
         </div>
       )}
+      {featureIndex !== null && <Link className="spatial-feature-link" href={projectPath(project)}>{copy.home.projects.viewDetail}<span aria-hidden="true">↗</span></Link>}
+      </div>
       {editorial.length > 0 && (
         <dl className="spatial-project-story">
           {editorial.map(([term, value]) => (

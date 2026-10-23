@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "title": "SPA - Angular Web Application",
+    "issuer": "Coursera",
+    "description": "Single page web application development using Angular framework.",
+    "competencies": ["Angular", "TypeScript", "RxJS", "NgRx"],
+    "status": "completed",
+    "issuedDate": "2023-05-15",
+    "credentialUrl": "https://www.coursera.org/account/accomplishments/certificate/XYZ123",
+    "credentialId": "XYZ123",
+    "image": null
+  },
+  {
+    "id": "2",
+    "title": "Python for Data Science",
+    "issuer": "IBM",
+    "description": null,
+    "competencies": [],
+    "status": "verified",
+    "issuedDate": null,
+    "credentialUrl": null,
+    "credentialId": null,
+    "image": null
+  },
+  {
+    "id": "3",
+    "title": "AI Engineer",
+    "issuer": "Google",
+    "description": null,
+    "competencies": [],
+    "status": "in-progress",
+    "issuedDate": null,
+    "credentialUrl": null,
+    "credentialId": null,
+    "image": null
+  }
+]

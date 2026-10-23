@@ -1,0 +1,359 @@
+[
+  {
+    "id": 1,
+    "slug": "mis-nexis",
+    "title": "MIS / Nexis Project",
+    "shortDescription": "The MIS Inventory Management System streamlines IT asset tracking and management through detailed logs, automated tagging, and integration with Next HRM via LDAP.",
+    "longDescription": "The MIS Inventory Management System streamlines IT asset tracking and management through detailed logs, automated tagging, and integration with Next HRM via LDAP. It distinguishes between stock and inventory, offering real-time insights and role-based access for efficient hardware lifecycle management. This system simplifies inventory audits, allocations, and repair tracking.",
+    "technologies": [
+      "Angular",
+      "PrimeNG",
+      "Bootstrap",
+      "Material",
+      "TailwindCSS",
+      "SCSS",
+      "Theming",
+      ".NET Framework"
+    ],
+    "category": "Enterprise systems",
+    "role": "Team Lead / Senior Software Engineer",
+    "date": null,
+    "links": {
+      "demo": "https://nexis.vteamslabs.com"
+    },
+    "image": null,
+    "featured": true,
+    "featuredOrder": 2,
+    "order": 1,
+    "problem": "IT assets need a clear history, from allocation to repair.",
+    "solution": "A role-based inventory platform with automated tagging, detailed logs, and LDAP integration with Next HRM.",
+    "outcome": "A connected view of stock, inventory, allocations, and the hardware lifecycle.",
+    "features": [
+      "Visual, real-time dashboard displaying key metrics",
+      "Local network scanning to collect hardware and software details",
+      "Role-based access control with user authentication",
+      "Comprehensive logging of system actions, asset changes, and user activities",
+      "Real-time tracking of IT assets with detailed specifications",
+      "Customizable and pre-built reports on asset usage, audits, and inventory with CSV, PDF, and Excel export"
+    ],
+    "responsibilities": [
+      "Led frontend Angular development as team lead"
+    ]
+  },
+  {
+    "id": 2,
+    "slug": "pos-online-ordering",
+    "title": "POS Online Ordering",
+    "shortDescription": "Online Ordering is a product where customers can build their own website and app for your restaurant. It is built in Angular frontend with Admin Panel.",
+    "longDescription": "Online Ordering is a product that allows customers to build a website and app for their restaurant. It is built with an Angular frontend and an admin panel.",
+    "technologies": [
+      "Angular",
+      "Third parties integration",
+      "Google Maps",
+      "TypeScript"
+    ],
+    "category": null,
+    "role": "Angular Developer",
+    "date": null,
+    "links": {},
+    "image": null,
+    "featured": false,
+    "featuredOrder": null,
+    "order": 2,
+    "features": [
+      "Cashier-free ordering",
+      "Cost-effective payment processing",
+      "Easy menu management",
+      "Cloud-based real-time reporting and analytics"
+    ],
+    "responsibilities": [
+      "Built website UI updates as a frontend Angular developer",
+      "Built item modifiers and nested modifiers",
+      "Built model features in the shared module",
+      "Built the accessibility statement page",
+      "Built skeleton loaders"
+    ]
+  },
+  {
+    "id": 3,
+    "slug": "getworker",
+    "title": "GetWorker",
+    "shortDescription": "GetWorker is a website that is similar to freelancer.com in which one user can post a task and others can apply for this task and the tasker can hire one or more bidders to complete the posted task. This is API based project, the API was built in Laravel 6 and, the application was built in Angular 8 and also made a hybrid app in IONIC (using Angular).",
+    "longDescription": "GetWorker is a website similar to freelancer.com, where one user can post a task, others can apply for it, and the tasker can hire one or more bidders to complete the posted task. It is an API-based project: the API was built in Laravel 6, the application in Angular 8, and a hybrid app in Ionic (using Angular).",
+    "technologies": [
+      "Angular",
+      "Laravel",
+      "MySQL",
+      "XAMPP",
+      "IONIC",
+      "TypeScript",
+      "Firebase"
+    ],
+    "category": null,
+    "role": "Full Stack Developer",
+    "date": null,
+    "links": {},
+    "image": null,
+    "featured": false,
+    "featuredOrder": null,
+    "order": 3,
+    "features": [
+      "Users, roles, and permissions",
+      "Chat",
+      "Runtime notifications using Pusher",
+      "Free task posting",
+      "Bid application viewing",
+      "Payments",
+      "Ionic app"
+    ],
+    "responsibilities": [
+      "Developed the project from start to end, including the backend API and the Angular frontend"
+    ]
+  },
+  {
+    "id": 4,
+    "slug": "remmi-crm",
+    "title": "Remmi CRM",
+    "shortDescription": "Remmi CRM is a product that is built for a client. It is a customer relationship and task management software built for a real estate company that helps you improve business performance.",
+    "longDescription": "Remmi CRM is a product that is built for a client. It is a customer relationship and task management software built for a real estate company that helps you improve business performance. Build valuable relationships with clients and manage properties, projects/apartments, leads, leads management, contacts, staff, developers, and tasks.",
+    "technologies": [
+      "Node.js (Express)",
+      "Angular",
+      "Typescript",
+      "MongoDB",
+      "PrimeNG",
+      "S3 Bucket",
+      "AWS",
+      "Socket.io"
+    ],
+    "category": "Business applications",
+    "role": "MEAN Stack Developer",
+    "date": null,
+    "links": {
+      "demo": "https://portal.remmi.com.au"
+    },
+    "image": null,
+    "featured": true,
+    "featuredOrder": 4,
+    "order": 4,
+    "problem": "A real estate team needs to connect properties, relationships, and daily tasks.",
+    "solution": "A CRM spanning properties, projects, leads, contacts, staff, and task management.",
+    "outcome": "A unified application for managing client relationships and property workflows.",
+    "features": [
+      "Users, roles, and permissions",
+      "Parser for external leads",
+      "Runtime notifications",
+      "Notice board for all companies",
+      "Customizable table views",
+      "Customizable dashboard view",
+      "Reporting",
+      "Dynamic forms manager",
+      "Custom email templates",
+      "Library for images and files"
+    ],
+    "responsibilities": [
+      "Developed module APIs in Node.js and modules in Angular as a team member",
+      "Worked on email templates, cron jobs, user roles and permissions, the notice board, notifications, emails, and the library"
+    ]
+  },
+  {
+    "id": 5,
+    "slug": "group-captain",
+    "title": "Group Captain Project",
+    "shortDescription": "A platform that provides document management, project management, and a Kanban board for tracking project tasks and activities.",
+    "longDescription": "A platform that provides document management, project management, and a Kanban board for tracking project tasks and activities. It also includes a comprehensive admin panel for managing users, roles, permissions, apps, organizations, talent, and website settings. Admins can manage users, assign roles, and view projects and tasks.",
+    "technologies": [
+      "React",
+      "NestJS",
+      "Typescript",
+      "MongoDB",
+      "Bootstrap",
+      "Redux"
+    ],
+    "category": "Collaboration platforms",
+    "role": "MERN / Full Stack Developer",
+    "date": null,
+    "links": {
+      "demo": "https://groupcaptain.com"
+    },
+    "image": null,
+    "featured": true,
+    "featuredOrder": 3,
+    "order": 5,
+    "problem": "Documents, project work, and organizational access need one shared workspace.",
+    "solution": "Document and project management, a Kanban board, and an admin panel for organizations, roles, and permissions.",
+    "outcome": "A workspace for managing project activity and controlling organizational access.",
+    "features": [
+      "Tasks with activity tracking and comments",
+      "Attachment module",
+      "Real-time chat",
+      "Workspace module",
+      "Kanban project module",
+      "Talent module"
+    ],
+    "responsibilities": [
+      "Developed the Talent, Kanban Board, and Task modules as a team member"
+    ]
+  },
+  {
+    "id": 6,
+    "slug": "xfinity-classified-ad-system",
+    "title": "XfinityClassified Ad System",
+    "shortDescription": "XfinityClassified is a classified Ad Web application for code Canyon. A modulable classified app having a fully responsive bootstrap design. It is built in Angular 7 fronted & Laravel 5.7 with Admin Panel. It is developed from scratch to the end.",
+    "longDescription": "XfinityClassified is a classified ads web application for CodeCanyon: a modular classified app with a fully responsive Bootstrap design. It is built with an Angular 7 frontend and Laravel 5.7 with an admin panel, developed from scratch to the end.",
+    "technologies": [
+      "Angular",
+      "Typescript",
+      "Laravel",
+      "Bootstrap",
+      "XAMPP",
+      "MySQL",
+      "Google Maps",
+      "Google Recaptcha",
+      "Phone Verification",
+      "PayPal",
+      "Stripe",
+      "Social Login",
+      "Plans/Packages"
+    ],
+    "category": null,
+    "role": "Software Engineer",
+    "date": null,
+    "links": {},
+    "image": null,
+    "featured": false,
+    "featuredOrder": null,
+    "order": 6,
+    "features": [
+      "Custom fields",
+      "Multiple language support",
+      "Homepage customization",
+      "Users, roles, and permissions",
+      "PayPal and Stripe integration",
+      "Google Maps API",
+      "Social network login (Facebook, Google)",
+      "Dynamic pages",
+      "Plans and packages for premium ads",
+      "Phone number verification using Firebase"
+    ],
+    "responsibilities": [
+      "Developed the web app from scratch to end, including the backend admin panel and the Angular frontend"
+    ]
+  },
+  {
+    "id": 7,
+    "slug": "smart-destination",
+    "title": "Smart Destination Project",
+    "shortDescription": "A platform that can help to sell tours and activities for travelers on the island through an e-commerce web page. Travelers can see the accommodation choices on the website, however, to book them the site will direct them to the hotel’s booking page.",
+    "longDescription": "A platform that helps sell tours and activities to travelers on the island through an e-commerce web page. Travelers can see accommodation choices on the website; to book them, the site directs them to the hotel's booking page.",
+    "technologies": [
+      "Angular",
+      "Typescript",
+      "Vue.js",
+      "Bootstrap",
+      "Core PHP",
+      "MySQL",
+      "Google Maps",
+      "CodeIgniter",
+      "jQuery",
+      "Ajax",
+      "Curl",
+      "XAMPP"
+    ],
+    "category": null,
+    "role": "Software Engineer",
+    "date": null,
+    "links": {},
+    "image": null,
+    "featured": false,
+    "featuredOrder": null,
+    "order": 7,
+    "features": [
+      "Digital itineraries",
+      "Destination information",
+      "Instant confirmation",
+      "Online payment"
+    ],
+    "responsibilities": [
+      "Developed Angular pages including the digital itinerary, tour detail page, event booking, and guider help as a team member",
+      "Developed APIs in CodeIgniter",
+      "Fixed payment gateway bugs and added new functionality"
+    ]
+  },
+  {
+    "id": 8,
+    "slug": "research-support-web-tool",
+    "title": "Research Support Web Tool (RSWT)",
+    "shortDescription": "Research support web tool (RSWT) is a search engine built in Angular for researchers with web scraping techniques using PHP to extract data from different digital libraries. We use semantic search queries in RSWT. Scraping website includes ACM digital library, science direct, Eric, etc.",
+    "longDescription": "Research support web tool (RSWT) is a search engine built in Angular for researchers, using PHP web scraping techniques to extract data from digital libraries such as the ACM Digital Library, ScienceDirect, and ERIC. RSWT uses semantic search queries.",
+    "technologies": [
+      "Laravel",
+      "Bootstrap",
+      "MySQL",
+      "jQuery",
+      "XAMPP"
+    ],
+    "category": null,
+    "role": "Laravel Developer",
+    "date": null,
+    "links": {},
+    "image": null,
+    "featured": false,
+    "featuredOrder": null,
+    "order": 8,
+    "features": [
+      "Search engine",
+      "Simple and advanced search",
+      "Web scraping",
+      "Add to favorites",
+      "Paper download"
+    ],
+    "responsibilities": [
+      "Developed the whole web app from start to end in Angular and Laravel"
+    ]
+  },
+  {
+    "id": 9,
+    "slug": "smartcommerce-e-commerce-widgets",
+    "title": "SmartCommerce – E-Commerce Widgets",
+    "shortDescription": "SmartCommerce provides lightweight JavaScript widgets that enhance e-commerce experiences on brand websites, including Click2Cart, SmartButton, SmartLink, Carousel, and Product Locator.",
+    "longDescription": "SmartCommerce provides lightweight JavaScript widgets that enhance e-commerce experiences on brand websites, including Click2Cart, SmartButton, SmartLink, Carousel, and Product Locator. The widgets are built with Vanilla JavaScript and CSS and customized for different brands.",
+    "technologies": [
+      "Vanilla JavaScript",
+      "HTML5",
+      "CSS3",
+      "SCSS",
+      "DOM Manipulation",
+      "MutationObserver",
+      "Responsive Design",
+      "Accessibility",
+      "Git",
+      "AWS CodeCommit",
+      "CI/CD Pipeline"
+    ],
+    "category": null,
+    "role": "Frontend / JavaScript Engineer",
+    "date": null,
+    "links": {},
+    "image": null,
+    "featured": true,
+    "featuredOrder": 1,
+    "order": 9,
+    "features": [
+      "Click2Cart and retailer purchasing integration",
+      "SmartButton and SmartLink shopping experiences",
+      "Product and retailer Carousel widgets",
+      "Product Locator for finding nearby retailers",
+      "Responsive and cross-browser widget support",
+      "Brand-specific CSS, JavaScript, fonts, and configurations"
+    ],
+    "responsibilities": [
+      "Developed and customized Vanilla JS widgets for client websites",
+      "Managed brand-specific CSS, JS, fonts, and configurations",
+      "Investigated frontend issues, identified root causes, and implemented JavaScript/CSS fixes",
+      "Troubleshot production issues and cross-browser compatibility",
+      "Implemented dynamic UI behavior using DOM manipulation and MutationObserver",
+      "Supported client demos and production deployments"
+    ]
+  }
+]

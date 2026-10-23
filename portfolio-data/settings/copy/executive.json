@@ -1,0 +1,76 @@
+{
+  "actions": {
+    "startConversation": "Start a conversation"
+  },
+  "navigation": {
+    "allProjects": "All projects",
+    "writing": "Writing"
+  },
+  "footer": {
+    "projects": "Projects",
+    "writing": "Writing",
+    "email": "Email"
+  },
+  "home": {
+    "overviewLabel": "Professional overview",
+    "brief": {
+      "experience": "Experience",
+      "focus": "Focus",
+      "coreStack": "Core stack",
+      "basedIn": "Based in"
+    },
+    "selectedWork": {
+      "kicker": "Selected work",
+      "heading": "Systems built for real operations.",
+      "exploreAll": "Explore all projects"
+    },
+    "about": {
+      "kicker": "About"
+    },
+    "expertise": {
+      "kicker": "Technical expertise",
+      "heading": "A full-stack practice, organized by outcome."
+    },
+    "experience": {
+      "kicker": "Professional experience",
+      "heading": "Progression through product engineering."
+    },
+    "education": {
+      "kicker": "Education",
+      "heading": "Foundations in software engineering."
+    },
+    "awards": {
+      "kicker": "Recognition",
+      "heading": "Awards & honors."
+    },
+    "contact": {
+      "kicker": "Contact"
+    }
+  },
+  "project": {
+    "challenge": "Challenge",
+    "approach": "Approach",
+    "outcome": "Outcome",
+    "features": "Key features",
+    "responsibilities": "My role",
+    "viewProject": "View project",
+    "viewSource": "source"
+  },
+  "projects": {
+    "kicker": "Project archive · {count} builds",
+    "heading": "Engineering work, in context.",
+    "intro": "Selected product, platform, and business-application work across frontend and backend systems.",
+    "ctaKicker": "Have a project in mind?"
+  },
+  "blog": {
+    "kicker": "Writing",
+    "heading": "Notes on building software.",
+    "intro": "Articles and practical observations from product engineering work.",
+    "emptyKicker": "Notebook update",
+    "empty": "No published articles yet.",
+    "unavailable": "Articles are temporarily unavailable.",
+    "emptyBody": "My DEV profile remains available for the latest writing.",
+    "profileAction": "Visit DEV Community",
+    "readingTime": "{minutes} min read"
+  }
+}

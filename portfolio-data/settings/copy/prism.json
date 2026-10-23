@@ -1,0 +1,145 @@
+{
+  "navigation": {
+    "items": {
+      "about": "About",
+      "skills": "Skills",
+      "projects": "Projects",
+      "experience": "Experience",
+      "certificates": "Certificates",
+      "writing": "Writing",
+      "resume": "Resume",
+      "contact": "Contact"
+    },
+    "drawer": "Navigation menu",
+    "themeToggle": "Toggle color theme"
+  },
+  "motion": {
+    "pause": "Pause motion",
+    "enable": "Enable motion",
+    "reduced": "Reduced motion"
+  },
+  "footer": {
+    "source": "Source",
+    "backToTop": "Back to top",
+    "navigation": "Navigation Map"
+  },
+  "home": {
+    "hero": {
+      "greeting": "Hello, world! I am",
+      "specialized": "Specialized in",
+      "projects": "View Projects",
+      "contact": "Contact Me",
+      "connect": "Connect",
+      "scroll": "Scroll Down",
+      "portraitAlt": "{name}"
+    },
+    "about": {
+      "label": "Engineering Philosophy",
+      "heading": "Thoughtful interfaces. Dependable systems.",
+      "summary": "Professional Summary",
+      "philosophy": "Engineering mindset",
+      "focus": "Core focus"
+    },
+    "skills": {
+      "label": "Technical Capabilities",
+      "heading": "Skills, Tools & Technologies",
+      "intro": "Explore the tools behind my work.",
+      "all": "All Skills",
+      "marquee": "Technology toolkit",
+      "additional": "More tools",
+      "proficiency": "• {level}/5"
+    },
+    "projects": {
+      "label": "Engineered Systems",
+      "heading": "Featured Projects",
+      "all": "All Projects",
+      "empty": "Projects will appear here when available."
+    },
+    "experience": {
+      "label": "Career Journey",
+      "heading": "Professional Experience",
+      "present": "Present"
+    },
+    "education": {
+      "label": "Formal Education",
+      "heading": "Education",
+      "awards": "Awards"
+    },
+    "certificates": {
+      "label": "Professional Development",
+      "heading": "Professional Certificates",
+      "placeholder": "Placeholder entries — real certificate details have not been provided.",
+      "credential": "View certificate",
+      "credentialId": "Credential ID",
+      "competencies": "Competencies",
+      "statuses": {
+        "in-progress": "In progress",
+        "completed": "Completed",
+        "verified": "Verified"
+      }
+    },
+    "writing": {
+      "label": "Ideas & Insights",
+      "heading": "Latest Writing",
+      "all": "All Articles",
+      "empty": "No articles published yet.",
+      "unavailable": "Articles are temporarily unavailable.",
+      "profile": "Visit writing profile"
+    },
+    "resume": {
+      "label": "Curriculum Vitae",
+      "heading": "Professional Resume",
+      "intro": "Explore my experience, projects and technical background.",
+      "open": "Open Resume",
+      "viewer": "PDF Document Viewer",
+      "previewFallback": "If the preview is unavailable, use Open Resume to view the document on Google Drive."
+    },
+    "contact": {
+      "label": "Direct Outreach",
+      "channels": "Instant Channels",
+      "email": "Email",
+      "phone": "Phone",
+      "location": "Location",
+      "message": "Send a Message",
+      "copy": "Copy {label}",
+      "copied": "Copied {label}",
+      "failed": "Unable to copy. Use the link instead.",
+      "channelHint": "Click a channel to connect, or copy its address.",
+      "delivery": "Direct delivery to {email}"
+    }
+  },
+  "project": {
+    "previous": "Previous project",
+    "next": "Next project",
+    "preview": "Quick preview",
+    "close": "Close preview",
+    "details": "View full project",
+    "source": "View Source",
+    "visit": "Visit Project",
+    "features": "Features",
+    "responsibilities": "Responsibilities",
+    "problem": "Challenge",
+    "solution": "Approach",
+    "outcome": "Outcome",
+    "role": "Role",
+    "stack": "Technologies",
+    "position": "Project {current} of {total}",
+    "cursor": "View"
+  },
+  "projects": {
+    "label": "Project Archive",
+    "heading": "Selected work & engineering",
+    "intro": "Explore the projects, systems and interfaces I have built."
+  },
+  "blog": {
+    "label": "Notes & Perspectives",
+    "heading": "Writing",
+    "intro": "Ideas from building software.",
+    "readingTime": "{minutes} min read"
+  },
+  "contactForm": {
+    "namePlaceholder": "Your full name",
+    "emailPlaceholder": "Your email address",
+    "messagePlaceholder": "Tell me about your project, team or opportunity."
+  }
+}

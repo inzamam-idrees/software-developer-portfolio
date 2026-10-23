@@ -1,41 +1,26 @@
-// @flow strict
-import Link from 'next/link';
-import { CgGitFork } from "react-icons/cg";
-import { IoStar } from "react-icons/io5";
-
-function Footer() {
+import Link from "next/link";
+export default function Footer({ profile, site, copy }) {
+  const footer = copy.footer;
   return (
-    <div className="relative border-t bg-[#0d1224] border-[#353951] text-white">
-      <div className="mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem] py-6 lg:py-10">
-        <div className="flex justify-center -z-40">
-          <div className="absolute top-0 h-[1px] w-1/2  bg-gradient-to-r from-transparent via-violet-500 to-transparent"></div>
-        </div>
-        <div className="flex flex-col md:flex-row items-center justify-between">
-          <p className="text-sm">
-            © Software Developer Portfolio by <Link target="_blank" href="https://www.linkedin.com/in/inzamam-idrees/" className="text-[#16f2b3]">Inzamam Idrees</Link>
-          </p>
-          <div className="flex items-center gap-5">
-            <Link
-              target="_blank"
-              href="https://github.com/inzamam-idrees/software-developer-portfolio"
-              className="flex items-center gap-2 uppercase hover:text-[#16f2b3]"
-            >
-              <IoStar />
-              <span>Star</span>
-            </Link>
-            <Link
-              target="_blank"
-              href="https://github.com/inzamam-idrees/software-developer-portfolio/fork"
-              className="flex items-center gap-2 uppercase hover:text-[#16f2b3]"
-            >
-              <CgGitFork />
-              <span>Fork</span>
-            </Link>
-          </div>
-        </div>
+    <footer className="site-footer">
+      <div className="container footer-inner">
+        <p>
+          © {new Date().getFullYear()} {profile.name}{" "}
+          <span className="muted">{footer.tagline}</span>
+        </p>
+        <nav aria-label={copy.navigation.footer}>
+          <Link href="/#education">{footer.education}</Link>
+          <Link href="/blog">{footer.writing}</Link>
+          <a
+            href={site.repositoryUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {footer.source}
+          </a>
+          <Link href="/#hero">{footer.backToTop}</Link>
+        </nav>
       </div>
-    </div >
+    </footer>
   );
-};
-
-export default Footer;
+}

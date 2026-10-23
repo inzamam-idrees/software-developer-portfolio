@@ -1,0 +1,120 @@
+:root {
+  --background: #0b0e11;
+  --surface: #14191e;
+  --elevated: #1b2229;
+  --text: #f4f1eb;
+  --muted: #aeb8c1;
+  --accent: #91e5c1;
+  --border: #606d78;
+  --rule: #29323a;
+  --radius: 8px;
+  --ease: cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+// ── Shared primitives ──
+// Tokens and primitives shared by the Cinematic theme and the shared contact form
+// (app/components/homepage/contact/contact-form.jsx), which Executive and Spatial
+// also render. Compiled into each of those theme sheets; see
+// lib/themes/stylesheet-sources.mjs.
+.muted {
+  color: var(--muted);
+}
+.eyebrow {
+  font:
+    11px/1.6 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  min-height: 48px;
+  padding: 14px 20px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  transition:
+    background 200ms,
+    color 200ms,
+    transform 200ms;
+}
+.button svg {
+  font-size: 18px;
+}
+.primary {
+  background: var(--accent);
+  color: var(--background);
+  border-color: var(--accent);
+}
+.primary:hover {
+  background: #bcf5dd;
+  transform: translateY(-2px);
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.form-field {
+  margin-bottom: 24px;
+}
+.form-field label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 14px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  resize: vertical;
+}
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--accent);
+}
+.form-submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.form-submit button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.field-error {
+  font-size: 13px;
+  margin-top: 8px;
+  color: #ffb4a5;
+}
+.form-status {
+  min-height: 48px;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 20px;
+  color: var(--accent);
+}
+@media (max-width: 767px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .form-submit {
+    align-items: start;
+    flex-direction: column;
+    gap: 16px;
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "navigation": {
+    "skipToContent": "Skip to content",
+    "main": "Main navigation",
+    "mobile": "Mobile navigation",
+    "footer": "Footer navigation",
+    "homeLink": "{name} home",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuToggleOpen": "Menu +",
+    "menuToggleClose": "Close −"
+  },
+  "socialLabels": {
+    "github": "GitHub",
+    "linkedIn": "LinkedIn",
+    "x": "X",
+    "stackOverflow": "Stack Overflow",
+    "leetcode": "LeetCode",
+    "facebook": "Facebook",
+    "dev": "DEV Community"
+  },
+  "contactForm": {
+    "label": "Contact form",
+    "name": "Your name",
+    "email": "Email address",
+    "message": "What are you building?",
+    "send": "Send message",
+    "sending": "Sending…",
+    "sent": "Message sent. Thank you for reaching out.",
+    "failed": "Could not send your message. Please try again or email me directly.",
+    "note": "A CONVERSATION STARTS HERE."
+  },
+  "articles": {
+    "readArticle": "Read {title}"
+  },
+  "projects": {
+    "technologiesLabel": "{title} technologies"
+  },
+  "projectDetail": {
+    "backToProjects": "All projects",
+    "overview": "Overview"
+  },
+  "notFound": {
+    "eyebrow": "404 / END OF PATH",
+    "heading": "Nothing here.",
+    "body": "Let’s get you back to the work.",
+    "action": "Return home ↗"
+  },
+  "routes": {
+    "projectsTitle": "Software Projects | {siteName}",
+    "blogTitle": "Articles | {siteName}",
+    "projectTitle": "{project} | {siteName}"
+  },
+  "blogLoading": {
+    "eyebrow": "THE NOTEBOOK",
+    "message": "Loading articles…"
+  },
+  "socialImage": {
+    "headlineConnector": "with"
+  },
+  "llms": {
+    "pagesHeading": "Pages",
+    "homePage": "Profile, experience and skills",
+    "projectsHeading": "Projects",
+    "profilesHeading": "Profiles",
+    "contactHeading": "Contact",
+    "emailLabel": "Email"
+  },
+  "contentSections": {
+    "roles": "Professional roles",
+    "skillsAdditional": "Additional technologies",
+    "navigation": {
+      "education": "Education",
+      "awards": "Awards",
+      "certificates": "Certificates",
+      "writing": "Writing",
+      "resume": "Resume"
+    },
+    "certificates": {
+      "heading": "Professional certifications",
+      "description": "Professional development and certifications.",
+      "placeholder": "Some entries are placeholders awaiting confirmed details.",
+      "competencies": "Competencies",
+      "statuses": {
+        "in-progress": "In progress",
+        "completed": "Completed",
+        "verified": "Verified"
+      },
+      "credential": "View certificate",
+      "credentialId": "Credential ID"
+    },
+    "resume": {
+      "heading": "Professional resume",
+      "viewer": "Resume document preview",
+      "open": "Open Resume",
+      "previewFallback": "If the preview is unavailable, use Open Resume to view the original document."
+    },
+    "proficiency": "Level {level}"
+  }
+}

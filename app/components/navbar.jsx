@@ -1,44 +1,138 @@
-// @flow strict
+"use client";
 import Link from "next/link";
+import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-
-function Navbar() {
+export default function Navbar({ profile, links, copy: navigation }) {
+  const [open, setOpen] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [activeSection, setActiveSection] = useState(null);
+  const disclosure = useRef(null);
+  const summary = useRef(null);
+  const pathname = usePathname();
+  const closeMenu = useCallback(() => {
+    if (disclosure.current) disclosure.current.open = false;
+    setOpen(false);
+  }, []);
+  useEffect(() => {
+    setOpen(Boolean(disclosure.current?.open));
+    setReady(true);
+    const media = matchMedia("(min-width: 768px)");
+    const reset = () => {
+      if (disclosure.current) disclosure.current.open = false;
+      setOpen(false);
+    };
+    media.addEventListener("change", reset);
+    return () => media.removeEventListener("change", reset);
+  }, []);
+  useEffect(() => {
+    closeMenu();
+  }, [closeMenu, pathname]);
+  useEffect(() => {
+    if (pathname !== "/") {
+      setActiveSection(null);
+      return undefined;
+    }
+    const sections = links
+      .map(({ id }) => document.getElementById(id))
+      .filter(Boolean);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.find((entry) => entry.isIntersecting);
+        setActiveSection((current) => {
+          if (visible) return visible.target.id;
+          return entries.some(
+            (entry) => entry.target.id === current && !entry.isIntersecting,
+          )
+            ? null
+            : current;
+        });
+      },
+      { rootMargin: "-30% 0px -55% 0px" },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [links, pathname]);
+  const currentSection =
+    pathname === "/project" ? "projects" : activeSection;
+  useEffect(() => {
+    const escape = (e) => {
+      if (e.key === "Escape" && disclosure.current?.open) {
+        disclosure.current.open = false;
+        setOpen(false);
+        summary.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", escape);
+    return () => document.removeEventListener("keydown", escape);
+  }, []);
+  const items = () =>
+    links.map(({ label, id, href }) => (
+      <li key={id}>
+        <Link
+          href={href}
+          onClick={closeMenu}
+          aria-current={
+            currentSection === id
+              ? pathname === "/project"
+                ? "page"
+                : "location"
+              : undefined
+          }
+        >
+          {label}
+          {id === "contact" && <span aria-hidden="true"> ↗</span>}
+        </Link>
+      </li>
+    ));
   return (
-    <nav className="bg-transparent">
-      <div className="flex items-center justify-between py-5">
-        <div className="flex flex-shrink-0 items-center">
-          <Link
-            href="/"
-            className=" text-[#16f2b3] text-3xl font-bold">
-            INZAMAM IDREES
-          </Link>
-        </div>
-
-        <ul className="mt-4 flex h-screen max-h-0 w-full flex-col items-start text-sm opacity-0 md:mt-0 md:h-auto md:max-h-screen md:w-auto md:flex-row md:space-x-1 md:border-0 md:opacity-100" id="navbar-default">
-          <li>
-            <Link className="block px-4 py-2 no-underline outline-none hover:no-underline" href="/#about">
-              <div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">ABOUT</div>
-            </Link>
-          </li>
-          <li>
-            <Link className="block px-4 py-2 no-underline outline-none hover:no-underline" href="/#experience"><div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">EXPERIENCE</div></Link>
-          </li>
-          <li>
-            <Link className="block px-4 py-2 no-underline outline-none hover:no-underline" href="/#skills"><div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">SKILLS</div></Link>
-          </li>
-          <li>
-            <Link className="block px-4 py-2 no-underline outline-none hover:no-underline" href="/#education"><div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">EDUCATION</div></Link>
-          </li>
-          <li>
-            <Link className="block px-4 py-2 no-underline outline-none hover:no-underline" href="/blog"><div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">BLOGS</div></Link>
-          </li>
-          <li>
-            <Link className="block px-4 py-2 no-underline outline-none hover:no-underline" href="/#projects"><div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">PROJECTS</div></Link>
-          </li>
-        </ul>
+    <header className="site-header">
+      <div className="container header-inner">
+        <Link
+          className="wordmark"
+          href="/"
+          aria-label={formatCopy(navigation.homeLink, { name: profile.name })}
+          onClick={closeMenu}
+        >
+          {profile.name.split(" ")[0].toLowerCase()}
+          <span className="accent">.</span>
+          <span className="wordmark-sub">
+            {profile.name.split(" ").slice(1).join(" ")} /{" "}
+            {navigation.wordmarkRole}
+          </span>
+        </Link>
+        <nav aria-label={navigation.main}>
+          <ul className="main-menu desktop-menu">{items()}</ul>
+          <details
+            className="mobile-disclosure"
+            suppressHydrationWarning
+            ref={disclosure}
+            onToggle={(e) => setOpen(e.currentTarget.open)}
+          >
+            <summary
+              ref={summary}
+              className="menu-toggle"
+              role="button"
+              aria-label={
+                ready
+                  ? open
+                    ? navigation.closeMenu
+                    : navigation.openMenu
+                  : navigation.menu
+              }
+              aria-expanded={ready ? open : undefined}
+              aria-controls="main-menu"
+            >
+              {open ? navigation.menuToggleClose : navigation.menuToggleOpen}
+            </summary>
+            <ul id="main-menu" className="main-menu mobile-menu">
+              {items()}
+            </ul>
+          </details>
+        </nav>
+        <div id="motion-slot" />
       </div>
-    </nav>
+    </header>
   );
-};
-
-export default Navbar;
+}

@@ -1,33 +1,27 @@
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Inter } from "next/font/google";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Footer from "./components/footer";
-import ScrollToTop from "./components/helper/scroll-to-top";
-import Navbar from "./components/navbar";
-import "./css/card.scss";
 import "./css/globals.scss";
+import { getCurrentPortfolioView } from "@/lib/portfolio/server.mjs";
+import { pageMetadata } from "@/lib/seo/metadata.mjs";
+
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "Portfolio of Inzamam Idrees - Senior Software Enginner",
-  description:
-    "This is the portfolio of Inzamam Idrees. I am a full stack developer and a self taught developer. I love to learn new things and I am always open to collaborating with others. I am a quick learner and I am always looking for new challenges.",
-};
+export async function generateMetadata() {
+  const { settings } = await getCurrentPortfolioView();
+  return pageMetadata(settings, { path: null });
+}
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const portfolio = await getCurrentPortfolioView();
+  const { settings } = portfolio;
   return (
-    <html lang="en">
+    <html lang={settings.site.locale}>
       <body className={inter.className}>
-        <ToastContainer />
-        <main className="min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem] text-white">
-          <Navbar />
-          {children}
-          <ScrollToTop />
-        </main>
-        <Footer />
+        {children}
+        {/^GTM-[A-Z0-9]+$/.test(process.env.NEXT_PUBLIC_GTM || "") && (
+          <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM} />
+        )}
       </body>
-      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM} />
     </html>
   );
 }

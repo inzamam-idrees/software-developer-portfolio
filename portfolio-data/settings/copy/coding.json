@@ -1,0 +1,94 @@
+{
+  "navigation": {
+    "items": {
+      "about": "ABOUT",
+      "experience": "EXPERIENCE",
+      "skills": "SKILLS",
+      "education": "EDUCATION",
+      "blogs": "BLOGS",
+      "projects": "PROJECTS",
+      "contact": "CONTACT"
+    }
+  },
+  "footer": {
+    "credit": "© Software Developer Portfolio by",
+    "star": "Star",
+    "fork": "Fork"
+  },
+  "home": {
+    "hero": {
+      "greeting": "Hello,",
+      "introPrefix": "I'm",
+      "introMiddle": ", a",
+      "introSuffix": ".",
+      "contactAction": "Contact me",
+      "resumeAction": "Get Resume"
+    },
+    "about": {
+      "rail": "ABOUT ME",
+      "heading": "About me",
+      "readMore": "Read full bio",
+      "readLess": "Show less",
+      "portraitAlt": "Portrait of {name}"
+    },
+    "experience": {
+      "heading": "Experience",
+      "showMore": "Show {count} more",
+      "showLess": "Show less"
+    },
+    "skills": {
+      "heading": "Skills"
+    },
+    "projects": {
+      "heading": "Projects",
+      "viewMore": "View More"
+    },
+    "education": {
+      "heading": "Education",
+      "degreesHeading": "Degrees",
+      "awardsHeading": "Awards"
+    },
+    "blog": {
+      "heading": "Articles",
+      "viewMore": "View More"
+    },
+    "contact": {
+      "rail": "CONTACT"
+    }
+  },
+  "contactForm": {
+    "heading": "Get in touch",
+    "intro": "If you have any questions or concerns, please don't hesitate to contact me. I am open to opportunities that align with my skills and interests.",
+    "name": "Your Name",
+    "email": "Your Email",
+    "message": "Your Message",
+    "send": "Send Message",
+    "sending": "Sending Message..."
+  },
+  "projects": {
+    "heading": "Software Projects",
+    "noDemo": "N/A",
+    "role": "Role",
+    "stack": "Built with",
+    "features": "Highlights",
+    "tasks": "Responsibilities",
+    "demo": "Live demo",
+    "showMore": "Show {count} more",
+    "showLess": "Show less"
+  },
+  "blog": {
+    "routeHeading": "Articles",
+    "emptyHeading": "Articles",
+    "empty": "No articles to show here yet.",
+    "unavailable": "Articles are temporarily unavailable.",
+    "profileAction": "Visit my DEV profile ↗",
+    "fallbackDate": "From the notebook",
+    "readingTime": "{minutes} Min Read"
+  },
+  "project": {
+    "problem": "Problem",
+    "solution": "Solution",
+    "outcome": "Outcome",
+    "source": "Source code"
+  }
+}

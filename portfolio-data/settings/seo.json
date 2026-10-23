@@ -1,0 +1,27 @@
+{
+  "title": "Inzamam Idrees | Senior Full Stack Engineer",
+  "description": "Inzamam Idrees is a Senior Full Stack Engineer in Lahore, Pakistan, building scalable and AI-enabled web applications with React, Angular, Node.js and Python.",
+  "keywords": [],
+  "openGraph": {
+    "siteName": "Inzamam Idrees",
+    "title": "Inzamam Idrees | Senior Full Stack Engineer",
+    "description": "Scalable web applications, AI-enabled products and readable interfaces.",
+    "imagePath": "/social-image",
+    "imageAlt": "Inzamam Idrees — Senior Full Stack Engineer",
+    "locale": "en_US"
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "Inzamam Idrees | Senior Full Stack Engineer",
+    "description": "Scalable web applications, AI-enabled products and readable interfaces.",
+    "imagePath": "/social-image"
+  },
+  "pages": {
+    "projects": {
+      "description": "Projects by Inzamam Idrees, Senior Full Stack Engineer: inventory, CRM, online ordering and e-commerce systems built with Angular, React, Node.js and Laravel."
+    },
+    "blog": {
+      "description": "Technical articles by Inzamam Idrees, Senior Full Stack Engineer, on web development and software engineering, also published on DEV Community."
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "items": [
+    { "id": "projects", "label": "Work", "href": "/#projects", "enabled": true, "order": 1 },
+    { "id": "about", "label": "About", "href": "/#about", "enabled": true, "order": 2 },
+    { "id": "skills", "label": "Expertise", "href": "/#skills", "enabled": true, "order": 3 },
+    { "id": "experience", "label": "Experience", "href": "/#experience", "enabled": true, "order": 4 },
+    { "id": "contact", "label": "Contact", "href": "/#contact", "enabled": true, "order": 5 }
+  ]
+}

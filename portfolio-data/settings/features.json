@@ -1,0 +1,7 @@
+{
+  "articles": true,
+  "contactForm": true,
+  "resume": true,
+  "animations": true,
+  "threeD": true
+}

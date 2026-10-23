@@ -1,0 +1,57 @@
+.not-found {
+  --nf-background: #0b0e11;
+  --nf-muted: #aeb8c1;
+  --nf-accent: #91e5c1;
+  // The root 404 page renders outside every theme shell, so it carries the few
+  // rules it needs, scoped to `.not-found` (values match the Cinematic sheet).
+  width: min(100% - 96px, 1280px);
+  margin-inline: auto;
+  padding-block: 120px;
+
+  h1 {
+    font-size: 80px;
+  }
+  p {
+    margin: 24px 0;
+    color: var(--nf-muted);
+  }
+  .eyebrow {
+    font:
+      11px/1.6 ui-monospace,
+      SFMono-Regular,
+      Consolas,
+      monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 48px;
+    padding: 14px 20px;
+    border: 1px solid var(--nf-accent);
+    border-radius: 4px;
+    background: var(--nf-accent);
+    color: var(--nf-background);
+    font-size: 13px;
+    font-weight: 500;
+    transition:
+      background 200ms,
+      transform 200ms;
+  }
+  .button:hover {
+    background: #bcf5dd;
+    transform: translateY(-2px);
+  }
+}
+@media (max-width: 1023px) {
+  .not-found {
+    width: calc(100% - 64px);
+  }
+}
+@media (max-width: 767px) {
+  .not-found {
+    width: calc(100% - 40px);
+  }
+}

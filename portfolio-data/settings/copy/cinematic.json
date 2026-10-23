@@ -1,0 +1,120 @@
+{
+  "navigation": {
+    "wordmarkRole": "ENGINEER"
+  },
+  "footer": {
+    "tagline": "/ Built with intention.",
+    "education": "Education",
+    "writing": "Writing",
+    "source": "Source ↗",
+    "backToTop": "Back to top ↑"
+  },
+  "motion": {
+    "pause": "Pause motion",
+    "enable": "Enable motion",
+    "reduced": "Reduced motion",
+    "systemNote": "Motion is disabled by your system preference."
+  },
+  "home": {
+    "hero": {
+      "headlineConnector": "with",
+      "primaryAction": "Explore my work",
+      "resumeAction": "Résumé",
+      "visualCaption": "SYSTEM_01",
+      "visualCaptionDetail": "INTERFACE → INFRASTRUCTURE",
+      "closingLead": "Frontend precision.",
+      "closingMuted": "Full-stack perspective.",
+      "scrollCue": "SCROLL TO EXPLORE"
+    },
+    "selectedWork": {
+      "label": "projects",
+      "heading": "Built for the real world.",
+      "description": "A selection of platforms connecting complex business needs with thoughtful software.",
+      "exploreAll": "Explore all {count} projects ↗"
+    },
+    "about": {
+      "label": "about",
+      "heading": "A builder at heart.",
+      "journeyLink": "More about my journey ↗",
+      "portraitAlt": "{name}, {designation}"
+    },
+    "expertise": {
+      "label": "skills",
+      "heading": "Depth across the stack.",
+      "description": "From the details people interact with to the services they never see."
+    },
+    "experience": {
+      "label": "experience",
+      "heading": "The journey so far."
+    },
+    "education": {
+      "label": "education",
+      "heading": "A foundation in engineering.",
+      "awardsHeading": "AWARDS & HONORS"
+    },
+    "writing": {
+      "label": "writing",
+      "heading": "Notes from the work.",
+      "description": "Ideas, observations, and lessons from building software.",
+      "empty": "My writing lives on DEV. Explore the notebook there.",
+      "unavailable": "The notebook is temporarily unavailable here. You can visit my DEV profile directly.",
+      "profileAction": "Visit my notebook ↗",
+      "allArticles": "All articles ↗",
+      "loading": "Loading the notebook…",
+      "loadingLabel": "Loading writing"
+    },
+    "contact": {
+      "label": "CONTACT",
+      "basedIn": "BASED IN"
+    }
+  },
+  "project": {
+    "problem": "THE PROBLEM",
+    "fallbackCategory": "Selected application",
+    "build": "THE BUILD",
+    "result": "THE RESULT",
+    "features": "KEY FEATURES",
+    "responsibilities": "MY ROLE",
+    "visit": "Visit project",
+    "source": "View source",
+    "diagram": {
+      "title": "ARCHITECTURE STUDY",
+      "codePrefix": "SYS_",
+      "coreLead": "CONNECTED",
+      "coreTrail": "BY DESIGN",
+      "footer": "CONCEPTUAL SYSTEM /",
+      "label": "{title}: conceptual system diagram, not a product screenshot",
+      "nodes": {
+        "1": [
+          "ASSETS",
+          "LDAP",
+          "AUDIT"
+        ],
+        "5": [
+          "DOCUMENTS",
+          "TASKS",
+          "ROLES"
+        ],
+        "4": [
+          "CONTACTS",
+          "PROPERTY",
+          "WORKFLOW"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "eyebrow": "PROJECT ARCHIVE / {count} BUILDS",
+    "heading": "Work, in detail.",
+    "contactAction": "Let’s talk about your project ↗"
+  },
+  "blog": {
+    "eyebrow": "THE NOTEBOOK",
+    "heading": "Thinking out loud.",
+    "empty": "No articles to show here yet. Explore my DEV profile.",
+    "unavailable": "Articles are temporarily unavailable. My DEV profile is still a click away.",
+    "profileAction": "Visit DEV ↗",
+    "fallbackDate": "FROM THE NOTEBOOK",
+    "readingTime": "{minutes} MIN READ"
+  }
+}

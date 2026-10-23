@@ -1,0 +1,81 @@
+[
+  {
+    "id": 1,
+    "company": "Nextbridge Ltd.",
+    "location": "Lahore, Punjab",
+    "role": "Senior Software Engineer",
+    "startDate": "2022-07",
+    "endDate": null,
+    "current": true,
+    "description": null,
+    "highlights": [
+      "SmartCommerce (USA client product): Developed and customized lightweight JavaScript-based e-commerce widgets including Click2Cart, SmartButton, SmartLink, Product Carousel, and Product Locator solutions for multiple brand websites.",
+      "SmartCommerce: Built highly configurable frontend components using Vanilla JavaScript, HTML5, CSS3, SCSS, and DOM manipulation techniques with a strong focus on cross-browser compatibility and responsive design.",
+      "Group Captain: Developed enterprise project management features including Kanban boards, task management, workspace modules, talent management, and real-time collaboration functionality.",
+      "Group Captain: Built scalable frontend modules using React, Redux, Bootstrap, and modern JavaScript practices while integrating with NestJS backend services.",
+      "MIS / Nexis: Contributed to an enterprise inventory management platform for tracking IT assets, hardware lifecycle, audits, and organizational resources.",
+      "MIS / Nexis: Developed advanced Angular-based UI components, dashboards, reports, accessibility improvements, and reusable modules."
+    ],
+    "technologies": [
+      "JavaScript",
+      "HTML5",
+      "CSS3",
+      "SCSS",
+      "React",
+      "Redux",
+      "Bootstrap",
+      "NestJS",
+      "Angular"
+    ],
+    "order": 1
+  },
+  {
+    "id": 2,
+    "company": "Xenex Media",
+    "location": "Queensland, Australia (Remote)",
+    "role": "Laravel Angular Developer",
+    "startDate": "2021-02",
+    "endDate": "2022-07",
+    "current": false,
+    "description": null,
+    "highlights": [
+      "Developed responsive web applications and reusable frontend components using Angular, TypeScript, PrimeNG, Bootstrap, and modern UI development practices.",
+      "Designed and integrated RESTful APIs using Laravel and Node.js services to improve application scalability and performance.",
+      "Collaborated remotely with Australian clients and distributed teams to analyze requirements, resolve technical issues, and deliver production-ready solutions.",
+      "Improved frontend performance, usability, and maintainability through optimized architecture, reusable components, and clean coding standards."
+    ],
+    "technologies": [
+      "Angular",
+      "TypeScript",
+      "PrimeNG",
+      "Bootstrap",
+      "Laravel",
+      "Node.js"
+    ],
+    "order": 2
+  },
+  {
+    "id": 3,
+    "company": "CodeInformatics",
+    "location": "Islamabad, Pakistan",
+    "role": "Web Developer",
+    "startDate": "2019-01",
+    "endDate": "2021-01",
+    "current": false,
+    "description": null,
+    "highlights": [
+      "Developed full-stack web applications using Angular, Laravel, CodeIgniter, PHP, and MySQL from requirement analysis to production deployment.",
+      "Built scalable platforms including event ticketing systems, donation management solutions, and CMS-based websites.",
+      "Implemented authentication, role-based permissions, payment integrations, dynamic content management, and third-party API integrations.",
+      "Delivered user-friendly interfaces while maintaining backend architecture and database optimization."
+    ],
+    "technologies": [
+      "Angular",
+      "Laravel",
+      "CodeIgniter",
+      "PHP",
+      "MySQL"
+    ],
+    "order": 3
+  }
+]

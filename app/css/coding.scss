@@ -1,0 +1,140 @@
+@use "content-sections";
+
+.theme-coding .coding-page-frame {
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-coding .coding-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.theme-coding .coding-menu-toggle {
+  min-height: 44px;
+  border: 1px solid #353951;
+  border-radius: 999px;
+  padding: 0.55rem 0.85rem;
+  color: #fff;
+  background: #11152c;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.theme-coding .coding-mobile-menu {
+  position: absolute;
+  z-index: 80;
+  top: calc(100% - 0.5rem);
+  right: 0;
+  width: min(18rem, 100%);
+  overflow: hidden;
+  border: 1px solid #353951;
+  border-radius: 0.75rem;
+  background: #11152c;
+  box-shadow: 0 1.25rem 3rem rgb(0 0 0 / 45%);
+}
+
+.theme-coding .coding-mobile-menu a {
+  display: block;
+  padding: 0.8rem 1rem;
+  color: #fff;
+  font-size: 0.8rem;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.theme-coding .coding-mobile-menu a:hover,
+.theme-coding .coding-mobile-menu a:focus-visible {
+  color: #16f2b3;
+  background: #1a1443;
+}
+
+.theme-coding code,
+.theme-coding .coding-contact-details,
+.theme-coding .coding-contact-details span {
+  overflow-wrap: anywhere;
+}
+
+.theme-coding .coding-social-links {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 399px) {
+  .theme-coding .coding-wordmark {
+    max-width: 10rem;
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+}
+
+.theme-coding .coding-expand-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  margin-top: 0.25rem;
+  color: #16f2b3;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.theme-coding .coding-expand-toggle::after {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-top: -0.2rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease-out;
+}
+
+.theme-coding .coding-expand-toggle[aria-expanded="true"]::after {
+  margin-top: 0.2rem;
+  transform: rotate(-135deg);
+}
+
+.theme-coding .coding-expand-toggle:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.theme-coding .coding-expand-toggle:focus-visible {
+  outline: 2px solid #16f2b3;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-coding .coding-expand-toggle::after {
+    transition: none;
+  }
+
+  .theme-coding .rfm-marquee {
+    animation-play-state: paused !important;
+  }
+}
+
+@include content-sections.styles(".theme-coding", #0d1224, #11152c, #ffffff, #d3d8e8, #16f2b3, #353951, 12px, true);
+.theme-coding {
+  .coding-hero-introduction { color: #d3d8e8; max-width: 65ch; line-height: 1.7; }
+  .coding-about-summary { color: #16f2b3; margin-bottom: 20px; }
+  .coding-about-philosophy { color: #d3d8e8; margin-top: 20px; line-height: 1.7; }
+  .coding-record-tags { display: flex; gap: 8px; flex-wrap: wrap; list-style: none; }
+  .coding-record-tags li { padding: 4px 10px; border: 1px solid #353951; border-radius: 6px; font-size: 13px; color: #d3d8e8; }
+  .coding-skill-categories { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; padding-top: 32px; }
+  .coding-skill-categories article { min-width: 0; border: 1px solid #353951; border-radius: 12px; background: #11152c; padding: 24px; }
+  .coding-skill-categories h3 { font-size: 20px; margin: 8px 0 12px; color: #fff; }
+  .coding-skill-categories p { color: #d3d8e8; line-height: 1.65; margin-bottom: 16px; }
+  .coding-social-links { flex-wrap: wrap; }
+  .coding-mobile-menu { max-height: 75svh; overflow-y: auto; }
+  @media(max-width: 767px) { .coding-skill-categories { grid-template-columns: 1fr; } }
+}
+.theme-coding {
+  .coding-hero-meta { font: 12px/1.6 ui-monospace,monospace; color: #16f2b3; margin-top: 20px; }
+  .coding-contact-heading { font-size: clamp(26px,3vw,40px); line-height: 1.3; color: #16f2b3; margin-bottom: 20px; }
+  .coding-contact-introduction { max-width: 65ch; color: #d3d8e8; line-height: 1.7; margin-bottom: 32px; }
+}
+.theme-coding .portfolio-content-section { padding-inline: 0; }

@@ -1,21 +1,22 @@
 // @flow strict
 
-import { personalData } from "@/utils/data/personal-data";
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
-import { FaFacebook } from "react-icons/fa";
+import ProfileRoles from "@/themes/shared/profile-roles";
+import { FaDev, FaFacebook, FaStackOverflow } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { MdDownload } from "react-icons/md";
 import { RiContactsFill } from "react-icons/ri";
 import { SiLeetcode } from "react-icons/si";
 
-function HeroSection() {
+function HeroSection({ personalData, skillsData, copy, socialLabels, rolesLabel }) {
   return (
-    <section className="relative flex flex-col items-center justify-between py-4 lg:py-12">
+    <section id="hero" className="relative flex flex-col items-center justify-between py-4 lg:py-12">
       <Image
         src="/hero.svg"
-        alt="Hero"
+        alt=""
         width={1572}
         height={795}
         className="absolute -top-[98px] -z-10"
@@ -24,65 +25,56 @@ function HeroSection() {
       <div className="grid grid-cols-1 items-start lg:grid-cols-2 lg:gap-12 gap-y-8">
         <div className="order-2 lg:order-1 flex flex-col items-start justify-center p-2 pb-20 md:pb-10 lg:pt-10">
           <h1 className="text-3xl font-bold leading-10 text-white md:font-extrabold lg:text-[2.6rem] lg:leading-[3.5rem]">
-            Hello, <br />
-            This is {' '}
+            {copy.greeting} <br />
+            {copy.introPrefix}{' '}
             <span className=" text-pink-500">{personalData.name}</span>
-            {` , I'm a Professional `}
+            {copy.introMiddle}{" "}
             <span className=" text-[#16f2b3]">{personalData.designation}</span>
-            .
+            {copy.introSuffix}
           </h1>
 
-          <div className="my-12 flex items-center gap-5">
-            <Link
-              href={personalData.github}
-              target='_blank'
-              className="transition-all text-pink-500 hover:scale-125 duration-300"
-            >
-              <BsGithub size={30} />
-            </Link>
-            <Link
-              href={personalData.linkedIn}
-              target='_blank'
-              className="transition-all text-pink-500 hover:scale-125 duration-300"
-            >
-              <BsLinkedin size={30} />
-            </Link>
-            <Link
-              href={personalData.facebook}
-              target='_blank'
-              className="transition-all text-pink-500 hover:scale-125 duration-300"
-            >
-              <FaFacebook size={30} />
-            </Link>
-            <Link
-              href={personalData.leetcode}
-              target='_blank'
-              className="transition-all text-pink-500 hover:scale-125 duration-300"
-            >
-              <SiLeetcode size={30} />
-            </Link>
-            <Link
-              href={personalData.twitter}
-              target='_blank'
-              className="transition-all text-pink-500 hover:scale-125 duration-300"
-            >
-              <FaXTwitter size={30} />
-            </Link>
-          </div>
+          <p className="coding-hero-meta">{personalData.canonicalProfile.experienceLabel} · {personalData.canonicalProfile.focusLabel} · {personalData.displayLocation}</p>
+          <ProfileRoles profile={personalData.canonicalProfile} label={rolesLabel} />
+          <p className="coding-hero-introduction">{personalData.shortIntroduction}</p>
+          <ul className="my-12 flex items-center gap-5">
+            {[
+              ["github", personalData.github, BsGithub],
+              ["dev", personalData.dev, FaDev],
+              ["stackOverflow", personalData.stackOverflow, FaStackOverflow],
+              ["linkedIn", personalData.linkedIn, BsLinkedin],
+              ["facebook", personalData.facebook, FaFacebook],
+              ["leetcode", personalData.leetcode, SiLeetcode],
+              ["x", personalData.twitter, FaXTwitter],
+            ]
+              .filter(([, href]) => href)
+              .map(([id, href, Icon]) => (
+                <li key={id}>
+                  <Link
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={socialLabels[id]}
+                    className="block transition-all text-pink-500 hover:scale-125 duration-300"
+                  >
+                    <Icon size={30} aria-hidden="true" />
+                  </Link>
+                </li>
+              ))}
+          </ul>
 
           <div className="flex items-center gap-3">
             <Link href="#contact" className="bg-gradient-to-r to-pink-500 from-violet-600 p-[1px] rounded-full transition-all duration-300 hover:from-pink-500 hover:to-violet-600">
-              <button className="px-3 text-xs md:px-8 py-3 md:py-4 bg-[#0d1224] rounded-full border-none text-center md:text-sm font-medium uppercase tracking-wider text-[#ffff] no-underline transition-all duration-200 ease-out  md:font-semibold flex items-center gap-1 hover:gap-3">
-                <span>Contact me</span>
-                <RiContactsFill size={16} />
-              </button>
+              <span className="px-3 text-xs md:px-8 py-3 md:py-4 bg-[#0d1224] rounded-full text-center md:text-sm font-medium uppercase tracking-wider text-white transition-all duration-200 ease-out md:font-semibold flex items-center gap-1 hover:gap-3">
+                <span>{copy.contactAction}</span>
+                <RiContactsFill size={16} aria-hidden="true" />
+              </span>
             </Link>
 
-            <Link className="flex items-center gap-1 hover:gap-3 rounded-full bg-gradient-to-r from-pink-500 to-violet-600 px-3 md:px-8 py-3 md:py-4 text-center text-xs md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-200 ease-out hover:text-white hover:no-underline md:font-semibold" role="button" target="_blank" href={personalData.resume}
+            {personalData.resumeEnabled && <Link className="flex items-center gap-1 hover:gap-3 rounded-full bg-gradient-to-r from-pink-500 to-violet-600 px-3 md:px-8 py-3 md:py-4 text-center text-xs md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-200 ease-out hover:text-white hover:no-underline md:font-semibold" target="_blank" rel="noopener noreferrer" href={personalData.resume}
             >
-              <span>Get Resume</span>
+              <span>{copy.resumeAction}</span>
               <MdDownload size={16} />
-            </Link>
+            </Link>}
           </div>
 
         </div>
@@ -109,56 +101,31 @@ function HeroSection() {
               <div>
                 <span className="ml-4 lg:ml-8 mr-2 text-white">name:</span>
                 <span className="text-gray-400">{`'`}</span>
-                <span className="text-amber-300">Inzamam Idrees</span>
+                <span className="text-amber-300">{personalData.name}</span>
                 <span className="text-gray-400">{`',`}</span>
               </div>
               <div className="ml-4 lg:ml-8 mr-2">
                 <span className=" text-white">skills:</span>
                 <span className="text-gray-400">{`['`}</span>
-                <span className="text-amber-300">Angular 2+</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">ReactJS</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">NextJS</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Redux</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">NodeJS</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Express</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">NestJS</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">MongoDB</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">MySql</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">PHP</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Laravel</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">CodeIgniter</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Docker</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">AWS</span>
+                {skillsData.map((skill, index) => (
+                  <Fragment key={skill}>
+                    <span className="text-amber-300">{skill}</span>
+                    {index < skillsData.length - 1 && (
+                      <span className="text-gray-400">{"', '"}</span>
+                    )}
+                  </Fragment>
+                ))}
                 <span className="text-gray-400">{"'],"}</span>
               </div>
-              <div>
-                <span className="ml-4 lg:ml-8 mr-2 text-white">hardWorker:</span>
-                <span className="text-orange-400">true</span>
-                <span className="text-gray-400">,</span>
-              </div>
-              <div>
-                <span className="ml-4 lg:ml-8 mr-2 text-white">quickLearner:</span>
-                <span className="text-orange-400">true</span>
-                <span className="text-gray-400">,</span>
-              </div>
-              <div>
-                <span className="ml-4 lg:ml-8 mr-2 text-white">problemSolver:</span>
-                <span className="text-orange-400">true</span>
-                <span className="text-gray-400">,</span>
-              </div>
+              {personalData.traits.map((trait) => (
+                <div key={trait.id}>
+                  <span className="ml-4 lg:ml-8 mr-2 text-white">
+                    {trait.id}:
+                  </span>
+                  <span className="text-orange-400">true</span>
+                  <span className="text-gray-400">,</span>
+                </div>
+              ))}
               <div>
                 <span className="ml-4 lg:ml-8 mr-2 text-green-400">hireable:</span>
                 <span className="text-orange-400">function</span>
@@ -170,12 +137,16 @@ function HeroSection() {
               </div>
               <div>
                 <span className="ml-12 lg:ml-24 text-cyan-400">this.</span>
-                <span className="mr-2 text-white">hardWorker</span>
+                <span className="mr-2 text-white">
+                  {personalData.traits[0].id}
+                </span>
                 <span className="text-amber-300">&amp;&amp;</span>
               </div>
               <div>
                 <span className="ml-12 lg:ml-24 text-cyan-400">this.</span>
-                <span className="mr-2 text-white">problemSolver</span>
+                <span className="mr-2 text-white">
+                  {personalData.traits.at(-1).id}
+                </span>
                 <span className="text-amber-300">&amp;&amp;</span>
               </div>
               <div>

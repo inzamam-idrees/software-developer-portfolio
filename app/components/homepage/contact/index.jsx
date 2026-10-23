@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { BiLogoLinkedin } from "react-icons/bi";
 import { CiLocationOn } from "react-icons/ci";
-import { FaFacebook, FaStackOverflow } from 'react-icons/fa';
+import { FaDev, FaFacebook, FaStackOverflow } from 'react-icons/fa';
 import { FaXTwitter } from "react-icons/fa6";
 import { IoLogoGithub, IoMdCall } from "react-icons/io";
 import { MdAlternateEmail } from "react-icons/md";
@@ -16,7 +16,9 @@ function ContactSection({ personalData, form, copy, socialLabels }) {
         </span>
         <span className="h-36 w-[2px] bg-[#1a1443]"></span>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+      <h2 className="coding-contact-heading">{personalData.contactHeading}</h2>
+      <p className="coding-contact-introduction">{personalData.contactIntroduction}</p>
+      <div className={`grid grid-cols-1 ${form ? "lg:grid-cols-2" : ""} gap-8 lg:gap-16 items-center`}>
         {form}
         <div className="coding-contact-details lg:w-3/4">
           <div className="flex flex-col gap-5 lg:gap-9">
@@ -107,6 +109,7 @@ function ContactSection({ personalData, form, copy, socialLabels }) {
                 size={48}
               />
             </Link>
+            {personalData.dev && <Link href={personalData.dev} target="_blank" rel="noopener noreferrer" aria-label={socialLabels.dev}><FaDev aria-hidden="true" className="bg-[#8b98a5] p-3 rounded-full text-gray-800" size={48} /></Link>}
           </div>
         </div>
       </div>

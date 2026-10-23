@@ -47,6 +47,7 @@ test("Coding presentation maps resume detail and awards", async () => {
     id: 1,
     title: "Student of the Year",
     issuer: "University of Gujrat",
+    location: portfolio.awards[0].location,
     duration: "Sep 2015 - Aug 2016",
   });
   assert.ok(coding.skillsData.includes("RAG"));

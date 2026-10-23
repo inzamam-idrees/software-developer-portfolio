@@ -40,6 +40,7 @@ function AboutSection({ personalData, copy }) {
           <h2 id="about-title" className="font-medium mb-5 text-[#16f2b3] text-xl">
             {copy.heading}
           </h2>
+          <p className="coding-about-summary">{personalData.about.summary}</p>
           <p className="text-gray-200 text-sm lg:text-lg leading-relaxed">
             {lead}
           </p>
@@ -54,6 +55,8 @@ function AboutSection({ personalData, copy }) {
               ))}
             </Expandable>
           )}
+          {!personalData.description.includes(personalData.about.personalStatement) && <p className="coding-about-philosophy">{personalData.about.personalStatement}</p>}
+          <p className="coding-about-philosophy">{personalData.about.engineeringPhilosophy}</p>
         </div>
         <div className="flex justify-center items-start order-1 lg:order-2">
           <Image

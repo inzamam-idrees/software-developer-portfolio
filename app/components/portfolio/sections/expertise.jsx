@@ -1,5 +1,8 @@
+import SkillLevel from "@/themes/shared/skill-level";
 import ChapterHeading from "../ui/chapter-heading";
-export default function Expertise({ skills, copy }) {
+export default function Expertise({ skills, copy, additionalLabel, proficiencyTemplate }) {
+  const categorized = new Set(skills.categories.flatMap((group) => group.technologies));
+  const additionalSkills = skills.all.filter((skill) => !categorized.has(skill));
   return (
     <section
       id="skills"
@@ -24,12 +27,20 @@ export default function Expertise({ skills, copy }) {
             </div>
             <ul className="technology-list">
               {group.technologies.map((t) => (
-                <li key={t}>{t}</li>
+                <li key={t}>{t}<SkillLevel name={t} proficiency={skills.proficiency} template={proficiencyTemplate} /></li>
               ))}
             </ul>
           </article>
         ))}
       </div>
+      {additionalSkills.length > 0 && (
+        <div className="additional-capabilities">
+          <h3 className="eyebrow accent">{additionalLabel}</h3>
+          <ul className="technology-list">
+            {additionalSkills.map((skill) => <li key={skill}>{skill}<SkillLevel name={skill} proficiency={skills.proficiency} template={proficiencyTemplate} /></li>)}
+          </ul>
+        </div>
+      )}
     </section>
   );
 }

@@ -1,5 +1,5 @@
 import ContactForm from "../../homepage/contact/contact-form";
-export default function Contact({ contact, social, copy }) {
+export default function Contact({ contact, social, copy, formEnabled }) {
   const headingWords = contact.heading.split(" ");
   const headingLead = headingWords.slice(0, 2).join(" ");
   const headingEmphasis = headingWords.slice(2).join(" ");
@@ -10,6 +10,7 @@ export default function Contact({ contact, social, copy }) {
     "stackOverflow",
     "leetcode",
     "facebook",
+    "dev",
   ]
     .filter((key) => Boolean(social[key]))
     .map((key) => [copy.socialLabels[key], social[key]]);
@@ -50,7 +51,7 @@ export default function Contact({ contact, social, copy }) {
             ))}
           </div>
         </div>
-        <ContactForm copy={copy.contactForm} />
+        {formEnabled && <ContactForm copy={copy.contactForm} />}
       </div>
     </section>
   );

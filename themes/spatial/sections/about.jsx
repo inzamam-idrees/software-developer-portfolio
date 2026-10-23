@@ -18,7 +18,8 @@ export default function About({ view }) {
             height={88}
           />
           <p className="spatial-lead">{about.summary}</p>
-          <p>{about.personalStatement}</p>
+          <p>{profile.longIntroduction}</p>
+          {!profile.longIntroduction.includes(about.personalStatement) && <p>{about.personalStatement}</p>}
           <p>{about.engineeringPhilosophy}</p>
           <p className="spatial-signoff">
             <span>{profile.name}</span>

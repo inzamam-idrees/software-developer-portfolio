@@ -24,11 +24,17 @@ export default function Experience({ experiences, copy }) {
               <p className="body-copy">
                 {job.company} · {job.location}
               </p>
+              {job.description && <p className="body-copy">{job.description}</p>}
               {job.highlights.length > 0 && (
                 <ul className="career-highlights">
                   {job.highlights.map((highlight) => (
                     <li key={highlight}>{highlight}</li>
                   ))}
+                </ul>
+              )}
+              {job.technologies.length > 0 && (
+                <ul className="technology-list">
+                  {job.technologies.map((technology) => <li key={technology}>{technology}</li>)}
                 </ul>
               )}
             </div>

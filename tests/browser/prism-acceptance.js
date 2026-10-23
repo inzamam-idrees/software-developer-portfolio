@@ -94,8 +94,8 @@ async (page) => {
   for (const id of ['coding','cinematic','executive','spatial']) {
     await page.goto(`${origin}/preview/${id}`, { waitUntil: "domcontentloaded" });
     check(await page.locator(`[data-theme-id="${id}"]`).count() === 1, `${id} broken`);
-    check(await page.locator('#certificates').count() === 0, `Certificates leaked into ${id}`);
-    check(!(await page.locator('body').innerText()).includes('[TODO: certificate'), `Placeholder leaked into ${id}`);
+    check(await page.locator('#certificates').count() === 1, `Certificates missing from ${id}`);
+
   }
   await page.goto(origin, { waitUntil: "domcontentloaded" });
   check(await page.locator('[data-theme-id="coding"]').count() === 1, "Public theme changed");

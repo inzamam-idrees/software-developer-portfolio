@@ -142,3 +142,26 @@ test("normalization keeps C, C++ and C# apart and never yields an empty key", ()
   assert.ok(normalizeTechnology("···").length > 0);
   assert.equal(normalizeTechnology("Tailwind CSS"), normalizeTechnology("TailwindCSS"));
 });
+
+
+test("keeps canonical skills unused by categories, projects, or roles selectable", () => {
+  const data = fixture();
+  data.skills.all.push("Python", "Agentic AI");
+  const graph = buildSpatialGraph(data);
+  for (const id of ["tech:python", "tech:agenticai"]) {
+    const node = graph.nodes.find((candidate) => candidate.id === id);
+    assert.ok(node, id);
+    assert.equal(node.unmatched, true);
+    assert.ok(node.position.every(Number.isFinite));
+    assert.deepEqual(relatedTo(graph, id).technologies, [id]);
+  }
+});
+
+test("keeps a shared technology in every canonical category", () => {
+  const data = fixture();
+  data.skills.categories[1].technologies.push("React");
+  const graph = buildSpatialGraph(data);
+  assert.equal(graph.nodes.filter((node) => node.id === "tech:react").length, 1);
+  assert.ok(graph.edges.some(([source, target]) => source === "category:backend" && target === "tech:react"));
+  assert.ok(relatedTo(graph, "category:backend").technologies.includes("tech:react"));
+});

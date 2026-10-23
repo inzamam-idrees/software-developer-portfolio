@@ -15,9 +15,12 @@ export default function About({ profile, about, social, displayLocation, copy })
             {about.summary}
           </p>
           <div className="about-story">
-            <p className="body-copy">
-              {about.personalStatement}
-            </p>
+            {profile.longIntroduction && (
+              <p className="body-copy">{profile.longIntroduction}</p>
+            )}
+            {about.personalStatement && !profile.longIntroduction?.includes(about.personalStatement) && (
+              <p className="body-copy">{about.personalStatement}</p>
+            )}
             <p className="body-copy">
               {about.engineeringPhilosophy}
             </p>

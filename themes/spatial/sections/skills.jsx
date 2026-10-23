@@ -22,6 +22,8 @@ export default function Skills({ view }) {
         <SkillsExplorer
           skillGroups={view.skillGroups}
           unmatchedTechnologies={view.unmatchedTechnologies}
+          proficiency={view.skills.proficiency}
+          proficiencyTemplate={view.copy.contentSections.proficiency}
           projects={view.projects.map(({ id, title }) => ({ id, title }))}
           experience={view.experience.map(({ id, role, company }) => ({ id, role, company }))}
           copy={copy}

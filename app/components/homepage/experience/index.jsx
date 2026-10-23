@@ -60,6 +60,7 @@ function Experience({ experiences, copy }) {
                         </p>
                       </div>
                     </div>
+                    {experience.description && <p className="relative px-3 pb-4 text-[#d3d8e8]">{experience.description}</p>}
                     {visible.length > 0 && (
                       <div className="relative pl-[4.25rem] sm:pl-[5.25rem] pr-3 pb-4 text-sm text-[#d3d8e8]" data-highlights>
                         <ul className="list-disc pl-4 space-y-2 max-w-[65ch]">
@@ -81,6 +82,7 @@ function Experience({ experiences, copy }) {
                         )}
                       </div>
                     )}
+                    {!!experience.technologies?.length && <ul className="coding-record-tags relative px-3 pb-4">{experience.technologies.map((skill) => <li key={skill}>{skill}</li>)}</ul>}
                   </article>
                 </GlowCard>
               </li>

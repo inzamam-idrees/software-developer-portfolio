@@ -1,4 +1,6 @@
 import { Suspense } from "react";
+import Certificates from "../shared/certificates";
+import Resume from "../shared/resume";
 import ExperienceShell from "@/app/components/portfolio/motion/experience-shell";
 import About from "@/app/components/portfolio/sections/about";
 import ContactSection from "@/app/components/portfolio/sections/contact";
@@ -19,10 +21,11 @@ export default function CinematicHome({ portfolio }) {
     <ExperienceShell motionCopy={copy.motion}>
       <Hero
         profile={view.profile}
-        resume={view.resume}
+        resume={view.settings.features.resume ? view.resume : null}
         skills={view.skills}
         displayLocation={view.displayLocation}
         copy={home.hero}
+        rolesLabel={copy.contentSections.roles}
       />
       <SelectedWork
         projects={view.featuredProjects}
@@ -36,14 +39,15 @@ export default function CinematicHome({ portfolio }) {
         displayLocation={view.displayLocation}
         copy={home.about}
       />
-      <Expertise skills={view.skills} copy={home.expertise} />
+      <Expertise skills={view.skills} copy={home.expertise} additionalLabel={copy.contentSections.skillsAdditional} proficiencyTemplate={copy.contentSections.proficiency} />
       <Experience experiences={view.experience} copy={home.experience} />
       <Education
         educations={view.education}
         awards={view.awards}
         copy={home.education}
       />
-      <Suspense
+      <Certificates items={view.certificates} copy={copy.contentSections.certificates} theme="cinematic" />
+      {view.settings.features.articles && <Suspense
         fallback={
           <section
             className="chapter container"
@@ -59,8 +63,11 @@ export default function CinematicHome({ portfolio }) {
           copy={home.writing}
           blogCopy={copy.blog}
         />
-      </Suspense>
-      <ContactSection contact={view.contact} social={view.social} copy={copy} />
+      </Suspense>}
+      {view.settings.features.resume && (
+        <Resume resume={view.resume} copy={copy.contentSections.resume} theme="cinematic" />
+      )}
+      <ContactSection contact={view.contact} social={view.social} copy={copy} formEnabled={view.settings.features.contactForm && view.contact.form.enabled} />
     </ExperienceShell>
   );
 }

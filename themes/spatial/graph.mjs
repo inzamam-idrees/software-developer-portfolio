@@ -63,7 +63,10 @@ export function buildSpatialGraph({ skills, projects, experience }) {
     });
     category.technologies.forEach((name, slot) => {
       const key = normalizeTechnology(name);
-      if (technologies.has(key)) return;
+      if (technologies.has(key)) {
+        addEdge(id, technologies.get(key).id);
+        return;
+      }
       const node = {
         id: `tech:${key}`,
         kind: "technology",
@@ -101,6 +104,9 @@ export function buildSpatialGraph({ skills, projects, experience }) {
     }
     return technologies.get(key);
   }
+
+  // Keep uncategorized canonical skills in the same selectable graph.
+  skills.all.forEach(technologyNode);
 
   const sortedProjects = [...projects].sort(byOrder);
   const sortedRoles = [...experience].sort(byOrder);

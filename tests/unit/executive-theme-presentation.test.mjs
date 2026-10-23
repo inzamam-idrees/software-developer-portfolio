@@ -10,11 +10,11 @@ import {
 
 const portfolio = buildCurrentPortfolioView(await loadCanonicalPortfolio());
 
-test("Executive navigation uses only enabled canonical navigation items", () => {
+test("Executive navigation preserves enabled canonical links and exposes added sections", () => {
   const presentation = createExecutivePresentation(portfolio);
 
   assert.deepEqual(
-    presentation.navigation.map(({ label, href }) => ({ label, href })),
+    presentation.navigation.slice(0, 5).map(({ label, href }) => ({ label, href })),
     [
       { label: "Work", href: "/#projects" },
       { label: "About", href: "/#about" },
@@ -23,6 +23,7 @@ test("Executive navigation uses only enabled canonical navigation items", () => 
       { label: "Contact", href: "/#contact" },
     ],
   );
+  for (const id of ["education", "awards", "certificates", "writing", "resume"]) assert.ok(presentation.navigation.some((item) => item.id === id));
 });
 
 test("Executive projects expose canonical case-study facts without invented metrics", () => {

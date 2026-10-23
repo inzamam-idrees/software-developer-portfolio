@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import Certificates from "../shared/certificates";
 import SelectionProvider from "./client/selection";
 import SpatialStage from "./client/stage";
 import About from "./sections/about";
@@ -23,6 +24,9 @@ export default function SpatialHome({ portfolio }) {
       <Skills view={view} />
       <Projects view={view} />
       <Education view={view} />
+      <div className="spatial-frame spatial-content-section">
+        <Certificates items={view.certificates} copy={view.copy.contentSections.certificates} theme="spatial" />
+      </div>
       {features.articles && (
         <Suspense fallback={<WritingFallback copy={view.copy.home.writing} />}>
           <Writing view={view} />

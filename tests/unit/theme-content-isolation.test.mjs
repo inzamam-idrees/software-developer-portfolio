@@ -33,6 +33,7 @@ test("one canonical fixture projects into every registered theme without mutatio
     assert.equal(view.education, portfolio.education);
     assert.equal(view.skills, portfolio.skills);
     assert.equal(view.resume, portfolio.resume);
+    assert.equal(view.certificates, portfolio.certificates);
     assert.equal(view.social, portfolio.social);
     assert.equal(view.contact, portfolio.contact);
   }

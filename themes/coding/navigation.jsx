@@ -13,8 +13,8 @@ const destinations = [
   ["contact", "/#contact"],
 ];
 
-export default function CodingNavigation({ profile, copy }) {
-  const items = destinations.map(([id, href]) => [copy.items[id], href]);
+export default function CodingNavigation({ profile, copy, links }) {
+  const items = links ? links.map(({label,href}) => [label,href]) : destinations.map(([id, href]) => [copy.items[id], href]);
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
   const button = useRef(null);
@@ -58,7 +58,7 @@ export default function CodingNavigation({ profile, copy }) {
         </div>
         <button
           ref={button}
-          className="coding-menu-toggle lg:hidden"
+          className="coding-menu-toggle 2xl:hidden"
           type="button"
           aria-controls="coding-mobile-menu"
           aria-expanded={open}
@@ -72,7 +72,7 @@ export default function CodingNavigation({ profile, copy }) {
           </span>
         </button>
         <ul
-          className="hidden text-sm lg:flex lg:flex-row lg:space-x-1"
+          className="hidden text-sm 2xl:flex 2xl:flex-row 2xl:space-x-1"
           id="navbar-default"
         >
           {items.map(([label, href]) => (
@@ -89,7 +89,7 @@ export default function CodingNavigation({ profile, copy }) {
           ))}
         </ul>
         <ul
-          className={`coding-mobile-menu lg:hidden ${open ? "is-open" : ""}`}
+          className={`coding-mobile-menu 2xl:hidden ${open ? "is-open" : ""}`}
           id="coding-mobile-menu"
           hidden={!open}
         >

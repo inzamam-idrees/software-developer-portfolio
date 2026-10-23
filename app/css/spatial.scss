@@ -1,3 +1,5 @@
+@use "content-sections";
+
 .theme-spatial {
   --sp-ground: #E3E6E8;
   --sp-surface: #D3D8DC;
@@ -1095,3 +1097,52 @@ button.spatial-chip {
     scroll-behavior: auto !important;
   }
 }
+
+// Canonical credentials and resume retain the Spatial frame and ruled rhythm.
+.theme-spatial .spatial-content-section {
+  border-top: 1px solid var(--sp-rule);
+
+  &:has(> :empty), &:empty { display: none; }
+}
+
+.theme-spatial .spatial-hero-copy .portfolio-role-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0.75rem 0 1.5rem;
+  color: var(--sp-soft);
+  font-size: var(--sp-step-small);
+
+  li {
+    padding-left: 0.75rem;
+    border-left: 2px solid var(--sp-signal);
+  }
+}
+
+
+@media (min-width: 900px) {
+  .theme-spatial .spatial-header-tools {
+    flex: 1;
+    min-width: 0;
+    justify-content: flex-end;
+  }
+
+  .theme-spatial .spatial-nav {
+    min-width: 0;
+    overflow-x: auto;
+
+    a { flex: none; }
+  }
+
+  .theme-spatial .spatial-wordmark { flex-shrink: 0; }
+}
+
+.theme-spatial .spatial-mobile-nav nav {
+  max-height: calc(100dvh - 100px);
+  overflow-y: auto;
+}
+
+@include content-sections.styles(".theme-spatial", #e3e6e8, #d3d8dc, #0e1b26, #4a5763, #2347e8, #b7bfc6, 6px, false);
+.theme-spatial .portfolio-content-section { width: min(100% - 2 * var(--sp-gutter), var(--sp-wide)); padding-inline: 0; }
+.theme-spatial .spatial-frame .portfolio-content-section { width: 100%; }
+.theme-spatial .spatial-footer-links a { display: inline-flex; align-items: center; min-height: 44px; padding-block: 8px; }

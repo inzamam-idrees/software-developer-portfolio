@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import { usePrismMotion } from "./controls";
 import Icon from "../icon";
+import SkillIcon from "../skill-icon";
 
 export default function Skills({ groups, featured, proficiency, copy }) {
   const [selected, setSelected] = useState("all");
@@ -30,8 +31,8 @@ export default function Skills({ groups, featured, proficiency, copy }) {
     </article>)}</div>
     </div><div className="prism-marquee" role="group" aria-label={copy.marquee}>
       {[featured.slice(0, Math.ceil(featured.length / 2)), featured.slice(Math.ceil(featured.length / 2))].filter((row) => row.length).map((row, index) => <div className={`prism-marquee-track${index ? " prism-marquee-reverse" : ""}`} key={index}>
-        <ul>{row.map((name) => <li key={name}><span className="prism-symbol"><Icon name="code" /></span><span>{name}<small>{groups.find((group) => group.technologies.includes(name))?.label ?? copy.additional}</small></span></li>)}</ul>
-        <ul aria-hidden="true">{row.map((name) => <li key={name}><span className="prism-symbol"><Icon name="code" /></span><span>{name}<small>{groups.find((group) => group.technologies.includes(name))?.label ?? copy.additional}</small></span></li>)}</ul>
+        <ul>{row.map((name) => <li key={name}><span className="prism-symbol"><SkillIcon name={name} /></span><span>{name}<small>{groups.find((group) => group.technologies.includes(name))?.label ?? copy.additional}</small></span></li>)}</ul>
+        <ul aria-hidden="true">{row.map((name) => <li key={name}><span className="prism-symbol"><SkillIcon name={name} /></span><span>{name}<small>{groups.find((group) => group.technologies.includes(name))?.label ?? copy.additional}</small></span></li>)}</ul>
       </div>)}
     </div>
   </>;

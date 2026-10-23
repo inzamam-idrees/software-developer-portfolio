@@ -66,5 +66,36 @@
     "profilesHeading": "Profiles",
     "contactHeading": "Contact",
     "emailLabel": "Email"
+  },
+  "contentSections": {
+    "roles": "Professional roles",
+    "skillsAdditional": "Additional technologies",
+    "navigation": {
+      "education": "Education",
+      "awards": "Awards",
+      "certificates": "Certificates",
+      "writing": "Writing",
+      "resume": "Resume"
+    },
+    "certificates": {
+      "heading": "Professional certifications",
+      "description": "Professional development and certifications.",
+      "placeholder": "Some entries are placeholders awaiting confirmed details.",
+      "competencies": "Competencies",
+      "statuses": {
+        "in-progress": "In progress",
+        "completed": "Completed",
+        "verified": "Verified"
+      },
+      "credential": "View certificate",
+      "credentialId": "Credential ID"
+    },
+    "resume": {
+      "heading": "Professional resume",
+      "viewer": "Resume document preview",
+      "open": "Open Resume",
+      "previewFallback": "If the preview is unavailable, use Open Resume to view the original document."
+    },
+    "proficiency": "Level {level}"
   }
 }

@@ -2,6 +2,7 @@
 import { useEffect, useId, useState } from "react";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import { useSelection } from "./selection";
+import SkillLevel from "../../shared/skill-level";
 
 function Technology({ technology, interactive, selectedId, select }) {
   if (!interactive) {
@@ -23,6 +24,8 @@ function Technology({ technology, interactive, selectedId, select }) {
 export default function SkillsExplorer({
   skillGroups,
   unmatchedTechnologies,
+  proficiency,
+  proficiencyTemplate,
   projects,
   experience,
   copy,
@@ -67,6 +70,7 @@ export default function SkillsExplorer({
               {group.technologies.map((technology) => (
                 <li key={technology.nodeId}>
                   <Technology technology={technology} {...shared} />
+                  <SkillLevel name={technology.label} proficiency={proficiency} template={proficiencyTemplate} />
                 </li>
               ))}
             </ul>
@@ -82,6 +86,7 @@ export default function SkillsExplorer({
               {unmatchedTechnologies.map((technology) => (
                 <li key={technology.nodeId}>
                   <Technology technology={technology} {...shared} />
+                  <SkillLevel name={technology.label} proficiency={proficiency} template={proficiencyTemplate} />
                 </li>
               ))}
             </ul>

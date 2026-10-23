@@ -1,0 +1,54 @@
+@mixin styles($scope, $ground, $panel, $ink, $muted, $accent, $border, $radius: 12px, $dark: false) {
+  #{$scope} {
+    .portfolio-content-section { width: min(100%, 1280px); margin-inline: auto; padding: clamp(56px, 7vw, 96px) 32px; scroll-margin-top: 110px; }
+    .portfolio-content-heading { margin-bottom: 32px; }
+    .portfolio-content-heading h2 { font-size: clamp(28px, 3vw, 44px); line-height: 1.15; color: $ink; margin: 0 0 16px; }
+    .portfolio-content-heading p, .portfolio-certificate > p { color: $muted; line-height: 1.65; }
+    .portfolio-certificate-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
+    .portfolio-certificate { min-width: 0; padding: 28px; border: 1px solid $border; border-radius: $radius; background: $panel; display: flex; flex-direction: column; gap: 16px; overflow-wrap: anywhere; }
+    .portfolio-certificate-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .portfolio-certificate-issuer { display: flex; gap: 12px; align-items: center; }
+    .portfolio-certificate-issuer > svg { width: 40px; height: 40px; padding: 8px; border: 1px solid $border; border-radius: $radius; color: $accent; flex-shrink: 0; }
+    .portfolio-certificate-issuer p, .portfolio-certificate-issuer time { font: 12px/18px ui-monospace,monospace; color: $muted; margin: 0; }
+    .portfolio-certificate h3 { font-size: 20px; line-height: 1.4; margin: 0; color: $ink; }
+    .portfolio-certificate p { margin: 0; }
+    .portfolio-certificate-status { display: inline-flex; align-items: center; gap: 6px; border: 1px solid currentColor; border-radius: 999px; padding: 4px 10px; font: 12px/16px ui-monospace,monospace; }
+    .portfolio-certificate-status svg { width: 14px; height: 14px; }
+    @if $dark {
+      .portfolio-certificate-status[data-status="completed"] { color: #93c5fd; }
+      .portfolio-certificate-status[data-status="verified"] { color: #6ee7b7; }
+      .portfolio-certificate-status[data-status="in-progress"] { color: #fcd34d; }
+    } @else {
+      .portfolio-certificate-status[data-status="completed"] { color: #1e40af; }
+      .portfolio-certificate-status[data-status="verified"] { color: #166534; }
+      .portfolio-certificate-status[data-status="in-progress"] { color: #854d0e; }
+    }
+    .portfolio-certificate-skills { margin-top: auto; padding-top: 8px; }
+    .portfolio-certificate-skills h4 { color: $muted; margin: 0 0 8px; font: 11px/16px ui-monospace,monospace; text-transform: uppercase; letter-spacing: .08em; }
+    .portfolio-certificate-skills ul, .portfolio-role-list { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; flex-wrap: wrap; }
+    .portfolio-certificate-skills li { color: $ink; border: 1px solid $border; border-radius: 6px; padding: 4px 10px; font: 12px/18px ui-monospace,monospace; }
+    .portfolio-certificate-image { width: 100%; height: auto; border-radius: $radius; }
+    .portfolio-certificate-id { font-size: 12px; }
+    .portfolio-content-action { min-height: 48px; display: inline-flex; gap: 10px; align-items: center; justify-content: center; align-self: flex-start; padding: 12px 18px; color: $ink; background: $ground; border: 1px solid $accent; border-radius: $radius; font-size: 13px; font-weight: 700; text-decoration: none; }
+    .portfolio-content-action:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .portfolio-content-action svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .portfolio-content-action:focus-visible { outline: 3px solid $accent; outline-offset: 4px; }
+    .portfolio-resume-panel { border: 1px solid $border; border-radius: $radius; padding: 24px; background: $panel; }
+    .portfolio-resume-controls { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; }
+    .portfolio-resume-controls > div { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .portfolio-resume-controls h3 { color: $ink; margin: 0; font-size: 18px; overflow-wrap: anywhere; }
+    .portfolio-resume-controls > div > svg { color: $accent; width: 28px; height: 28px; flex-shrink: 0; }
+    .portfolio-resume iframe { display: block; width: 100%; height: 760px; border: 1px solid $border; border-radius: $radius; background: #fff; }
+    .portfolio-resume-fallback { color: $muted; font-size: 13px; line-height: 1.6; margin: 16px 0 0; }
+    .portfolio-skill-level { display: inline-block; margin-left: 6px; font-size: 11px; color: inherit; }
+    .portfolio-role-list { margin: 20px 0; }
+    .portfolio-role-list li { border-left: 2px solid $accent; padding-left: 12px; color: $muted; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+    @media(max-width: 767px) {
+      .portfolio-content-section { padding-inline: 20px; }
+      .portfolio-certificate-grid { grid-template-columns: 1fr; }
+      .portfolio-certificate { padding: 20px; }
+      .portfolio-resume-panel { padding: 16px; }
+      .portfolio-resume iframe { height: 560px; }
+    }
+  }
+}

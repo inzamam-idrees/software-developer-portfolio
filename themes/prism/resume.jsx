@@ -1,6 +1,6 @@
 import Heading from "./heading";
 import Icon from "./icon";
-import { resumePreviewUrl } from "./resume-preview.mjs";
+import { resumePreviewUrl } from "../shared/resume-preview.mjs";
 
 export default function Resume({ resume, designation, copy }) {
   const previewUrl = resumePreviewUrl(resume.url);

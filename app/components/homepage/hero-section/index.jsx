@@ -4,15 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
-import { FaFacebook } from "react-icons/fa";
+import ProfileRoles from "@/themes/shared/profile-roles";
+import { FaDev, FaFacebook, FaStackOverflow } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { MdDownload } from "react-icons/md";
 import { RiContactsFill } from "react-icons/ri";
 import { SiLeetcode } from "react-icons/si";
 
-function HeroSection({ personalData, skillsData, copy, socialLabels }) {
+function HeroSection({ personalData, skillsData, copy, socialLabels, rolesLabel }) {
   return (
-    <section className="relative flex flex-col items-center justify-between py-4 lg:py-12">
+    <section id="hero" className="relative flex flex-col items-center justify-between py-4 lg:py-12">
       <Image
         src="/hero.svg"
         alt=""
@@ -32,9 +33,14 @@ function HeroSection({ personalData, skillsData, copy, socialLabels }) {
             {copy.introSuffix}
           </h1>
 
+          <p className="coding-hero-meta">{personalData.canonicalProfile.experienceLabel} · {personalData.canonicalProfile.focusLabel} · {personalData.displayLocation}</p>
+          <ProfileRoles profile={personalData.canonicalProfile} label={rolesLabel} />
+          <p className="coding-hero-introduction">{personalData.shortIntroduction}</p>
           <ul className="my-12 flex items-center gap-5">
             {[
               ["github", personalData.github, BsGithub],
+              ["dev", personalData.dev, FaDev],
+              ["stackOverflow", personalData.stackOverflow, FaStackOverflow],
               ["linkedIn", personalData.linkedIn, BsLinkedin],
               ["facebook", personalData.facebook, FaFacebook],
               ["leetcode", personalData.leetcode, SiLeetcode],
@@ -64,11 +70,11 @@ function HeroSection({ personalData, skillsData, copy, socialLabels }) {
               </span>
             </Link>
 
-            <Link className="flex items-center gap-1 hover:gap-3 rounded-full bg-gradient-to-r from-pink-500 to-violet-600 px-3 md:px-8 py-3 md:py-4 text-center text-xs md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-200 ease-out hover:text-white hover:no-underline md:font-semibold" target="_blank" rel="noopener noreferrer" href={personalData.resume}
+            {personalData.resumeEnabled && <Link className="flex items-center gap-1 hover:gap-3 rounded-full bg-gradient-to-r from-pink-500 to-violet-600 px-3 md:px-8 py-3 md:py-4 text-center text-xs md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-200 ease-out hover:text-white hover:no-underline md:font-semibold" target="_blank" rel="noopener noreferrer" href={personalData.resume}
             >
               <span>{copy.resumeAction}</span>
               <MdDownload size={16} />
-            </Link>
+            </Link>}
           </div>
 
         </div>

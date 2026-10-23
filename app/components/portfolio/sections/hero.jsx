@@ -1,8 +1,9 @@
+import ProfileRoles from "@/themes/shared/profile-roles";
 import { splitHeadline } from "@/lib/portfolio/format-copy.mjs";
 import SceneFallback from "../scene/scene-fallback";
 import { FiArrowDownRight, FiArrowUpRight } from "react-icons/fi";
 
-export default function Hero({ profile, resume, skills, displayLocation, copy }) {
+export default function Hero({ profile, resume, skills, displayLocation, copy, rolesLabel }) {
   const connector = copy.headlineConnector;
   const [headlineLead, headlineEmphasis] = splitHeadline(
     profile.headline,
@@ -37,18 +38,19 @@ export default function Hero({ profile, resume, skills, displayLocation, copy })
           <p className="hero-description" data-reveal>
             {profile.shortIntroduction}
           </p>
+          <ProfileRoles profile={profile} label={rolesLabel} />
           <div className="actions" data-reveal>
             <a className="button primary" href="#projects">
               {copy.primaryAction} <FiArrowDownRight aria-hidden="true" />
             </a>
-            <a
+            {resume && <a
               className="button secondary"
               href={resume.url}
               target="_blank"
               rel="noreferrer"
             >
               {copy.resumeAction} <FiArrowUpRight aria-hidden="true" />
-            </a>
+            </a>}
           </div>
         </div>
         <div className="hero-visual" aria-hidden="true">

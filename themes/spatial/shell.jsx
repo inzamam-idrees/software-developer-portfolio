@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { buildContentNavigation } from "../shared/content-navigation.mjs";
 import { Archivo } from "next/font/google";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import { themeStylesheetHref } from "@/lib/themes/stylesheets.mjs";
@@ -17,9 +18,7 @@ const archivo = Archivo({
 export default function SpatialShell({ portfolio, children }) {
   const view = createSpatialView(portfolio);
   const { copy, profile, settings } = view;
-  const links = settings.navigation.items
-    .filter((item) => item.enabled)
-    .sort((left, right) => left.order - right.order);
+  const links = buildContentNavigation(view);
   const routeLinks = [
     { href: "/project", label: copy.projects.heading },
     { href: "/blog", label: copy.blog.heading },
@@ -75,7 +74,7 @@ export default function SpatialShell({ portfolio, children }) {
             © {new Date().getFullYear()} {settings.site.name}
           </p>
           <nav className="spatial-footer-links" aria-label={copy.navigation.footer}>
-            {routeLinks.map((item) => (
+            {[...links, ...routeLinks].map((item) => (
               <Link key={item.href} href={item.href}>
                 {item.label}
               </Link>

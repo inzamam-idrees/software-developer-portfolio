@@ -4,7 +4,7 @@ import { BsMortarboard, BsTrophy } from "react-icons/bs";
 import GlowCard from "../../helper/glow-card";
 import SectionHeading from "../section-heading";
 
-function TimelineCard({ identifier, icon, duration, title, subtitle, ...rest }) {
+function TimelineCard({ identifier, icon, duration, title, subtitle, description, location, ...rest }) {
   return (
     <li>
       <GlowCard identifier={identifier}>
@@ -17,6 +17,8 @@ function TimelineCard({ identifier, icon, duration, title, subtitle, ...rest }) 
               <p className="text-xs sm:text-sm text-[#16f2b3] mb-1">{duration}</p>
               <h4 className="text-base sm:text-lg mb-1 font-semibold">{title}</h4>
               <p className="text-sm sm:text-base text-[#d3d8e8]">{subtitle}</p>
+              {location && <p className="text-sm text-[#d3d8e8]">{location}</p>}
+              {description && <p className="mt-3 text-sm text-[#d3d8e8]">{description}</p>}
             </div>
           </div>
         </article>
@@ -65,13 +67,15 @@ function Education({ educations, awards = [], copy }) {
                 duration={education.duration}
                 title={education.title}
                 subtitle={education.institution}
+                description={education.description}
+                location={education.location}
               />
             ))}
           </ol>
         </div>
 
         {awards.length > 0 && (
-          <div aria-labelledby="awards-title">
+          <div id="awards" aria-labelledby="awards-title">
             <h3 id="awards-title" className="text-[#16f2b3] text-lg font-medium mb-5">
               {copy.awardsHeading}
             </h3>
@@ -84,6 +88,7 @@ function Education({ educations, awards = [], copy }) {
                   duration={award.duration}
                   title={award.title}
                   subtitle={award.issuer}
+                  location={award.location}
                   data-award
                 />
               ))}

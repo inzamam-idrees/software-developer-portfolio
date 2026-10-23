@@ -1,3 +1,5 @@
+@use "content-sections";
+
 .container {
   width: min(100% - 96px, 1280px);
   margin-inline: auto;
@@ -1133,3 +1135,20 @@
 .motion-button {
   white-space: nowrap;
 }
+
+.additional-capabilities {
+  border-top: 1px solid var(--rule);
+  padding-top: 32px;
+}
+.additional-capabilities .technology-list {
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+@include content-sections.styles(".theme-cinematic", var(--background), var(--surface), var(--text), var(--muted), var(--accent), var(--rule), 4px, true);
+.theme-cinematic .main-menu.desktop-menu { gap: 16px; font-size: 12px; }
+.theme-cinematic .header-inner > nav { min-width: 0; }
+.theme-cinematic .main-menu.mobile-menu { max-height: 75svh; overflow-y: auto; }
+.theme-cinematic .portfolio-content-section { width: min(100% - 96px, 1280px); padding-inline: 0; }
+@media(max-width: 1023px) { .theme-cinematic .portfolio-content-section { width: calc(100% - 64px); } }
+@media(max-width: 767px) { .theme-cinematic .portfolio-content-section { width: calc(100% - 40px); } }

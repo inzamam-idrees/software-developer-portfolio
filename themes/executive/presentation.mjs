@@ -1,5 +1,6 @@
 import { projectDetailSections } from "../shared/project-detail.mjs";
 import { createExecutiveView } from "./view.mjs";
+import { buildContentNavigation } from "../shared/content-navigation.mjs";
 
 export { projectDetailSections };
 
@@ -29,10 +30,7 @@ function monogramOf(name) {
 
 export function createExecutivePresentation(portfolio) {
   const view = createExecutiveView(portfolio);
-  const navigation = view.settings.navigation.items
-    .filter((item) => item.enabled)
-    .sort((left, right) => left.order - right.order)
-    .map(({ id, label, href }) => ({ id, label, href }));
+  const navigation = buildContentNavigation(view);
   const professionalSocials = professionalSocialKeys
     .filter((key) => Boolean(view.social[key]))
     .map((key) => ({

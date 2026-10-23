@@ -24,7 +24,7 @@ test("certificates are editable strict canonical records and allow an empty list
   assert.equal(validateDocument("certificates", [record, record]).ok, false);
 });
 
-test("only Prism receives certificate placeholders and its copy is strict", async () => {
+test("all themes receive canonical certificates and Prism copy stays strict", async () => {
   const canonical = await loadCanonicalPortfolio({ env: {} });
   canonical.content.certificates = [1, 2, 3].map((number) => ({ id: `placeholder-${number}`, title: `[TODO: certificate ${number}]`, issuer: "[TODO: issuer]" }));
   const portfolio = buildCurrentPortfolioView(canonical);
@@ -36,7 +36,7 @@ test("only Prism receives certificate placeholders and its copy is strict", asyn
     assert.equal(item.credentialUrl, undefined);
   }
   for (const id of ["coding", "cinematic", "executive", "spatial"]) {
-    assert.equal(createThemeView(id, portfolio).certificates, undefined);
+    assert.equal(createThemeView(id, portfolio).certificates, portfolio.certificates);
   }
   const prism = createThemeView("prism", portfolio);
   assert.equal(prism.certificates, portfolio.certificates);

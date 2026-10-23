@@ -3,9 +3,10 @@
 import { skillsImage } from "@/utils/skill-image";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
+import SkillLevel from "@/themes/shared/skill-level";
 import SectionHeading from "../section-heading";
 
-function Skills({ skillsData, copy }) {
+function Skills({ skillsData, skills, proficiencyTemplate, copy }) {
   return (
     <section id="skills" aria-labelledby="skills-title" className="relative z-50 border-t my-12 lg:my-24 border-[#25213b]">
       <div className="w-[100px] h-[100px] bg-violet-100 rounded-full absolute top-6 left-[42%] translate-x-1/2 filter blur-3xl  opacity-20"></div>
@@ -18,6 +19,7 @@ function Skills({ skillsData, copy }) {
 
       <SectionHeading id="skills-title">{copy.heading}</SectionHeading>
 
+      <div className="coding-skill-categories">{skills.categories.map((group) => <article key={group.id}><p>{group.label}</p><h3>{group.title}</h3><p>{group.summary}</p><ul className="coding-record-tags">{group.technologies.map((name) => <li key={name}>{name}<SkillLevel name={name} proficiency={skills.proficiency} template={proficiencyTemplate} /></li>)}</ul></article>)}</div>
       <div className="w-full my-12">
         <Marquee
           gradient={false}
@@ -59,7 +61,7 @@ function Skills({ skillsData, copy }) {
                     )}
                   </div>
                   <p className="text-white text-sm sm:text-lg">
-                    {skill}
+                    {skill}<SkillLevel name={skills.all[id]} proficiency={skills.proficiency} template={proficiencyTemplate} />
                   </p>
                 </div>
               </div>

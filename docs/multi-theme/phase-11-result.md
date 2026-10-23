@@ -143,3 +143,7 @@ Prism now embeds the current canonical Google Drive résumé using its Drive pre
 ## Final cleanup and local commit verification
 
 Removed unused certificate date-label copy and empty layout wrappers; the typewriter now uses its named timing constants rather than duplicate numeric delays. Retained the focused components and regression tests because they are used by the theme and verification. Updated stale placeholder/commit documentation. Owner profile/certificate edits are preserved. No generated output, temporary fixtures, screenshots, environment files or dependencies are included in the commits. Public theme remains Coding. Final verification: `validate:content` passed; **228 unit tests passed, 0 failed**; lint passed; isolated production build passed. Actual Drive viewer checks passed at 1280/390. Axe scans passed at 390/1280 in light/dark with zero host-page violations. `git diff --check` passed. Removed the inactive `.next-prism-build` verification output after the successful build; kept the active preview output. Local commit authorized by the owner; no push.
+
+## Subsequent content parity
+
+Phase 12 supersedes the original Prism-only certificate visibility: all five themes now consume canonical certificates and shared optional content sections. See [phase-12-content-parity-result.md](phase-12-content-parity-result.md).

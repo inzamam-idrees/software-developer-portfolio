@@ -1,3 +1,4 @@
+import { buildContentNavigation } from "../shared/content-navigation.mjs";
 import Footer from "@/app/components/footer";
 import Navbar from "@/app/components/navbar";
 import { themeStylesheetHref } from "@/lib/themes/stylesheets.mjs";
@@ -5,7 +6,7 @@ import { createCinematicView } from "./view.mjs";
 
 export default function CinematicShell({ portfolio, children }) {
   const view = createCinematicView(portfolio);
-  const links = view.settings.navigation.items.filter((item) => item.enabled);
+  const links = buildContentNavigation(view);
 
   return (
     <div className="theme-cinematic" data-theme-id="cinematic">

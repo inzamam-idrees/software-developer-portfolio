@@ -4,13 +4,9 @@
 
 ---
 
-<!-- # [Built Portfolio With GitHub ](https://github.com/inzamam-idrees/github-portfolio) -->
-
-<!-- --- -->
-
 # Software Developer Portfolio
 
-#### Are you having trouble making a website for your portfolio that looks good? Look no further!  You can use the Software Developer Portfolio template and create your very own personalized portfolio today!  My website is designed to be user-friendly and easily customizable, making it perfect for both developers and freelancers.
+A multi-theme personal portfolio built with Next.js 15 (App Router), React 19, Tailwind 3 and Sass. One validated content source (`portfolio-data/`) is rendered by five distinct themes — **Coding**, **Cinematic**, **Executive**, **Spatial** and **Prism** — with a private admin area for content editing, theme preview and theme activation. No database.
 
 ---
 
@@ -26,28 +22,34 @@
 
 - [Sections](#sections-bookmark)
 - [Demo](#demo-movie_camera)
+- [Available themes](#available-themes)
 - [Installation](#installation-arrow_down)
 - [Getting Started](#getting-started-dart)
 - [Usage](#usage-joystick)
 - [Deployment](#deployment-rocket)
 - [Tutorials](#tutorials-wrench)
   - [Gmail App Password Setup](#gmail-app-password-setup)
-  - [Create a Telegram Bot](#create-a-telegram-bot)
   - [Fetching Blog from dev.to](#fetching-blog-from-devto)
+- [Development and tests](#development-and-tests)
 - [Packages Used](#packages-used-package)
 
 ---
 
 # Sections :bookmark:
 
-- HERO SECTION
-- ABOUT ME
-- EXPERIENCE
-- SKILLS
-- PROJECTS
-- EDUCATION
-- BLOG
-- CONTACTS
+Every theme renders the same canonical sections (empty or disabled sections are hidden):
+
+- Hero (name, primary and additional roles)
+- About
+- Experience
+- Skills (categories and proficiency levels)
+- Projects, with a detail page per project at `/project/<slug>`
+- Education
+- Awards
+- Certificates
+- Résumé preview
+- Writing (dev.to articles, `/blog`)
+- Contact
 
 ---
 
@@ -58,7 +60,7 @@
 - [Git](https://git-scm.com/downloads)
 - [Node](https://nodejs.org/en/download/)
 
-#### Make sure you have the latest version of both Git and Node on your computer.
+#### Node.js 20.9 or newer is required (`.nvmrc` pins Node 22). Use npm; the project ships a `package-lock.json`.
 
 ```bash
 node --version
@@ -83,16 +85,12 @@ cd software-developer-portfolio
 
 ```bash
 npm install
-# or
-yarn install
 ```
 
-Then, run the development server:
+Then, run the development server (theme stylesheet watcher plus `next dev`):
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -132,18 +130,20 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 # Usage :joystick:
 
-Please create a new `.env` file from `.env.example` file.
+Create a `.env` file from `.env.example`. All variables are documented there:
 
-Eg:
+| Variable | Purpose |
+|---|---|
+| `EMAIL_ADDRESS`, `GMAIL_PASSKEY` | Contact form delivery through Gmail (nodemailer). |
+| `RECAPTCHA_SECRET_KEY` | Server-only reCAPTCHA verification for the contact form. |
+| `NEXT_PUBLIC_GTM` | Optional Google Tag Manager ID (`GTM-…`). |
+| `SITE_URL` | Verified public HTTPS origin; enables canonical URLs and sitemap. |
+| `PORTFOLIO_ADMIN_PASSWORD_HASH`, `PORTFOLIO_ADMIN_SESSION_SECRET` | Admin sign-in (see below). |
+| `PORTFOLIO_CONTENT_STORE`, `GITHUB_CONTENT_*` | Where admin saves go (see Admin content editing). |
+| `PORTFOLIO_DATA_DIR` | Optional alternative data root (persistent-volume hosts only). |
 
-```env
-NEXT_PUBLIC_GTM =
-NEXT_PUBLIC_APP_URL =
-TELEGRAM_BOT_TOKEN =
-TELEGRAM_CHAT_ID =
-GMAIL_PASSKEY =
-EMAIL_ADDRESS =
-```
+`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` and `NEXT_PUBLIC_APP_URL` are left over from the
+original template; no code reads them.
 
 Portfolio content is stored in validated JSON under `portfolio-data/`. See
 [`docs/multi-theme/phase-2-canonical-content.md`](docs/multi-theme/phase-2-canonical-content.md)
@@ -198,7 +198,7 @@ ephemeral filesystem. A host with a persistent volume can instead use
 2. Once logged in, click on **"New Project"**.
 3. Select your **GitHub repo** (the one that contains your forked project) and click **Import**.
 4. Configure your environment variables in the Vercel dashboard by adding each key from your `.env` file.
-   - E.g., `NEXT_PUBLIC_GTM`, `NEXT_PUBLIC_APP_URL`, `TELEGRAM_BOT_TOKEN`, etc.
+   - E.g., `SITE_URL`, `EMAIL_ADDRESS`, `GMAIL_PASSKEY`, `RECAPTCHA_SECRET_KEY`, etc.
 5. Click on **Deploy**. Vercel will automatically detect your Next.js app and build it.
 6. Once the deployment is complete, you can visit your live website!
 
@@ -244,19 +244,6 @@ for the persistence assessment and future migration path.
 6. In the **Select app** dropdown, choose "Mail", and for **Select device**, choose "Other (Custom name)" and name it appropriately (e.g., "Portfolio").
 7. Click **Generate**. A 16-character app password will be displayed. Save this password for later use in your environment variables (e.g., `GMAIL_PASSKEY`).
 
-## Create a Telegram Bot
-
-1. **Open Telegram** and search for the user **@BotFather**.
-2. Start a chat with BotFather and use the `/newbot` command to create a new bot.
-3. Choose a name for your bot.
-4. Set a unique username for your bot (must end with `bot`, e.g., `PortfolioAssistantBot`).
-5. Once your bot is created, BotFather will send you a **Token**. Save this token, as you will need it for your environment variables (e.g., `TELEGRAM_BOT_TOKEN`).
-6. To get your chat ID:
-   - Open your bot in Telegram and send it a message.
-   - Visit the following URL in your browser, replacing `BOT_TOKEN` with your actual bot token:  
-     `https://api.telegram.org/bot<BOT_TOKEN>/getUpdates`
-   - Look for the `chat` object in the response, which contains your **chat ID** (you can use this value for `TELEGRAM_CHAT_ID`).
-
 ## Fetching Blog from dev.to
 
 To display your blog posts from dev.to on the portfolio:
@@ -269,23 +256,21 @@ To display your blog posts from dev.to on the portfolio:
 
 # Packages Used :package:
 
-|   Used Package List    |
-| :--------------------: |
-|    @emailjs/browser    |
-|  @next/third-parties   |
-|         axios          |
-|      lottie-react      |
-|          next          |
-|       nodemailer       |
-|         react          |
-|       react-dom        |
-|   react-fast-marquee   |
-| react-google-recaptcha |
-|      react-icons       |
-|     react-toastify     |
-|         sharp          |
-|          sass          |
-|      tailwindcss       |
+|   Package    | Use |
+| :--- | :--- |
+| next, react, react-dom | Framework (Next.js 15, React 19) |
+| zod | Canonical content and copy schemas |
+| three, @react-three/fiber | Lazy 3D scenes (Cinematic, Spatial only) |
+| gsap | Cinematic scroll motion |
+| nodemailer, react-google-recaptcha, axios | Contact form delivery and verification |
+| @next/third-parties | Google Tag Manager |
+| react-icons | Icons (several themes) |
+| react-fast-marquee, lottie-react | Coding theme UI (original template) |
+| react-toastify, @emailjs/browser | Installed from the original template; not imported by current code |
+| sharp | Image optimisation |
+| tailwindcss, sass, postcss, autoprefixer | Styles |
+
+Dependency decisions are recorded in `docs/portfolio/dependency-decisions.md`.
 
 ---
 
@@ -306,9 +291,7 @@ This installs Next.js globally
 then do the usual `npm run dev`
 
 
-## Cinematic portfolio implementation
-
-Requires Node.js 20.9 or newer (validated with Node 22).
+## Cinematic theme
 
 The existing Next.js App Router application reads all factual content through the
 server-only validated loader in `lib/portfolio`. The bundled development data lives
@@ -336,18 +319,38 @@ preference (shared with Cinematic) or software rendering, and no 3D at all witho
 WebGL2 or with `features.threeD` off. Spatial adds no dependencies and loads no GSAP.
 Details: `docs/multi-theme/phase-8-spatial-result.md`.
 
-Run `npm run test:unit`, `npm run lint`, and `npm run build` for local checks.
-Browser cases in `tests/browser` run with the installed Playwright CLI, e.g.
+## Development and tests
+
+```bash
+npm run validate:content   # Zod-validate portfolio-data/ (also runs before build)
+npm run build:theme-css    # compile per-theme stylesheets to public/theme-css
+npm run test:unit          # node --test tests/unit/*.test.mjs
+npm run lint
+npm run build
+```
+
+Browser cases in `tests/browser` run with the installed Playwright CLI against a running server, e.g.
 `playwright-cli -s=portfolio run-code --filename=tests/browser/navigation.js`.
 If another Next process uses the checkout, isolate generated files:
 `PORTFOLIO_BUILD_DIR=.next-portfolio-dev npm run dev -- --port 3001`.
 Use the same `PORTFOLIO_BUILD_DIR` for a production build and its start command.
-Validation evidence and dependency choices are recorded under `docs/portfolio`.
+Validation evidence and dependency choices are recorded under `docs/portfolio`; phase
+designs and results under `docs/multi-theme`.
+
+## SEO
+
+Public routes (`/`, `/project`, `/project/<slug>`, `/blog`) are prerendered; `/blog`
+revalidates hourly for dev.to articles, and admin saves or theme activation revalidate
+on demand. Each route emits its own title, description, Open Graph/Twitter tags and
+JSON-LD (WebSite, ProfilePage and Person on `/`; item lists for projects and posts).
+`/llms.txt`, `robots.txt` (disallows `/admin`, `/api/`, `/preview`), the sitemap, icons and
+the social image are generated from canonical content. The audit is in
+`docs/seo/2026-10-19-seo-audit.md`.
 
 
 ## Available themes
 
-Coding, Cinematic, Executive, Spatial, and **Prism** all render one validated canonical portfolio through five lazy slots: shell, home, projects, individual project, and blog.
+Coding (the current public theme), Cinematic, Executive, Spatial, and **Prism** all render one validated canonical portfolio through five lazy slots: shell, home, projects, individual project, and blog. Each theme loads only its own stylesheet. Activate a theme from `/admin/theme`; preview any theme privately at `/preview/<theme>`.
 
 Prism recreates the reference's portrait-led glass layout with warm rose/terracotta/gold palettes, pill navigation, skills filters and marquee, project carousel and accessible quick preview, and native motion. It adds no dependencies or 3D runtime. Private previews are `/preview/prism`, `/preview/prism/project`, `/preview/prism/project/<slug>`, and `/preview/prism/blog` after admin sign-in. Adding Prism does not activate it.
 

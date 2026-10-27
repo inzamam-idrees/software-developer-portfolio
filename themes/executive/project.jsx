@@ -43,7 +43,7 @@ export default function ExecutiveProject({ portfolio, project }) {
         </ul>
         {links.length > 0 && <div className="executive-project-links executive-project-page-links">{links.map(([kind, href]) => <a href={href} target="_blank" rel="noreferrer" key={kind}>{projectLinkLabel(kind, labels)} <span aria-hidden="true">↗</span></a>)}</div>}
       </article>
-      <aside className="executive-route-cta"><p className="executive-kicker">{copy.projects.ctaKicker}</p><h2>{view.contact.heading}</h2><Link className="executive-button primary" href="/#contact">{copy.actions.startConversation} <span aria-hidden="true">→</span></Link></aside>
+      <aside className="executive-route-cta"><p className="executive-kicker">{copy.projects.ctaKicker}</p><h2>{view.contact.heading}</h2><Link className="executive-button primary" href="/#contact">{copy.actions.startConversation}</Link></aside>
     </div>
   );
 }

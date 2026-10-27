@@ -6,6 +6,7 @@ import { documentFormSchema } from "@/lib/admin/form-schema.mjs";
 import { getAdminRequestState } from "@/lib/admin/server.mjs";
 import { createContentStore } from "@/lib/content-store/index.mjs";
 import { getDocumentDefinition } from "@/lib/portfolio/documents.mjs";
+import { getCurrentPortfolioView } from "@/lib/portfolio/server.mjs";
 import SchemaForm from "../schema-form";
 import { describeStore } from "../store-description.mjs";
 
@@ -48,6 +49,8 @@ export default async function ContentDocumentPage({ params }) {
     failure = error.message;
   }
 
+  const portfolio = await getCurrentPortfolioView();
+
   return (
     <AdminShell current="content">
       <nav className="admin-breadcrumb" aria-label="Breadcrumb">
@@ -79,7 +82,7 @@ export default async function ContentDocumentPage({ params }) {
         <SchemaForm
           documentId={definition.id}
           label={definition.label}
-          jsonSchema={documentFormSchema(definition.id)}
+          jsonSchema={documentFormSchema(definition.id, { fieldCopy: portfolio.settings.copy.shared.adminFields })}
           initialData={loaded.data}
           revision={loaded.revision}
           writable={store.capabilities.writable}

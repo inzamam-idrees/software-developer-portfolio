@@ -1,6 +1,6 @@
 {
   "actions": {
-    "startConversation": "Start a conversation"
+    "startConversation": "Get in touch"
   },
   "navigation": {
     "allProjects": "All projects",
@@ -21,7 +21,7 @@
     },
     "selectedWork": {
       "kicker": "Selected work",
-      "heading": "Systems built for real operations.",
+      "heading": "Selected engineering work",
       "exploreAll": "Explore all projects"
     },
     "about": {
@@ -29,22 +29,34 @@
     },
     "expertise": {
       "kicker": "Technical expertise",
-      "heading": "A full-stack practice, organized by outcome."
+      "heading": "Technical expertise"
     },
     "experience": {
       "kicker": "Professional experience",
-      "heading": "Progression through product engineering."
+      "heading": "Career experience",
+      "intro": "Roles, contributions and the technology behind the work.",
+      "navigationLabel": "Navigate career roles",
+      "responsibilities": "Show all responsibilities ({count} more)",
+      "moreTechnologies": "+{count} more technologies",
+      "impact": "Impact"
     },
     "education": {
       "kicker": "Education",
-      "heading": "Foundations in software engineering."
+      "heading": "Education"
     },
     "awards": {
       "kicker": "Recognition",
-      "heading": "Awards & honors."
+      "heading": "Awards and recognition"
     },
     "contact": {
       "kicker": "Contact"
+    },
+    "background": {
+      "heading": "Background"
+    },
+    "proof": {
+      "employers": "Career experience",
+      "stack": "Core technologies"
     }
   },
   "project": {
@@ -54,11 +66,12 @@
     "features": "Key features",
     "responsibilities": "My role",
     "viewProject": "View project",
-    "viewSource": "source"
+    "viewSource": "source",
+    "expand": "Explore the work"
   },
   "projects": {
-    "kicker": "Project archive · {count} builds",
-    "heading": "Engineering work, in context.",
+    "kicker": "{count} projects",
+    "heading": "Engineering work",
     "intro": "Selected product, platform, and business-application work across frontend and backend systems.",
     "ctaKicker": "Have a project in mind?"
   },
@@ -72,5 +85,29 @@
     "emptyBody": "My DEV profile remains available for the latest writing.",
     "profileAction": "Visit DEV Community",
     "readingTime": "{minutes} min read"
+  },
+  "contactForm": {
+    "note": "You can also contact me directly by email."
+  },
+  "certificates": {
+    "issued": "Issued",
+    "verify": "Verify credential"
+  },
+  "resume": {
+    "summary": "Review my career history, projects and technical background in one document.",
+    "download": "Download résumé",
+    "open": "Open résumé",
+    "preview": "Preview full résumé",
+    "updated": "Last updated",
+    "loadPreview": "Load preview",
+    "noScriptPreview": "Choose Load preview to display the document here."
+  },
+  "motion": {
+    "pause": "Pause animation",
+    "resume": "Enable animation",
+    "on": "Motion on",
+    "off": "Motion off",
+    "reduced": "Motion reduced",
+    "reducedHelp": "Your device’s reduced-motion preference is enabled."
   }
 }

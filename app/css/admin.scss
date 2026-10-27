@@ -1921,3 +1921,8 @@
     height: 2.75rem;
   }
 }
+.admin-surface .admin-field-help { margin: 8px 0 0; color: var(--a-text-3); font-size: 13px; line-height: 1.5; }
+// Keep role validation badges/errors within the editor's available grid width.
+.admin-schema-form .admin-array { grid-template-columns: minmax(0, 1fr); }
+.admin-schema-form .admin-array-item { min-width: 0; }
+.admin-fieldset > legend.admin-sr-only { width: 1px; margin: -1px; }

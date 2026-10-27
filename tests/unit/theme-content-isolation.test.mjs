@@ -98,3 +98,19 @@ test("awards reach every theme view with formatted durations", async () => {
     /requires canonical awards content/,
   );
 });
+
+test("experience outcomes remain canonical data but only Executive presentation consumes them", async () => {
+  const canonical = await loadCanonicalPortfolio({ env: {} });
+  canonical.content.experience[0].outcome = "[TEST FIXTURE ONLY: explicit outcome]";
+  const portfolio = buildCurrentPortfolioView(canonical);
+  for (const [, createView] of themeViews) assert.equal(createView(portfolio).experience[0].outcome, canonical.content.experience[0].outcome);
+  for (const theme of ["coding", "cinematic", "spatial", "prism"]) {
+    const files = await listFiles(path.resolve("themes", theme));
+    if (theme === "coding") files.push(...await listFiles(path.resolve("app/components/homepage")));
+    if (theme === "cinematic") files.push(...await listFiles(path.resolve("app/components/portfolio")));
+    for (const file of files.filter(file => /\.[cm]?jsx?$/.test(file))) {
+      const source = await readFile(file, "utf8");
+      assert.doesNotMatch(source, /(?:experience|item|role)\??\.outcome/, `${file} starts presenting a new experience field`);
+    }
+  }
+});

@@ -14,7 +14,7 @@ export default function ExecutiveProjects({ portfolio }) {
         <p>{copy.projects.intro}</p>
       </header>
       <div className="executive-projects executive-project-archive">{view.projects.map((project, index) => <ExecutiveProjectCard key={project.id} project={project} index={index} copy={copy} detailed={Boolean(project.problem && project.solution)} />)}</div>
-      <aside className="executive-route-cta"><p className="executive-kicker">{copy.projects.ctaKicker}</p><h2>{view.contact.heading}</h2><Link className="executive-button primary" href="/#contact">{copy.actions.startConversation} <span aria-hidden="true">→</span></Link></aside>
+      <aside className="executive-route-cta"><p className="executive-kicker">{copy.projects.ctaKicker}</p><h2>{view.contact.heading}</h2><Link className="executive-button primary" href="/#contact">{copy.actions.startConversation}</Link></aside>
     </div>
   );
 }

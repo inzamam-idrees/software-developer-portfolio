@@ -29,14 +29,14 @@ async (sourcePage) => {
 
     await page.goto(origin, { waitUntil: "domcontentloaded" });
     await page.locator('[data-theme-id="executive"]').waitFor();
-    await page.getByRole("heading", { level: 1, name: /Engineering with intention/i }).waitFor();
-    for (const text of ["Senior Full Stack Engineer", "7+ years", "Full-stack engineering", "Selected work", "Professional experience", "Technical expertise", "Get Resume"]) {
+    await page.getByRole("heading", { level: 1, name: /Senior Full Stack Engineer/i }).waitFor();
+    for (const text of ["Senior Full Stack Engineer", "7+ years", "Full-stack engineering", "Selected engineering work", "Career experience", "Technical expertise", "Get Resume"]) {
       if (!(await page.getByText(text, { exact: !["Get Resume", "Senior Full Stack Engineer"].includes(text) }).first().isVisible())) throw new Error(`${text} is not readily visible in the Executive document at ${viewport.width}`);
     }
     if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error(`Executive horizontal overflow at ${viewport.width}`);
-    const awards = await page.locator("#awards h3").allTextContents();
+    const awards = await page.locator("#awards article h4").allTextContents();
     if (awards.join("|") !== "Student of the Year|High GPA Achievers|Coding Competition Winner") throw new Error(`Executive awards missing at ${viewport.width}: ${awards}`);
-    if ((await page.locator(".executive-timeline .executive-highlights").count()) !== 3) throw new Error(`Executive highlights missing at ${viewport.width}`);
+    if ((await page.locator(".executive-timeline .executive-primary-highlights").count()) !== 3) throw new Error(`Executive highlights missing at ${viewport.width}`);
     if ((await page.locator(".executive-timeline ul:empty").count()) !== 0) throw new Error(`Executive empty highlight list at ${viewport.width}`);
     if (await page.locator("canvas,.experience-shell,.motion-control").count()) throw new Error(`Executive initialized Cinematic UI at ${viewport.width}`);
 

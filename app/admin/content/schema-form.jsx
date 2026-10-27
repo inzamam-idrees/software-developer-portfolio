@@ -16,7 +16,7 @@ import {
 import Icon from "../icons";
 
 // ── Labels and identifiers ──
-const LONG_TEXT = /description|introduction|statement|summary|philosophy|intro|body|note/i;
+const LONG_TEXT = /description|introduction|statement|summary|philosophy|intro|body|note|outcome/i;
 const COMPLEX_KINDS = new Set(["object", "record", "array", "json"]);
 
 function humanize(key) {
@@ -133,7 +133,9 @@ function ScalarField({ schema, path, value, label, labelHidden }) {
   const { onChange, issues } = useForm();
   const { schema: inner } = unwrapNullable(schema);
   const kind = fieldKind(inner);
-  const { id, message, attributes } = controlProps(path, issues);
+  const { id, message, attributes: baseAttributes } = controlProps(path, issues);
+  const help = schema.description ?? inner.description;
+  const attributes = { ...baseAttributes, "aria-describedby": [help ? `${id}-help` : null, baseAttributes["aria-describedby"]].filter(Boolean).join(" ") || undefined };
   const display = value ?? "";
   let wide = false;
 
@@ -213,6 +215,7 @@ function ScalarField({ schema, path, value, label, labelHidden }) {
         {control}
         <ClearButton schema={schema} path={path} value={value} label={label} />
       </div>
+      {help && <p className="admin-field-help" id={`${id}-help`}>{help}</p>}
       <ErrorText id={id} message={message} />
     </div>
   );
@@ -539,6 +542,7 @@ function ObjectField({ schema, path, value, label, legendHidden }) {
 }
 
 function Field(props) {
+  props = { ...props, label: props.schema.title ?? props.label };
   const kind = fieldKind(props.schema);
   if (kind === "object") return <ObjectField {...props} />;
   if (kind === "array") return <ArrayField {...props} />;

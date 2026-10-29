@@ -1,6 +1,7 @@
 import SkillLevel from "@/themes/shared/skill-level";
 import ChapterHeading from "../ui/chapter-heading";
-export default function Expertise({ skills, copy, additionalLabel, proficiencyTemplate }) {
+import TechTiles from "../ui/tech-tiles";
+export default function Expertise({ skills, tiles, copy, additionalLabel, proficiencyTemplate }) {
   const categorized = new Set(skills.categories.flatMap((group) => group.technologies));
   const additionalSkills = skills.all.filter((skill) => !categorized.has(skill));
   return (
@@ -16,6 +17,7 @@ export default function Expertise({ skills, copy, additionalLabel, proficiencyTe
         title={copy.heading}
         description={copy.description}
       />
+      <TechTiles tiles={tiles} label={copy.heading} />
       <div className="capability-list">
         {skills.categories.map((group, index) => (
           <article key={group.id} data-reveal>

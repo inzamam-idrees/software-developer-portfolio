@@ -4,7 +4,7 @@ import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export default function Navbar({ profile, links, copy: navigation }) {
+export default function Navbar({ profile, links, copy: navigation, cta = null }) {
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
   const [activeSection, setActiveSection] = useState(null);
@@ -82,7 +82,6 @@ export default function Navbar({ profile, links, copy: navigation }) {
           }
         >
           {label}
-          {id === "contact" && <span aria-hidden="true"> ↗</span>}
         </Link>
       </li>
     ));
@@ -95,12 +94,14 @@ export default function Navbar({ profile, links, copy: navigation }) {
           aria-label={formatCopy(navigation.homeLink, { name: profile.name })}
           onClick={closeMenu}
         >
-          {profile.name.split(" ")[0].toLowerCase()}
-          <span className="accent">.</span>
-          <span className="wordmark-sub">
-            {profile.name.split(" ").slice(1).join(" ")} /{" "}
-            {navigation.wordmarkRole}
+          <span className="wordmark-mark" aria-hidden="true">
+            {profile.name
+              .split(" ")
+              .map((part) => part[0])
+              .join("")
+              .toLowerCase()}
           </span>
+          <span className="wordmark-name">{profile.name}</span>
         </Link>
         <nav aria-label={navigation.main}>
           <ul className="main-menu desktop-menu">{items()}</ul>
@@ -131,6 +132,11 @@ export default function Navbar({ profile, links, copy: navigation }) {
             </ul>
           </details>
         </nav>
+        {cta && (
+          <a className="header-cta" href={cta.href}>
+            {cta.label} <span aria-hidden="true">→</span>
+          </a>
+        )}
         <div id="motion-slot" />
       </div>
     </header>

@@ -11,7 +11,7 @@ export function Writing({ result, profileUrl, copy, blogCopy }) {
     >
       <ChapterHeading
         id="writing"
-        number="06"
+        number="07"
         label={copy.label}
         title={copy.heading}
         description={copy.description}

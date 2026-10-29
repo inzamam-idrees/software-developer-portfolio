@@ -1,10 +1,24 @@
 {
   "actions": {
-    "startConversation": "Get in touch"
+    "startConversation": "Get in touch",
+    "viewProjects": "View my projects",
+    "contactMe": "Contact me",
+    "backToTop": "Back to top",
+    "viewResume": "View Resume",
+    "downloadCv": "Download CV"
   },
   "navigation": {
     "allProjects": "All projects",
-    "writing": "Writing"
+    "writing": "Writing",
+    "home": "Home",
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "skills": "Skills",
+    "education": "Education",
+    "awards": "Awards",
+    "blog": "Blog",
+    "contact": "Contact"
   },
   "footer": {
     "projects": "Projects",
@@ -20,20 +34,23 @@
       "basedIn": "Based in"
     },
     "selectedWork": {
-      "kicker": "Selected work",
-      "heading": "Selected engineering work",
-      "exploreAll": "Explore all projects"
+      "kicker": "Featured projects",
+      "heading": "Some things I've built",
+      "exploreAll": "View all projects"
     },
     "about": {
-      "kicker": "About"
+      "kicker": "About me",
+      "heading": "Engineer, collaborator, owner",
+      "readMore": "Read more"
     },
     "expertise": {
-      "kicker": "Technical expertise",
-      "heading": "Technical expertise"
+      "kicker": "My tech stack",
+      "heading": "Skills & technologies",
+      "all": "All technologies"
     },
     "experience": {
-      "kicker": "Professional experience",
-      "heading": "Career experience",
+      "kicker": "Professional journey",
+      "heading": "Work experience",
       "intro": "Roles, contributions and the technology behind the work.",
       "navigationLabel": "Navigate career roles",
       "responsibilities": "Show all responsibilities ({count} more)",
@@ -42,14 +59,14 @@
     },
     "education": {
       "kicker": "Education",
-      "heading": "Education"
+      "heading": "Academic background"
     },
     "awards": {
       "kicker": "Recognition",
-      "heading": "Awards and recognition"
+      "heading": "Awards & achievements"
     },
     "contact": {
-      "kicker": "Contact"
+      "kicker": "Get in touch"
     },
     "background": {
       "heading": "Background"
@@ -57,6 +74,21 @@
     "proof": {
       "employers": "Career experience",
       "stack": "Core technologies"
+    },
+    "stats": {
+      "projects": "Projects built",
+      "technologies": "Technologies",
+      "certifications": "Certifications"
+    },
+    "hero": {
+      "note": "Turning ideas into scalable products"
+    },
+    "codeCard": {
+      "experience": "Years of experience",
+      "focus": "Focus",
+      "roles": "Roles",
+      "stack": "Core stack",
+      "location": "Based in"
     }
   },
   "project": {
@@ -66,8 +98,8 @@
     "features": "Key features",
     "responsibilities": "My role",
     "viewProject": "View project",
-    "viewSource": "source",
-    "expand": "Explore the work"
+    "viewSource": "Source code",
+    "expand": "Project details"
   },
   "projects": {
     "kicker": "{count} projects",

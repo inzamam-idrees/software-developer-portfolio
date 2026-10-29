@@ -49,3 +49,7 @@ viewport, which is what Drei's `View` would provide. `axe-core`, used by
 
 Scene budget (measured with draw-call instrumentation in headless Chromium): at most 6
 draw calls and 1,736 triangles per frame for any station; Spatial scene code 4.0 kB gz.
+
+## simple-icons (Executive skill tiles)
+
+Added `simple-icons` (CC0 brand SVG paths) so Executive skill tiles show real technology marks. Named imports are used only in server components (`themes/executive/tech-icons.mjs`), so no client JavaScript or other theme is affected; names without an icon are skipped.

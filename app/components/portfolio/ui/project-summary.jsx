@@ -26,6 +26,7 @@ export default function ProjectSummary({
   return (
     <article
       className={`project-chapter ${featured ? "featured" : "compact-project"}`}
+      data-project-screen={featured ? "" : undefined}
     >
       <div className="project-meta">
         <span className="eyebrow accent">

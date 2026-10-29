@@ -21,25 +21,28 @@ export default function CinematicHome({ portfolio }) {
     <ExperienceShell motionCopy={copy.motion}>
       <Hero
         profile={view.profile}
-        resume={view.settings.features.resume ? view.resume : null}
         skills={view.skills}
+        stats={view.stats}
         displayLocation={view.displayLocation}
         copy={home.hero}
-        rolesLabel={copy.contentSections.roles}
-      />
-      <SelectedWork
-        projects={view.featuredProjects}
-        projectCount={view.projects.length}
-        copy={copy}
       />
       <About
         profile={view.profile}
         about={view.about}
         social={view.social}
+        stats={view.stats}
+        resume={view.settings.features.resume ? view.resume : null}
         displayLocation={view.displayLocation}
         copy={home.about}
+        actions={home.hero}
+        rolesLabel={copy.contentSections.roles}
       />
-      <Expertise skills={view.skills} copy={home.expertise} additionalLabel={copy.contentSections.skillsAdditional} proficiencyTemplate={copy.contentSections.proficiency} />
+      <Expertise skills={view.skills} tiles={view.techTiles} copy={home.expertise} additionalLabel={copy.contentSections.skillsAdditional} proficiencyTemplate={copy.contentSections.proficiency} />
+      <SelectedWork
+        projects={view.featuredProjects}
+        projectCount={view.projects.length}
+        copy={copy}
+      />
       <Experience experiences={view.experience} copy={home.experience} />
       <Education
         educations={view.education}

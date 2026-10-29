@@ -8,7 +8,7 @@ export default function Education({ educations, awards, copy }) {
     >
       <ChapterHeading
         id="education"
-        number="05"
+        number="06"
         label={copy.label}
         title={copy.heading}
       />

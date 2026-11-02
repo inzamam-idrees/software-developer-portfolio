@@ -1,0 +1,11 @@
+# Phase 20: Executive visible motion and certificate completeness
+
+Date: 2026-10-27. Keep the owner's light/refined direction and Executive-only scope. No activation, commit, push, new dependencies or factual content edits.
+
+The previous entrance moved only 16–24px and the remaining motion was primarily interaction feedback. Make movement perceptible with a staged headline/portrait entrance, staggered scroll arrivals for work, career, expertise and certificates, and stronger fine-pointer feedback. Use native Web Animations plus IntersectionObserver, retaining the earlier no-GSAP/no-scroll-handler constraint. Keep text fully opaque for contrast and keep all content visible before enhancement. A labeled header control explains whether animation is on, off, or disabled by the system. Pause/reduction cancels running native animations as well as CSS transitions. Reveals run once, not continuously; cleanup and focus must settle content.
+
+The owner now explicitly requests all three certification records. This supersedes the earlier whole-record placeholder filter: retain genuine title/issuer/status but omit BOTH credential ID and link when either contains a placeholder. Do not change canonical data, invent a credential, promote completion to verification, or display placeholder/missing-value text. Keep malformed title/issuer records hidden and hide an empty section/nav. Test that sanitization never mutates canonical records.
+
+Build: test new certificate policy first; implement a separately testable native motion controller and preference integration; label the control through copy/schema; keep certificate rows consistent; compile in the existing pipeline. Verify real running transforms and stagger timing, scroll arrivals, pause/resume and blocked storage, system reduction, no-JS content, keyboard disclosures, light/dark at phone/desktop widths, required command checks and a production build. Save screenshots and an animation recording, then report actual results and limitations.
+
+Design critique: preserve the refined composition. Avoid glowing backgrounds, spinning skill logos, bouncing badges, invented project imagery, scroll hijacking and effects that conceal text. Visible motion should stage actual content and respond to the visitor, not compete with career evidence.

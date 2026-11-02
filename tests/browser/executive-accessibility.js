@@ -23,7 +23,7 @@ async (sourcePage) => {
   const nojs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
   const staticPage = await nojs.newPage();
   await staticPage.goto("http://127.0.0.1:3016", { waitUntil: "domcontentloaded" });
-  await staticPage.getByRole("heading", { level: 1, name: /Engineering with intention/i }).waitFor();
+  await staticPage.getByRole("heading", { level: 1, name: /Senior Full Stack Engineer/i }).waitFor();
   const nativeMenu = staticPage.locator(".executive-mobile-nav");
   await nativeMenu.locator("summary").focus();
   await staticPage.keyboard.press("Enter");

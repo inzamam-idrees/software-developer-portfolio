@@ -2,198 +2,119 @@
 import { useEffect } from "react";
 import { useMotion } from "./motion-preferences";
 import { createSceneState } from "./scene-state.mjs";
-const chapters = [
-  [
-    "projects",
-    {
-      cameraZ: 9,
-      rotationY: 0.9,
-      coreX: 0.5,
-      coreY: 0.3,
-      coreScale: 0.85,
-      spread: 0.2,
-      opacity: 0.16,
-    },
-  ],
-  [
-    "about",
-    {
-      cameraZ: 10,
-      rotationY: 1.5,
-      coreX: 1.2,
-      coreY: 0.1,
-      coreScale: 0.85,
-      spread: 0.3,
-      opacity: 0.18,
-    },
-  ],
-  [
-    "skills",
-    {
-      cameraZ: 10.5,
-      rotationY: 2.1,
-      rotationX: 0.25,
-      coreX: 0.5,
-      coreY: 0.25,
-      coreScale: 1,
-      spread: 1.5,
-      opacity: 0.17,
-    },
-  ],
-  [
-    "experience",
-    {
-      cameraZ: 11,
-      rotationY: 2.9,
-      coreX: 1,
-      coreY: 0.2,
-      coreScale: 0.8,
-      spread: 0.5,
-      opacity: 0.12,
-    },
-  ],
-  [
-    "education",
-    {
-      cameraZ: 12,
-      rotationY: 3.3,
-      coreX: 0.4,
-      coreY: 0.2,
-      coreScale: 0.7,
-      spread: 0.3,
-      opacity: 0.1,
-    },
-  ],
-  [
-    "writing",
-    {
-      cameraZ: 13,
-      rotationY: 3.7,
-      coreX: 0.5,
-      coreY: 0,
-      coreScale: 0.7,
-      spread: 0.2,
-      opacity: 0.08,
-    },
-  ],
-  [
-    "contact",
-    {
-      cameraZ: 14,
-      rotationY: 4,
-      coreX: 0.2,
-      coreY: 0,
-      coreScale: 0.6,
-      spread: 0,
-      opacity: 0.04,
-    },
-  ],
-];
+import { STATION_IDS, stationStops } from "./journey.mjs";
+
+// ── Helpers ──
+function resetScene(scene) {
+  const { projectCount, pathCount } = scene;
+  Object.assign(scene, createSceneState(), { projectCount, pathCount });
+}
+
+function countOf(root, selector, fallback) {
+  const found = root.querySelectorAll(selector).length;
+  return found || fallback;
+}
+
 export default function ScrollCoordinator({ stateRef, rootRef }) {
   const { enabled } = useMotion();
+
   useEffect(() => {
-    const scene = stateRef.current,
-      rootElement = rootRef.current;
+    const scene = stateRef.current;
+    const rootElement = rootRef.current;
+    scene.projectCount = countOf(rootElement, "[data-project-screen]", scene.projectCount);
+    scene.pathCount = countOf(rootElement, "[data-career-step]", scene.pathCount);
     if (!enabled) {
-      Object.assign(scene, createSceneState());
+      resetScene(scene);
       return;
     }
-    let cancelled = false,
-      media;
+    let cancelled = false;
+    let media;
+
     Promise.all([import("gsap"), import("gsap/ScrollTrigger")])
       .then(([gsapModule, triggerModule]) => {
         if (cancelled) return;
-        const gsap = gsapModule.gsap,
-          ScrollTrigger = triggerModule.ScrollTrigger;
+        const gsap = gsapModule.gsap;
+        const ScrollTrigger = triggerModule.ScrollTrigger;
         gsap.registerPlugin(ScrollTrigger);
         media = gsap.matchMedia();
         media.add(
           { compact: "(max-width: 767px)", desktop: "(min-width: 768px)" },
           (context) => {
-            const compact = context.conditions.compact,
-              root = rootElement,
-              progress = root.querySelector(".story-progress");
-            let timeline, refreshFrame;
+            const compact = context.conditions.compact;
+            const root = rootElement;
+            const progress = root.querySelector(".story-progress");
+            let timeline;
+            let refreshFrame;
+
+            // Camera journey: one scrubbed timeline across the whole page.
             context.add("rebuild", () => {
               timeline?.scrollTrigger?.kill();
               timeline?.kill();
-              Object.assign(scene, createSceneState());
-              const max = Math.max(1, ScrollTrigger.maxScroll(window));
-              let previous = 0;
+              scene.journey = 0;
+              const max = ScrollTrigger.maxScroll(window);
+              const offsets = STATION_IDS.map((id, index) => {
+                if (index === 0) return 0;
+                const element = root.querySelector("#" + id);
+                if (!element) return NaN;
+                const top = element.getBoundingClientRect().top + window.scrollY;
+                return top - window.innerHeight * (compact ? 0.2 : 0.3);
+              });
+              const stops = stationStops(offsets, max);
               timeline = gsap.timeline({
                 defaults: { ease: "none" },
                 scrollTrigger: {
                   trigger: root,
                   start: 0,
                   end: () => ScrollTrigger.maxScroll(window),
-                  scrub: 0.4,
+                  scrub: 0.6,
                   invalidateOnRefresh: true,
                 },
                 onUpdate: () => {
                   progress.style.transform = `scaleX(${timeline.progress()})`;
                 },
               });
-              for (const [id, pose] of chapters) {
-                const element = root.querySelector("#" + id);
-                if (!element) continue;
-                const stop = Math.min(
-                  0.98,
-                  Math.max(
-                    previous + 0.001,
-                    (element.getBoundingClientRect().top +
-                      window.scrollY -
-                      120) /
-                      max,
-                  ),
-                );
-                const target = { ...pose };
-                if (compact) {
-                  target.rotationY *= 0.35;
-                  target.coreX = 0;
-                  target.coreY = 0;
-                  target.spread *= 0.5;
-                }
-                timeline.to(
-                  scene,
-                  { ...target, duration: stop - previous },
-                  previous,
-                );
+              let previous = 0;
+              STATION_IDS.forEach((id, index) => {
+                if (index === 0) return;
+                const stop = stops[index];
+                timeline.to(scene, { journey: index, duration: stop - previous }, previous);
                 previous = stop;
-              }
-              timeline.to(
-                scene,
-                { opacity: 0.02, duration: Math.max(0.001, 1 - previous) },
-                previous,
-              );
+              });
+              timeline.set({}, {}, 1);
               timeline.scrollTrigger.refresh();
               timeline.scrollTrigger.update();
             });
             context.rebuild();
-            gsap
-              .timeline({ defaults: { duration: 0.8, ease: "power2.out" } })
-              .from(root.querySelectorAll("#hero [data-reveal]"), {
-                y: 18,
-                opacity: 0.65,
-                stagger: 0.1,
+
+            // Per-chapter scrubs: the active project, the career path, the tech orbit.
+            const scrub = (selector, vars, start, end) => {
+              const trigger = root.querySelector(selector);
+              if (!trigger) return;
+              gsap.to(scene, {
+                ...vars,
+                ease: "none",
+                scrollTrigger: { trigger, start, end, scrub: 0.5, invalidateOnRefresh: true },
               });
+            };
+            scrub("#experience", { pathProgress: 1 }, "top 55%", "bottom 65%");
+            scrub("#skills", { skillsTurn: 1 }, "top 100%", "bottom 0%");
+
+            // Entrance: hero first, then each chapter as it arrives.
+            gsap
+              .timeline({ defaults: { duration: 0.9, ease: "power3.out" } })
+              .from(root.querySelectorAll("#hero [data-reveal]"), { y: 24, opacity: 0, stagger: 0.12 })
+              .from(root.querySelectorAll("#hero .hero-portrait"), { y: 40, scale: 0.94, opacity: 0, duration: 1.2 }, 0.15)
+              .from(root.querySelectorAll("#hero .hero-chip"), { y: 18, opacity: 0, stagger: 0.08 }, 0.5);
             for (const section of root.querySelectorAll(".chapter")) {
               const targets = section.querySelectorAll("[data-reveal]");
-              if (targets.length)
-                gsap
-                  .timeline({
-                    scrollTrigger: {
-                      trigger: section,
-                      start: "top 82%",
-                      toggleActions: "play none none reverse",
-                    },
-                  })
-                  .from(targets, {
-                    y: 20,
-                    duration: 0.75,
-                    stagger: 0.08,
-                    ease: "power2.out",
-                  });
+              if (!targets.length) continue;
+              gsap
+                .timeline({
+                  scrollTrigger: { trigger: section, start: "top 80%", toggleActions: "play none none reverse" },
+                })
+                .from(targets, { y: 32, opacity: 0, duration: 0.8, stagger: 0.09, ease: "power2.out" });
             }
+
             const observer = new ResizeObserver(() => {
               cancelAnimationFrame(refreshFrame);
               refreshFrame = requestAnimationFrame(() => context.rebuild());
@@ -202,7 +123,6 @@ export default function ScrollCoordinator({ stateRef, rootRef }) {
             const visibility = () => {
               if (document.hidden) {
                 timeline?.scrollTrigger?.disable(false);
-                timeline?.pause();
               } else {
                 timeline?.scrollTrigger?.enable();
                 ScrollTrigger.refresh();
@@ -218,13 +138,12 @@ export default function ScrollCoordinator({ stateRef, rootRef }) {
           rootElement,
         );
       })
-      .catch(() => {
-        Object.assign(scene, createSceneState());
-      });
+      .catch(() => resetScene(scene));
+
     return () => {
       cancelled = true;
       media?.revert();
-      Object.assign(scene, createSceneState());
+      resetScene(scene);
       const bar = rootElement?.querySelector(".story-progress");
       if (bar) bar.style.transform = "scaleX(0)";
     };

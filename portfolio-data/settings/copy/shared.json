@@ -97,5 +97,11 @@
       "previewFallback": "If the preview is unavailable, use Open Resume to view the original document."
     },
     "proficiency": "Level {level}"
+  },
+  "adminFields": {
+    "experienceOutcome": {
+      "label": "Outcome",
+      "help": "A short, verified result for this role; leave empty if unknown."
+    }
   }
 }

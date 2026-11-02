@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { formatCopy } from "@/lib/portfolio/format-copy.mjs";
+import ProfileRoles from "@/themes/shared/profile-roles";
 import ChapterHeading from "../ui/chapter-heading";
-export default function About({ profile, about, social, displayLocation, copy }) {
+import Stats from "../ui/stats";
+export default function About({ profile, about, social, stats, resume, displayLocation, copy, actions, rolesLabel }) {
   return (
     <section
       id="about"
@@ -14,33 +16,42 @@ export default function About({ profile, about, social, displayLocation, copy })
           <p className="about-lead">
             {about.summary}
           </p>
-          <div className="about-story">
+          <p className="body-copy">{about.engineeringPhilosophy}</p>
+          <ProfileRoles profile={profile} label={rolesLabel} />
+          <details className="about-story">
+            <summary>{copy.readMore}</summary>
             {profile.longIntroduction && (
               <p className="body-copy">{profile.longIntroduction}</p>
             )}
             {about.personalStatement && !profile.longIntroduction?.includes(about.personalStatement) && (
               <p className="body-copy">{about.personalStatement}</p>
             )}
-            <p className="body-copy">
-              {about.engineeringPhilosophy}
-            </p>
+          </details>
+          <div className="actions">
+            {resume && (
+              <a className="button primary" href={resume.url} target="_blank" rel="noreferrer">
+                {actions.resumeAction}
+              </a>
+            )}
+            <a className="button secondary" href="#contact">
+              {actions.contactAction}
+            </a>
+            <a className="text-link" href={social.linkedIn} target="_blank" rel="noreferrer">
+              {copy.journeyLink}
+            </a>
           </div>
-          <a
-            className="text-link"
-            href={social.linkedIn}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {copy.journeyLink}
-          </a>
         </div>
         <figure className="portrait">
+          {profile.headline && (
+            <p className="portrait-note" aria-hidden="true">
+              {profile.headline}
+            </p>
+          )}
           <Image
-            src={profile.image}
-            width={480}
-            height={560}
-            sizes="(max-width: 767px) 90vw, 360px"
-            quality={85}
+            src="/inzamam_profile-cutout.webp"
+            width={800}
+            height={800}
+            sizes="(max-width: 767px) 80vw, 420px"
             alt={formatCopy(copy.portraitAlt, {
               name: profile.name,
               designation: profile.designation,
@@ -51,6 +62,7 @@ export default function About({ profile, about, social, displayLocation, copy })
             <span>{displayLocation.toUpperCase()}</span>
           </figcaption>
         </figure>
+        <Stats stats={stats} className="about-stats" />
       </div>
     </section>
   );

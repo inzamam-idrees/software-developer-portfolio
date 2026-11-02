@@ -1,6 +1,8 @@
 {
   "navigation": {
-    "wordmarkRole": "ENGINEER"
+    "wordmarkRole": "ENGINEER",
+    "home": "Home",
+    "letsTalk": "Let’s Talk"
   },
   "footer": {
     "tagline": "/ Built with intention.",
@@ -24,19 +26,46 @@
       "visualCaptionDetail": "INTERFACE → INFRASTRUCTURE",
       "closingLead": "Frontend precision.",
       "closingMuted": "Full-stack perspective.",
-      "scrollCue": "SCROLL TO EXPLORE"
+      "scrollCue": "SCROLL TO EXPLORE",
+      "contactAction": "Contact me",
+      "chipsLabel": "Core disciplines",
+      "portraitAlt": "Portrait of {name}, {designation}",
+      "stats": {
+        "yearsLabel": "Years experience",
+        "projectsLabel": "Projects",
+        "technologiesLabel": "Technologies",
+        "companiesLabel": "Companies"
+      },
+      "watchIntro": "Watch intro",
+      "stopIntro": "Stop intro",
+      "scrollLabel": "Scroll to explore",
+      "codeLabel": "Profile summary as code",
+      "codeKeyword": "const",
+      "codeVariable": "developer",
+      "codeKeys": {
+        "name": "name",
+        "role": "role",
+        "location": "location",
+        "focus": "focus"
+      }
     },
     "selectedWork": {
       "label": "projects",
       "heading": "Built for the real world.",
       "description": "A selection of platforms connecting complex business needs with thoughtful software.",
-      "exploreAll": "Explore all {count} projects ↗"
+      "exploreAll": "Explore all {count} projects ↗",
+      "carouselLabel": "Featured projects",
+      "previous": "Previous project",
+      "next": "Next project",
+      "details": "Project details",
+      "position": "{current} of {total}"
     },
     "about": {
       "label": "about",
       "heading": "A builder at heart.",
       "journeyLink": "More about my journey ↗",
-      "portraitAlt": "{name}, {designation}"
+      "portraitAlt": "{name}, {designation}",
+      "readMore": "Read the full story"
     },
     "expertise": {
       "label": "skills",
@@ -65,7 +94,9 @@
     },
     "contact": {
       "label": "CONTACT",
-      "basedIn": "BASED IN"
+      "basedIn": "BASED IN",
+      "emailAction": "Send email",
+      "socialLabel": "Social profiles"
     }
   },
   "project": {

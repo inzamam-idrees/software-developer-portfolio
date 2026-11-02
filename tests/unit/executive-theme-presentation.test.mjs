@@ -17,13 +17,13 @@ test("Executive navigation preserves enabled canonical links and exposes added s
     presentation.navigation.slice(0, 5).map(({ label, href }) => ({ label, href })),
     [
       { label: "Work", href: "/#projects" },
-      { label: "About", href: "/#about" },
+      { label: "Background", href: "/#background" },
       { label: "Expertise", href: "/#skills" },
       { label: "Experience", href: "/#experience" },
       { label: "Contact", href: "/#contact" },
     ],
   );
-  for (const id of ["education", "awards", "certificates", "writing", "resume"]) assert.ok(presentation.navigation.some((item) => item.id === id));
+  for (const id of ["background", "certificates", "writing", "resume"]) assert.ok(presentation.navigation.some((item) => item.id === id));
 });
 
 test("Executive projects expose canonical case-study facts without invented metrics", () => {

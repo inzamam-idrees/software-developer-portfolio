@@ -29,9 +29,11 @@ test("bundled copy documents validate and load under settings.copy", () => {
   assert.deepEqual(Object.keys(canonical.settings.copy).sort(), [
     "cinematic",
     "coding",
+    "creative",
     "executive",
     "prism",
     "shared",
+    "sienna",
     "spatial",
   ]);
 });
@@ -42,12 +44,12 @@ test("theme view merges shared copy with its own theme copy only", () => {
 
   assert.equal(
     executive.home.selectedWork.heading,
-    "Systems built for real operations.",
+    canonical.settings.copy.executive.home.selectedWork.heading,
   );
   assert.equal(executive.navigation.skipToContent, "Skip to content");
   assert.notEqual(
     coding.home?.selectedWork?.heading,
-    "Systems built for real operations.",
+    canonical.settings.copy.executive.home.selectedWork.heading,
   );
   assert.equal(coding.contactForm.heading, "Get in touch");
   assert.equal(

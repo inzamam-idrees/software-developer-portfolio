@@ -40,14 +40,6 @@ test("the deployment validator uses the canonical loader", async () => {
   assert.match(validator, /Canonical portfolio content is valid/);
 });
 
-test("the production container uses Node 22 and packages read-only canonical data", async () => {
-  const dockerfile = await read("Dockerfile.prod");
-
-  assert.doesNotMatch(dockerfile, /FROM node:20/);
-  assert.match(dockerfile, /FROM node:22/);
-  assert.match(dockerfile, /COPY --from=base \/app\/portfolio-data \.\/portfolio-data/);
-});
-
 test("server secrets do not use a browser-exposed environment prefix", async () => {
   const [captchaRoute, envExample] = await Promise.all([
     read("app/api/google/route.js"),

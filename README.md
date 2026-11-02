@@ -13,7 +13,7 @@ A multi-theme portfolio platform for a senior full-stack engineer. One validated
 ![Active theme screenshot](./public/image/screen.png)
 
 <!-- ACTIVE-THEME:START -->
-Active theme: **Coding**. Developer-centric and code-inspired, with a strong technical personality.
+Active theme: **Prism**. Portrait-led glass panels, warm gradients and an interactive project showcase.
 <!-- ACTIVE-THEME:END -->
 
 [View the live site](https://inzamam-idrees.netlify.app/)

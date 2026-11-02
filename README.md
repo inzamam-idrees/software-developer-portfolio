@@ -13,7 +13,7 @@ A multi-theme portfolio platform for a senior full-stack engineer. One validated
 ![Active theme screenshot](./public/image/screen.png)
 
 <!-- ACTIVE-THEME:START -->
-Active theme: **Prism**. Portrait-led glass panels, warm gradients and an interactive project showcase.
+Active theme: **Sienna**. Dark-first personal portfolio in raw sienna: portrait over a paint splash, stat cards, skill tiles and a masonry works grid, with a light mode.
 <!-- ACTIVE-THEME:END -->
 
 [View the live site](https://inzamam-idrees.netlify.app/)

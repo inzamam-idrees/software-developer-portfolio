@@ -118,9 +118,9 @@ test("GitHub store reads all documents concurrently", async () => {
     return response(200, { content: encoded, encoding: "base64", sha: "abc" });
   });
   const all = await store(fetch).readAll();
-  assert.equal(calls.length, 24);
-  assert.equal(Object.keys(all).length, 24);
-  assert.equal(peak, 24);
+  assert.equal(calls.length, 25);
+  assert.equal(Object.keys(all).length, 25);
+  assert.equal(peak, 25);
 });
 
 test("GitHub rate limits and non-revision rejections explain themselves", async () => {

@@ -14,7 +14,7 @@ test("registry exposes only the approved Phase 3 themes with complete lazy slots
 
   assert.deepEqual(
     themes.map((theme) => theme.id),
-    ["coding", "cinematic", "executive", "spatial", "prism", "creative"],
+    ["coding", "cinematic", "executive", "spatial", "prism", "creative", "sienna"],
   );
   assert.equal(themes.some((theme) => theme.id === "minimal"), false);
   for (const theme of themes) {

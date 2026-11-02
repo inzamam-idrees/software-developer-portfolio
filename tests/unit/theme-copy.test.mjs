@@ -33,6 +33,7 @@ test("bundled copy documents validate and load under settings.copy", () => {
     "executive",
     "prism",
     "shared",
+    "sienna",
     "spatial",
   ]);
 });

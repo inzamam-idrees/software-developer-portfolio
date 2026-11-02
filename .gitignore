@@ -39,3 +39,6 @@ next-env.d.ts
 # generated per-theme stylesheets (scripts/build-theme-css.mjs)
 /public/theme-css/
 /lib/themes/stylesheets.generated.json
+
+# Sienna reference captures (unlicensed third-party imagery; comparison only)
+/docs/multi-theme/sienna-reference/

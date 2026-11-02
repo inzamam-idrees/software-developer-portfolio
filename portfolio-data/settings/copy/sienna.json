@@ -1,0 +1,125 @@
+{
+  "navigation": {
+    "items": {
+      "home": "Home",
+      "about": "About",
+      "skills": "Skills",
+      "experience": "Experience",
+      "projects": "Portfolio",
+      "blog": "Blog",
+      "contact": "Contact"
+    },
+    "suffix": ".",
+    "colorMode": "Light theme"
+  },
+  "footer": {
+    "copyright": "© {year} {name}. All rights reserved"
+  },
+  "backToTop": "Go to top",
+  "home": {
+    "hero": {
+      "cta": "Get in touch",
+      "scroll": "Scroll",
+      "social": "Social profiles",
+      "portraitAlt": "Portrait of {name}"
+    },
+    "stats": {
+      "label": "At a glance",
+      "plus": "+",
+      "items": {
+        "experience": "Years of Experience",
+        "projects": "Projects Showcased",
+        "companies": "Companies Worked With"
+      }
+    },
+    "about": {
+      "label": "About me",
+      "heading": "Need a Product Built? I can Help You!",
+      "hire": "Hire me",
+      "download": "Download CV"
+    },
+    "skills": {
+      "label": "My skills",
+      "heading": "What My Programming Skills Include",
+      "intro": "The languages, frameworks and tools I use to design, build and ship applications.",
+      "tabs": "Skill groups",
+      "groups": [
+        { "id": "skills", "label": "Skills", "categories": ["frontend", "backend"] },
+        { "id": "tools", "label": "Tools", "categories": ["delivery", "ai"] }
+      ]
+    },
+    "experience": {
+      "label": "Experience",
+      "heading": "Where I Have Worked",
+      "intro": "The teams I have worked with, what I built there and the technologies I used.",
+      "present": "Present",
+      "more": "Show {count} more",
+      "less": "Show less"
+    },
+    "projects": {
+      "label": "My Works",
+      "heading": "See the Work I Have Built",
+      "intro": "A selection of applications and platforms, featured work first. Open any card for the problem, solution and stack.",
+      "loadMore": "Load more work",
+      "all": "View all projects",
+      "empty": "Projects will appear here soon."
+    },
+    "education": {
+      "label": "Education",
+      "heading": "Education & Awards",
+      "intro": "My formal studies and the recognition I received along the way.",
+      "awards": "Awards"
+    },
+    "certificates": {
+      "label": "Certificates",
+      "heading": "Certificates & Courses"
+    },
+    "resume": {
+      "label": "Résumé",
+      "heading": "My Résumé"
+    },
+    "writing": {
+      "label": "Writing",
+      "heading": "Latest Articles",
+      "all": "Read all articles",
+      "empty": "No articles published yet.",
+      "unavailable": "Articles could not be loaded right now.",
+      "profile": "Visit my DEV profile"
+    },
+    "contact": {
+      "label": "Contact",
+      "address": "Address:",
+      "phone": "Phone:",
+      "email": "Email:",
+      "social": "Social profiles"
+    }
+  },
+  "contactForm": {
+    "namePlaceholder": "e.g. Jane Doe",
+    "emailPlaceholder": "e.g. jane@example.com",
+    "messagePlaceholder": "Write message..."
+  },
+  "project": {
+    "details": "Project details",
+    "source": "Source code",
+    "visit": "Visit project",
+    "features": "Features",
+    "responsibilities": "Responsibilities",
+    "problem": "Problem",
+    "solution": "Solution",
+    "outcome": "Outcome",
+    "role": "Role",
+    "stack": "Stack"
+  },
+  "projects": {
+    "label": "My Works",
+    "heading": "All Projects",
+    "intro": "Every project in the portfolio, featured work first."
+  },
+  "blog": {
+    "label": "Blog",
+    "heading": "Articles",
+    "intro": "Notes on building software, published on DEV.",
+    "readingTime": "{minutes} min read"
+  }
+}

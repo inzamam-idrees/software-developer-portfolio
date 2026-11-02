@@ -13,6 +13,7 @@ const ownedPrefixes = {
   spatial: ".spatial-",
   prism: ".prism-",
   creative: ".creative-",
+  sienna: ".sienna-",
   admin: ".admin-",
 };
 

@@ -5,6 +5,8 @@
   "headline": "Engineering with intention.",
   "location": "Lahore, Punjab, Pakistan",
   "image": "/inzamam_profile.jpg",
+  "cutoutImage": "/inzamam_profile-cutout.webp",
+  "heroImage": "/inzamam_profile-hero.webp",
   "shortIntroduction": "I build thoughtful interfaces and the systems behind them. From a first interaction to a scalable application.",
   "longIntroduction": "Senior Full Stack Engineer with 7+ years of experience designing, developing, and delivering scalable web applications, SaaS platforms, and enterprise solutions for international clients. Strong expertise across modern JavaScript ecosystems including React, Angular, Node.js, Express, NestJS, TypeScript, and REST/GraphQL APIs, with hands-on experience building high-performance frontend and backend systems. Experienced in developing client-focused products for USA-based and global businesses, collaborating with cross-functional teams, and delivering production-ready solutions in Agile environments. Recently expanded expertise into Python-based development and AI technologies including FastAPI, Flask, Django, Generative AI, Agentic AI, Prompt Engineering, RAG architectures, Vector Databases, and AI-assisted development tools. Passionate about integrating emerging AI capabilities into modern applications to improve automation, user experience, and business efficiency.",
   "experienceLabel": "7+ years",

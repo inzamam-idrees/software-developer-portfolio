@@ -1,0 +1,36 @@
+name: Sync README with active theme
+
+# Admin activation commits only portfolio-data/settings/theme.json.
+# Also runs when this file changes, so merging it fixes a stale README at once.
+# This job copies the active theme's committed screenshot to public/image/screen.png
+# and rewrites the README block. It needs no install, secrets or extra dependencies.
+on:
+  push:
+    paths:
+      - "portfolio-data/settings/theme.json"
+      - ".github/workflows/sync-readme.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - run: npm run sync:readme
+      - name: Commit changes
+        run: |
+          if git diff --quiet -- README.md public/image/screen.png; then
+            echo "README already in sync"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md public/image/screen.png
+          git commit -m "Sync README with active theme"
+          git push

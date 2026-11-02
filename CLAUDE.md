@@ -146,7 +146,7 @@ node --test --test-name-pattern="<regex>" tests/unit/x.test.mjs # single test
 8. Never claim tests, builds, deployments, or integrations succeeded unless actually verified in this session.
 9. No destructive Git operations, no overwriting user changes, and **no commits or pushes without explicit authorization**.
 10. Clearly label what is implemented vs. planned vs. an unresolved deployment assumption.
-11. `README.md` is intentionally short; long-form guidance belongs in `docs/` or this file. After changing the active theme (`settings/theme.json`) or redesigning a theme, regenerate its screenshot (`npm run capture:screenshots -- <id>`) and run `npm run sync:readme`, then `npm run check:readme` to confirm. Admin activation on Netlify commits only the theme JSON, so this stays a manual step. Never edit the README active-theme markers by hand.
+11. `README.md` is intentionally short; long-form guidance belongs in `docs/` or this file. After changing the active theme (`settings/theme.json`) or redesigning a theme, regenerate its screenshot (`npm run capture:screenshots -- <id>`) and run `npm run sync:readme`, then `npm run check:readme` to confirm. Admin activation on Netlify commits only the theme JSON; `.github/workflows/sync-readme.yml` then runs `sync:readme` and commits the README and `screen.png` itself (screenshots must already exist for the theme). Not yet verified on GitHub. Never edit the README active-theme markers by hand.
 
 ## Conventions
 

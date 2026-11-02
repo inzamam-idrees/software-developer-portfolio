@@ -55,7 +55,7 @@ npm run check:readme
 
 `PORTFOLIO_SCREENSHOT_SETTLE` (ms, default 4000) lengthens the wait for motion and 3D. Playwright is not a project dependency: the script uses a local `playwright` if present, else the one bundled with the global Playwright CLI. If no browser is found the script prints the steps to fix it. If the cached browser build differs from the library's expected one, set `PORTFOLIO_SCREENSHOT_CHROMIUM` to a Chromium executable. Because Next expands `$` in env values (see above), a throwaway server for capturing needs its hash escaped in a `.env.local`.
 
-After the admin activates a theme on Netlify with the GitHub store, only `settings/theme.json` is committed, so the README image is stale until someone runs the two commands above locally and commits. An optional GitHub Action that runs `sync:readme` on changes to `theme.json` would keep the text current but cannot capture a screenshot (needs a server and browser), so it is not implemented.
+After the admin activates a theme on Netlify with the GitHub store, only `settings/theme.json` is committed. `.github/workflows/sync-readme.yml` runs on every push that touches that file: it runs `npm run sync:readme` (screenshots for all themes are committed, so no browser is needed) and commits `README.md` and `public/image/screen.png` back to the same branch with the built-in `GITHUB_TOKEN`. It needs no secrets or dependencies. It can also be started by hand (workflow_dispatch). A new or redesigned theme still needs `npm run capture:screenshots -- <id>` locally first. Not yet verified on GitHub; it only runs once pushed.
 
 ## Docker (removed)
 

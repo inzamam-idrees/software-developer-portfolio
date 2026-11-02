@@ -1,0 +1,111 @@
+{
+  "navigation": {
+    "items": {
+      "home": "Home",
+      "about": "About",
+      "projects": "Projects",
+      "blog": "Blog",
+      "contact": "Contact"
+    },
+    "download": "Download CV"
+  },
+  "footer": {
+    "navigation": "Explore",
+    "connect": "Connect",
+    "backToTop": "Back to top"
+  },
+  "home": {
+    "hero": {
+      "headline": ["Code", "Build", "Innovate"],
+      "intro": "I’m {name}, a {designation} with {experience} of experience.",
+      "projects": "View Projects",
+      "contact": "Contact Me",
+      "note": "Let’s create something amazing!",
+      "portraitAlt": "Portrait of {name}"
+    },
+    "technologies": {
+      "label": "Core technologies",
+      "items": ["Laravel", "React", "Angular", "Node.js", "TypeScript", "Python"]
+    },
+    "projects": {
+      "heading": "Featured Projects",
+      "all": "View all",
+      "empty": "Projects will appear here soon."
+    },
+    "about": {
+      "label": "About me",
+      "heading": "A little about me",
+      "philosophy": "How I work",
+      "location": "Based in",
+      "roles": "Roles I take on"
+    },
+    "experience": {
+      "label": "Experience",
+      "heading": "Where I’ve worked",
+      "present": "Present",
+      "more": "Show {count} more highlights"
+    },
+    "skills": {
+      "label": "Skills",
+      "heading": "My toolbox",
+      "intro": "Technologies I use to design, build and ship products."
+    },
+    "education": {
+      "label": "Education",
+      "heading": "Learning & recognition",
+      "awards": "Awards"
+    },
+    "certificates": {
+      "label": "Certificates"
+    },
+    "writing": {
+      "label": "Blog",
+      "heading": "Latest writing",
+      "all": "All articles",
+      "empty": "No articles published yet.",
+      "unavailable": "Articles are unavailable right now.",
+      "profile": "Visit my DEV profile"
+    },
+    "resume": {
+      "label": "Résumé",
+      "intro": "A one-page overview of my experience, skills and education."
+    },
+    "contact": {
+      "label": "Contact",
+      "email": "Email",
+      "phone": "Phone",
+      "location": "Location",
+      "message": "Send a message",
+      "resume": "Download CV",
+      "delivery": "Messages go straight to {email}."
+    }
+  },
+  "contactForm": {
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "you@example.com",
+    "messagePlaceholder": "Tell me about your idea…"
+  },
+  "project": {
+    "details": "View details",
+    "source": "Source code",
+    "visit": "Live demo",
+    "features": "Key features",
+    "responsibilities": "Responsibilities",
+    "problem": "Problem",
+    "solution": "Solution",
+    "outcome": "Outcome",
+    "role": "My role",
+    "stack": "Tech stack"
+  },
+  "projects": {
+    "label": "Projects",
+    "heading": "Things I’ve built",
+    "intro": "A selection of products and platforms I have designed and developed."
+  },
+  "blog": {
+    "label": "Blog",
+    "heading": "Notes & articles",
+    "intro": "Writing about web development, engineering practice and the tools I use.",
+    "readingTime": "{minutes} min read"
+  }
+}

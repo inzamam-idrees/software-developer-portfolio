@@ -12,6 +12,7 @@ const ownedPrefixes = {
   executive: ".executive-",
   spatial: ".spatial-",
   prism: ".prism-",
+  creative: ".creative-",
   admin: ".admin-",
 };
 

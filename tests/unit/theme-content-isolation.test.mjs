@@ -10,6 +10,7 @@ import { createExecutiveView } from "../../themes/executive/view.mjs";
 import { createSpatialView } from "../../themes/spatial/view.mjs";
 
 import { createPrismView } from "../../themes/prism/view.mjs";
+import { createCreativeView } from "../../themes/creative/view.mjs";
 
 const themeViews = [
   ["coding", createCodingView],
@@ -17,6 +18,7 @@ const themeViews = [
   ["executive", createExecutiveView],
   ["spatial", createSpatialView],
   ["prism", createPrismView],
+  ["creative", createCreativeView],
 ];
 
 test("one canonical fixture projects into every registered theme without mutation", async () => {
@@ -104,7 +106,7 @@ test("experience outcomes remain canonical data but only Executive presentation 
   canonical.content.experience[0].outcome = "[TEST FIXTURE ONLY: explicit outcome]";
   const portfolio = buildCurrentPortfolioView(canonical);
   for (const [, createView] of themeViews) assert.equal(createView(portfolio).experience[0].outcome, canonical.content.experience[0].outcome);
-  for (const theme of ["coding", "cinematic", "spatial", "prism"]) {
+  for (const theme of ["coding", "cinematic", "spatial", "prism", "creative"]) {
     const files = await listFiles(path.resolve("themes", theme));
     if (theme === "coding") files.push(...await listFiles(path.resolve("app/components/homepage")));
     if (theme === "cinematic") files.push(...await listFiles(path.resolve("app/components/portfolio")));

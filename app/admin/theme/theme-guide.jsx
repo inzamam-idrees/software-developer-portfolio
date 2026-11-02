@@ -8,6 +8,7 @@ const PURPOSES = Object.freeze({
   executive: "Recruiter-first charcoal and gold layout, highly readable and focused on career evidence.",
   spatial: "An interactive system model: skills graph, project ring and experience spine.",
   prism: "Portrait-led glass panels, warm gradients and an interactive project showcase.",
+  creative: "Light, personal and illustrated: portrait with hand-drawn accents, technology strip and colorful project cards.",
 });
 
 export function themePurpose(themeId) {
@@ -22,6 +23,7 @@ const THUMBNAILS = Object.freeze({
   executive: "/theme-thumbnails/executive.webp",
   spatial: "/theme-thumbnails/spatial.webp",
   prism: "/theme-thumbnails/prism.webp",
+  creative: "/theme-thumbnails/creative.webp",
 });
 
 export function ThemeThumbnail({ themeId }) {

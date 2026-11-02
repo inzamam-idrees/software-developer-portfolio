@@ -29,6 +29,7 @@ test("bundled copy documents validate and load under settings.copy", () => {
   assert.deepEqual(Object.keys(canonical.settings.copy).sort(), [
     "cinematic",
     "coding",
+    "creative",
     "executive",
     "prism",
     "shared",

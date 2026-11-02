@@ -282,7 +282,7 @@ A second production build with the real data (`activeTheme: coding`, `PORTFOLIO_
 - **Registration and schema:** `lib/themes/{ids,registry,stylesheet-sources}.mjs`, `lib/portfolio/{copy-schemas,documents,schemas}.mjs` (optional `profile.cutoutImage` / `profile.heroImage`), `portfolio-data/content/profile.json`, `app/admin/theme/theme-guide.jsx`.
 - **Tests updated** for the 7th theme and 25th document, plus the copy-scan allowlist.
 - **Docs:** this file, `phase-22-sienna-plan.md`, `CLAUDE.md`, `.gitignore`.
-- **Screenshots:** `artifacts/` (untracked, not ignored).
+- **Screenshots:** `artifacts/` is committed with only the files the phase docs name by file or pattern; directory-only references (for example `sienna/2d/`, `sienna/2e/`) were pruned.
 
 ### Risks and open items
 - **Content-store tests:** they cover the 25-document registry, but the GitHub store was still only exercised against a mocked API.
